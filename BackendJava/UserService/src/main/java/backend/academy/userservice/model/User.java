@@ -1,37 +1,30 @@
 package backend.academy.userservice.model;
 
-
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class User {
 
-    /**
-     * Модель для определения пользователя
-     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "user_id")
     private Long id;
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
     @Column(name = "password")
     private String password;
-    @Column(name = "email")
-    private String email;
+
     @ManyToMany()
     @JoinTable(
             name = "users_role",
@@ -40,4 +33,13 @@ public class User {
     )
     private Set<Role> roles = new HashSet<Role>();
 
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY)
+    private Set<Stat> stats = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY)
+    private Set<KeyWords> keyWords = new HashSet<>();
 }
