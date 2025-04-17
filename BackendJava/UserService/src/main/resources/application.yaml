@@ -1,0 +1,12 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  application:
+      name: UserService
+  datasource:
+    url: "jdbc:postgresql://localhost:5433/mydatabase"
+    username: "myuser"
+    password: "mypassword"
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
