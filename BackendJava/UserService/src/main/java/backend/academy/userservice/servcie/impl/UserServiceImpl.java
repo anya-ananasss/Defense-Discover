@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String removeUser(String username) throws UserNotFoundException {
+    public void removeUser(String username) throws UserNotFoundException {
         User userEntity = getUserByUsername(username);
         userRepository.delete(userEntity);
     }

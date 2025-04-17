@@ -11,7 +11,7 @@ public interface UserService {
     UserDto createDefaultUser(CreateDefaultUserRequestDto createDefaultUserRequestDto);
     UserDto changeUserName(String oldName, String newName) throws UserNotFoundException;
     String getPassword(String username) throws UserNotFoundException;
-    String removeUser(String username) throws UserNotFoundException;
+    void removeUser(String username) throws UserNotFoundException;
     UserDto createAdminUser(CreateDefaultUserRequestDto createDefaultUserRequestDto);
     List<UserDto> getAllUsers();
 }
