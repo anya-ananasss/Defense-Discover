@@ -2,10 +2,7 @@ package backend.academy.userservice.model;
 
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "key_words")
@@ -13,6 +10,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class KeyWords {
 
     @Id
