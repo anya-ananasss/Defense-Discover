@@ -1,9 +1,8 @@
-import os
-
 import requests
 import json
 import re
 from dotenv import load_dotenv
+import os
 
 difficulty_levels = {
     "легкий": "простой вопрос",
@@ -11,7 +10,10 @@ difficulty_levels = {
     "сложный": "сложный и нестандартный вопрос"
 }
 
+load_dotenv(os.path.join(os.path.dirname(__file__), "private/token.env"))
 TOKEN = os.getenv('TOKEN')
+print(f"Используемый токен: {TOKEN}")
+# TOKEN = "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"
 
 QWEN_URL = "https://openrouter.ai/api/v1/chat/completions"
 QWEN_HEADERS = {
@@ -55,7 +57,7 @@ def generate_quiz_question_with_choices_json(topic, num_questions=5, difficulty=
                     quiz_json = json.loads(json_content)  # Преобразуем в объект Python
 
                     # Записываем в файл
-                    with open("quiz_questions.json", "w", encoding="utf-8") as file:
+                    with open("../quiz_questions.json", "w", encoding="utf-8") as file:
                         json.dump(quiz_json, file, ensure_ascii=False, indent=4)
 
                     print("JSON успешно записан в 'quiz_questions.json'")

@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import json
 
-from utils.generation import generate_quiz
+from ModelGateway.utils.generation import generate_quiz
 
 app = FastAPI()
 
@@ -24,7 +24,7 @@ async def api_generate_quiz(request: QuizRequest):
             key_words=request.key_words
         )
 
-        with open("quiz_questions.json", "r", encoding="utf-8") as f:
+        with open("./quiz_questions.json", "r", encoding="utf-8") as f:
             result = json.load(f)
 
         return result
