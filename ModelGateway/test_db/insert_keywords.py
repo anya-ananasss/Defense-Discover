@@ -1,6 +1,6 @@
 import json
 
-from test_db.db_utils import get_or_create_category, add_keywords, connect_to_db
+from ModelGateway.test_db.db_utils import get_or_create_category, add_keywords, connect_to_db
 
 
 # Основной скрипт
