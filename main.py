@@ -7,7 +7,9 @@ from llm_config.qwen_llm import QwenLLM
 from utils.quiz_json_parser import QuizJSONParser
 
 
-def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "средний"):
+def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "средний", key_words=None):
+    if key_words is None:
+        key_words = []
     llm = QwenLLM(
         api_token=Config.QWEN_API_TOKEN,
         api_url=Config.QWEN_API_URL,
@@ -19,6 +21,7 @@ def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "сре�
                 "topic": lambda x: x["topic"],
                 "num_questions": lambda x: x["num_questions"],
                 "difficulty": lambda x: x["difficulty"],
+                "key_words": lambda x: x["key_words"],
             }
             | quiz_prompt
             | llm
@@ -29,7 +32,8 @@ def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "сре�
         inputs = {
             "topic": topic,
             "num_questions": num_questions,
-            "difficulty": difficulty_levels.get(difficulty, "средний")
+            "difficulty": difficulty_levels.get(difficulty, "средний"),
+            "key_words": key_words
         }
         result = chain.invoke(inputs)
 
@@ -41,4 +45,4 @@ def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "сре�
 
 
 if __name__ == "__main__":
-    generate_quiz("Музыка", num_questions=3, difficulty="легкий")
+    generate_quiz("Музыка", num_questions=3, difficulty="легкий", key_words=["композитор", "симфония", "Пятая"])
