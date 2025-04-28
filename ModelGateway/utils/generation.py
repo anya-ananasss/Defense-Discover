@@ -1,5 +1,3 @@
-import json
-
 from ModelGateway.llm_config.config import Config
 from ModelGateway.llm_config.constants import difficulty_levels
 from ModelGateway.llm_config.prompts import quiz_prompt
@@ -10,6 +8,7 @@ from ModelGateway.utils.quiz_json_parser import QuizJSONParser
 def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "средний", key_words=None):
     if key_words is None:
         key_words = []
+
     llm = QwenLLM(
         api_token=Config.QWEN_API_TOKEN,
         api_url=Config.QWEN_API_URL,
@@ -28,17 +27,18 @@ def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "сре�
             | QuizJSONParser()
     )
 
-    try:
-        inputs = {
-            "topic": topic,
-            "num_questions": num_questions,
-            "difficulty": difficulty_levels.get(difficulty, "средний"),
-            "key_words": key_words
-        }
-        result = chain.invoke(inputs)
+    for attempt in range(1, 101):
+        try:
+            inputs = {
+                "topic": topic,
+                "num_questions": num_questions,
+                "difficulty": difficulty_levels.get(difficulty, "средний"),
+                "key_words": key_words
+            }
+            result = chain.invoke(inputs)
+            return result
 
-        with open("quiz_questions.json", "w", encoding="utf-8") as f:
-            json.dump(result, f, ensure_ascii=False, indent=4)
-        print("JSON успешно записан в 'quiz_questions.json'")
-    except Exception as e:
-        print(f"Ошибка: {str(e)}")
+        except Exception as e:
+            print(f"Попытка {attempt}/{100}: Ошибка - {str(e)}")
+            if attempt == 100:
+                raise Exception("Не удалось сгенерировать викторину после 100 попыток.")

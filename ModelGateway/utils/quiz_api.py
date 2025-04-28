@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import json
 
 from ModelGateway.utils.generation import generate_quiz
 
@@ -17,15 +16,12 @@ class QuizRequest(BaseModel):
 @app.post("/generate_quiz")
 async def api_generate_quiz(request: QuizRequest):
     try:
-        generate_quiz(
+        result = generate_quiz(
             topic=request.topic,
             num_questions=request.num_questions,
             difficulty=request.difficulty,
             key_words=request.key_words
         )
-
-        with open("./quiz_questions.json", "r", encoding="utf-8") as f:
-            result = json.load(f)
 
         return result
     except Exception as e:
