@@ -1,0 +1,43 @@
+app:
+  stat:
+    topic: "stat"
+    partitions: "1"
+    replicas: "1"
+server:
+  port: 8082
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  application:
+    name: ModelService
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP-SERVERS}
+    consumer.properties:
+      enable.auto.commit: false
+      auto.offset.reset: earliest
+      isolation.level: read_committed
+      fetch.min.bytes: 1024
+      fetch.max.bytes: 1048576
+      fetch.max.wait.ms: 10000
+      max.poll.interval.ms: 10000
+      max.poll.records: 10
+      schema.registry.url: ${SCHEMA_REGISTRY_URL}
+    cloud.zookeeper:
+      config.enabled: false
+      connect-string: ${ZOOKEEPER_CONNECT_STRING}
+promt:
+  client:
+    url: ${PROMT_CLIENT_URL}
