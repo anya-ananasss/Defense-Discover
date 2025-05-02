@@ -1,0 +1,305 @@
+﻿openapi: 3.0.0
+info:
+  title: API
+  version: 1.0.0
+tags:
+  - name: Authentication
+    description: Endpoints for user authentication and registration
+  - name: Admin
+    description: Endpoints restricted to admin users
+  - name: User
+    description: Endpoints for user account management
+
+
+paths:
+  /api/regUser:
+    post:
+      summary: Register a new user
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        201:
+          description: User registered successfully
+        400:
+          description: Invalid input
+
+  /api/confirmation:
+    post:
+      summary: Confirm user registration
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                code:
+                  type: integer
+      responses:
+        200:
+          description: Confirmation successful
+        400:
+          description: Invalid confirmation code
+
+  /api/login:
+    post:
+      summary: Authenticate user and return JWT token
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login successful
+        401:
+          description: Unauthorized
+
+  /api/regAdmin:
+    post:
+      summary: Register a new admin
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        201:
+          description: Admin registered successfully
+        403:
+          description: Forbidden
+
+  /api/users:
+    get:
+      summary: Get list of users
+      tags: [Admin]
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: List of users returned successfully
+        403:
+          description: Forbidden
+
+  /api/user:
+    get:
+      summary: Get user details
+      tags: [User]
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: User details retrieved successfully
+        403:
+          description: Forbidden
+    delete:
+      summary: Delete user account
+      tags: [User]
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: User account deleted successfully
+        403:
+          description: Forbidden
+    patch:
+      summary: Update user details
+      tags: [User]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        200:
+          description: User details updated successfully
+        403:
+          description: Forbidden
+
+  /api/getQuestion:
+    post:
+      summary: Get a quiz question
+      tags: [Quiz, LLMService]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+      responses:
+        200:
+          description: Question retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  question:
+                    type: string
+                  answers:
+                    type: array
+                    items:
+                      type: string
+                  correctAnswerIndex:
+                    type: integer
+        400:
+          description: Invalid request
+
+  /api/stat:
+    post:
+      summary: Submit quiz statistics
+      tags: [Quiz]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+                correctAnswers:
+                  type: integer
+      responses:
+        200:
+          description: Statistics recorded successfully
+        400:
+          description: Invalid request
+
+    get:
+      summary: Get user quiz statistics
+      tags: [Quiz]
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Statistics retrieved successfully
+        403:
+          description: Forbidden
+
+  /api/usersstat:
+    get:
+      summary: Get all users' statistics
+      tags: [Admin, Quiz]
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Statistics retrieved successfully
+        403:
+          description: Forbidden
+
+  /api/category:
+    post:
+      summary: Create a new category
+      tags: [Admin, Quiz]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        201:
+          description: Category created successfully
+        400:
+          description: Invalid request
+
+    get:
+      summary: Get all categories
+      tags: [Quiz]
+      responses:
+        200:
+          description: Categories retrieved successfully
+
+    patch:
+      summary: Update a category
+      tags: [Admin, Quiz]
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+      responses:
+        200:
+          description: Category updated successfully
+        400:
+          description: Invalid request
+
+    delete:
+      summary: Delete a category
+      tags: [Admin, Quiz]
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Category deleted successfully
+        403:
+          description: Forbidden
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
