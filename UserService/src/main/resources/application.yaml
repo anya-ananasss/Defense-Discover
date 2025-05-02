@@ -1,0 +1,37 @@
+app:
+  stat:
+    topic: "stat"
+    fail-on-processing: false
+    concurrency: 3
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
+  datasource:
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP-SERVERS}
+    consumer.properties:
+      enable.auto.commit: false
+      auto.offset.reset: earliest
+      isolation.level: read_committed
+      fetch.min.bytes: 1024
+      fetch.max.bytes: 1048576
+      fetch.max.wait.ms: 10000
+      max.poll.interval.ms: 10000
+      max.poll.records: 10
+      schema.registry.url: ${SCHEMA_REGISTRY_URL}
+    cloud.zookeeper:
+      config.enabled: false
+      connect-string: ${ZOOKEEPER_CONNECT_STRING}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+server:
+  port: 8081

@@ -1,0 +1,41 @@
+app:
+  user-confirmation:
+    topic: "user-confirmation"
+    fail-on-processing: false
+    concurrency: 3
+
+spring:
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+        mail:
+          debug: true
+          smtp:
+             auth: true
+             starttls:
+                 enable: true
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP-SERVERS}
+    consumer.properties:
+      enable.auto.commit: false
+      auto.offset.reset: earliest
+      isolation.level: read_committed
+      fetch.min.bytes: 1024
+      fetch.max.bytes: 1048576
+      fetch.max.wait.ms: 10000
+      max.poll.interval.ms: 10000
+      max.poll.records: 10
+      schema.registry.url: ${SCHEMA_REGISTRY_URL}
+    cloud.zookeeper:
+      config.enabled: false
+      connect-string: ${ZOOKEEPER_CONNECT_STRING}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+server:
+  port: 8083

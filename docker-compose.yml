@@ -1,0 +1,142 @@
+services:
+
+  apigateway:
+    container_name: "apigateway"
+    build: ./ApiGateWay
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_HOST=host.docker.internal
+      - REDIS_PORT=6379
+
+      - ZOOKEEPER_CONNECT_STRING=host.docker.internal:2181
+      - SCHEMA_REGISTRY_URL=http://host.docker.internal:8083
+      - BOOTSTRAP-SERVERS=kafka-1:9092
+
+      - PROMT_CLIENT_URL=http://host.docker.internal:8082
+      - ROLE_CLIENT_URL=http://host.docker.internal:8081
+      - STAT_CLIENT_URL=http://host.docker.internal:8081
+      - USER_CLIENT_URL=http://host.docker.internal:8081
+
+  model_service:
+    container_name: "model_service"
+    build: ./ModelService
+    ports:
+      - "8082:8082"
+    environment:
+      - REDIS_HOST=localhost
+      - REDIS_PORT=6379
+
+      - POSTGRES_URL=jdbc:postgresql://localhost:5434/mydatabase
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+
+      - ZOOKEEPER_CONNECT_STRING=localhost:2181
+      - SCHEMA_REGISTRY_URL=http://localhost:8083
+      - BOOTSTRAP-SERVERS=localhost:19092,localhost:29092
+
+      - PROMT_CLIENT_URL=http://localhost:8000
+
+  notification_service:
+    container_name: "notification_service"
+    build: ./NotificationService
+    ports:
+      - "8083:8083"
+    environment:
+      - REDIS_HOST=localhost
+      - REDIS_PORT=6379
+
+      - ZOOKEEPER_CONNECT_STRING=localhost:2181
+      - SCHEMA_REGISTRY_URL=http://localhost:8083
+      - BOOTSTRAP-SERVERS=localhost:19092,localhost:29092
+
+      - MAIL_HOST=smtp.mail.ru
+      - MAIL_PORT=587
+      - MAIL_USERNAME=mymail
+      - MAIL_PASSWORD=mymailpassword
+
+  user_service:
+    container_name: "user_service"
+    build: ./UserService
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_HOST=localhost
+      - REDIS_PORT=6379
+
+      - POSTGRES_URL=jdbc:postgresql://localhost:5434/mydatabase
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+
+      - ZOOKEEPER_CONNECT_STRING=localhost:2181
+      - SCHEMA_REGISTRY_URL=http://localhost:8083
+      - BOOTSTRAP-SERVERS=localhost:19092,localhost:29092
+
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  postgres2:
+    image: postgres:latest
+    container_name: postgres_db2
+    restart: always
+    environment:
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka-1:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka
+    container_name: kafka-1
+    ports:
+      - "19092:19092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-1:9092,DOCKER://localhost:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,DOCKER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_MIN_IN_SYNC_REPLICAS: 1
+    depends_on:
+      - zookeeper
+  redis:
+    image: redis:latest
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+#  llmservice:
+#    build: ./modelGatewayPath
+#    ports:
+#      - "8000:8000"
+#    env_file:
+#      - .env
+#    restart: always
+volumes:
+  postgres:
+  redis-data:
