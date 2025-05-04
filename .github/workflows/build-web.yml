@@ -1,0 +1,47 @@
+name: Godot Web Export and Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Create export directory
+      run: mkdir -p frontend/build/web
+
+    - name: Export HTML5 build using Godot
+      run: |
+        docker run --rm \
+          -v "${{ github.workspace }}/frontend":/game \
+          -w /game \
+          barichello/godot-ci:4.4.1 \
+          godot --headless --export-release "Web" build/web/index.html
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: frontend/build/web
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

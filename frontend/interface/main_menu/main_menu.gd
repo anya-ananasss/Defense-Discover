@@ -2,7 +2,9 @@ extends Control
 
 const ALLOWED_SPECIALS = "!@#$%^&*()_+-=[]{}|;:'\",.<>?/ "
 const NOT_ALLOWED_EMAIL_ERROR = "Неверный адресс электронной почты" 
+const MIN_LEN_PASSWORD_ERROR = "Пароль слишком короткий"
 var email_regex :=  RegEx.new() 
+const MINIMUM_PASSWORD_LENGTH := 8
 
 var email: String:
 	set(value):
@@ -69,7 +71,7 @@ func _ready():
 	for node in get_tree().get_nodes_in_group("text_fields") + find_children("", "LineEdit"):
 		if node is LineEdit:
 			node.gui_input.connect(_on_line_edit_gui_input)
-	%ConfirmationButton.gui_input.connect(_only_numbers_line_edit)
+	%ConfirmationLineEdit.gui_input.connect(_only_numbers_line_edit)
 
 func _only_numbers_line_edit(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
@@ -198,10 +200,20 @@ func is_valid_email(email: String) -> bool:
 	var res :=  email_regex.search(email)
 	return res != null and res.get_end() == email.length()
 
+func is_valid_passoword(password: String) -> bool:
+	return len(password) >= MINIMUM_PASSWORD_LENGTH
+
 func _on_authorization_button_pressed() -> void:
+	var error = ''
 	if not is_valid_email(%EmailLineEdit2.text):
-		%ErrorAutharizationLabel.text = NOT_ALLOWED_EMAIL_ERROR
+		error = NOT_ALLOWED_EMAIL_ERROR
+	elif not is_valid_passoword(%PasswordLineEdit2.text):
+		error = MIN_LEN_PASSWORD_ERROR
+	
+	if error != '':
+		%ErrorAutharizationLabel.text = error
 		return
+		
 	
 	enable_waiting()
 	var ret = await Http.login_user(%EmailLineEdit2.text, %PasswordLineEdit2.text)

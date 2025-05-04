@@ -585,7 +585,6 @@ text = "Профиль"
 
 [node name="Authorization" type="Control" parent="."]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1622,7 +1621,6 @@ visible = false
 layout_mode = 1
 
 [node name="NotificationPanel" type="PanelContainer" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 568.0
 offset_top = -540.0

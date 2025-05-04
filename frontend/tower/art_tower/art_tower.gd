@@ -25,7 +25,7 @@ func _process(delta: float) -> void:
 			tween = create_tween()
 			tween.tween_property(%Shader.material, "shader_parameter/dop_alpha", 1, TWEEN_TIME)
 		visiable = false
-		%TowerSprite.stop()
+		%TowerSprite.pause()
 	else:
 		%Shader.visible = true
 		if visiable == false:
