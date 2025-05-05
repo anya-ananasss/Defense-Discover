@@ -59,9 +59,9 @@ func start_question(category: String, difficulty: int):
 	for x: Button in children:
 		if x.text == http_res.correct_answer:
 			x.modulate = Color.GREEN
-	
+	var result
 	if !http_res.is_correct:
-		question_completed.emit(Results.Incorrect)
+		result = Results.Incorrect
 		if res != -1:
 			children[res].modulate = Color.INDIAN_RED
 		else:
@@ -70,11 +70,13 @@ func start_question(category: String, difficulty: int):
 					x.modulate = Color.INDIAN_RED
 					
 	else:
-		question_completed.emit(Results.Correct)
+		result = Results.Correct
 	await timer.timeout
+	
 	visible = false
-	get_tree().paused = false
-	filling.bg_color = prev_color
 	for i in range(len(children)):
 		children[i].modulate = Color.WHITE
+	get_tree().paused = false
+	filling.bg_color = prev_color
+	question_completed.emit(result)
 	

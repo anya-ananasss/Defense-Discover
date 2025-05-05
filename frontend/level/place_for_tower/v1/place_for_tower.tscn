@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bnyty5vobw6si"]
+[gd_scene load_steps=19 format=3 uid="uid://bnyty5vobw6si"]
 
 [ext_resource type="Script" uid="uid://7h2rok1xosj1" path="res://level/place_for_tower/v1/place_for_tower.gd" id="1_5b8io"]
 [ext_resource type="Theme" uid="uid://h1f7iqhh7ycb" path="res://theme/kenneyUI-yellow.tres" id="2_8yj58"]
@@ -7,12 +7,62 @@
 [ext_resource type="Texture2D" uid="uid://d2omc278toyg2" path="res://tower/electric_tower/electric_tower.png" id="4_4bv7a"]
 [ext_resource type="Texture2D" uid="uid://c5lsxj52wm6r8" path="res://tower/tree_tower/tree_tower.png" id="5_i8p77"]
 [ext_resource type="Texture2D" uid="uid://b6xq7i4oqgfq1" path="res://tower/art_tower/art_tower.png" id="6_k7vnn"]
-[ext_resource type="Texture2D" uid="uid://bdd4gcb88t88t" path="res://level/place_for_tower/placeForTower.png" id="7_7tcvd"]
 [ext_resource type="Texture2D" uid="uid://dh0b3bx6fqn8o" path="res://level/place_for_tower/6379ded93cc6652.png" id="8_wxjlh"]
 [ext_resource type="Texture2D" uid="uid://cdsit8ni20ri7" path="res://level/place_for_tower/trashcan2_sptite.png" id="9_3xuer"]
+[ext_resource type="Texture2D" uid="uid://b2l0gaf4c68yr" path="res://level/place_for_tower/flag animation-sheet.png" id="10_5b8io"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fvx64"]
 radius = 52.0024
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qs4vb"]
+atlas = ExtResource("10_5b8io")
+region = Rect2(0, 0, 68, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ydtdt"]
+atlas = ExtResource("10_5b8io")
+region = Rect2(68, 0, 68, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3f5vv"]
+atlas = ExtResource("10_5b8io")
+region = Rect2(136, 0, 68, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5eqla"]
+atlas = ExtResource("10_5b8io")
+region = Rect2(204, 0, 68, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37smt"]
+atlas = ExtResource("10_5b8io")
+region = Rect2(136, 0, 68, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tk1m"]
+atlas = ExtResource("10_5b8io")
+region = Rect2(68, 0, 68, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oougy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qs4vb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ydtdt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3f5vv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5eqla")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_37smt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tk1m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="PlaceForTower" type="Node2D"]
 script = ExtResource("1_5b8io")
@@ -121,11 +171,13 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_fvx64")
 
-[node name="PlaceTexture" type="Sprite2D" parent="."]
+[node name="PlaceTexture" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -5)
+position = Vector2(2, -5)
 scale = Vector2(0.9, 1)
-texture = ExtResource("7_7tcvd")
+sprite_frames = SubResource("SpriteFrames_oougy")
+autoplay = "default"
+frame_progress = 0.34988
 
 [connection signal="mouse_entered" from="Control" to="." method="_on_control_mouse_entered"]
 [connection signal="mouse_exited" from="Control" to="." method="_on_control_mouse_exited"]

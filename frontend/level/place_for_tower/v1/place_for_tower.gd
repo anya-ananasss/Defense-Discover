@@ -4,6 +4,11 @@ var mouse_in_control : bool
 var mouse_in_area : bool 
 var current_tower : Tower
 var tower_cashback := 0.5
+var lost_price := 0.25
+var current_tower_type
+
+signal start_question(topic: String, is_ok: Signal, level: int)
+signal is_ok(is_ok: bool)
 
 func  _ready() -> void:
 	%ArcherTowerCard.price = Global.archer_tower_price
@@ -51,18 +56,33 @@ func _on_area_2d_mouse_entered() -> void:
 func _on_area_2d_mouse_exited() -> void:
 	mouse_in_area = false
 
+func handle_question(type: Global.Types):
+	if type == Global.Types.ARCHER:
+		print('start_archer')
+	start_question.emit(Global.topic_names[type], is_ok, 1)
+	var res = await is_ok
+	if type == Global.Types.ARCHER:
+		print('end_archer')
+	var price = Global.tower_prices[type]
+	if not res:
+		Global.gold -= price * lost_price
+		return
+	current_tower_type = type
+	create_tower(Global.tower_scenes[type], price)
+
 
 func _on_archer_tower_card_card_pressed() -> void:
-	create_tower(Global.archer_tower, Global.archer_tower_price)
+	handle_question(Global.Types.ARCHER)
+	
 
 func _on_art_tower_card_card_pressed() -> void:
-	create_tower(Global.art_tower, Global.art_tower_price)
+	handle_question(Global.Types.ART)
 
 func _on_tree_tower_card_card_pressed() -> void:
-	create_tower(Global.tree_tower, Global.tree_tower_price)
+	handle_question(Global.Types.TREE)
 
 func _on_electric_tower_card_card_pressed() -> void:
-	create_tower(Global.electric_tower, Global.electric_tower_price)
+	handle_question(Global.Types.ELECTRIC)
 
 func update_prices():
 	%UpdateCard.price = current_tower.get_update_price()
@@ -80,6 +100,12 @@ func create_tower(tower: PackedScene, tower_price):
 
 
 func _on_update_card_card_pressed() -> void:
+	start_question.emit(Global.topic_names[current_tower_type], is_ok, min(current_tower.level, Global.max_question_level))
+	var res = await is_ok
+	var price = current_tower.get_update_price()
+	if not res:
+		Global.gold -= price * lost_price
+		return
 	current_tower.update_tower()
 	%UpdatePanel.visible = false
 	update_prices()

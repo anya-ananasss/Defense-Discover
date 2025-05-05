@@ -491,8 +491,8 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -961.0
 offset_top = -540.5
-offset_right = 961.0
-offset_bottom = 540.5
+offset_right = 959.0
+offset_bottom = 538.5
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_rahlh")
@@ -585,6 +585,7 @@ text = "Профиль"
 
 [node name="Authorization" type="Control" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -942,7 +943,8 @@ layout_mode = 2
 theme_override_constants/margin_top = -16
 theme_override_constants/margin_bottom = -12
 
-[node name="Label" type="Label" parent="Registration/Panel/MarginContainer/Control/MarginContainer5"]
+[node name="ErrorRegistrationLabel" type="Label" parent="Registration/Panel/MarginContainer/Control/MarginContainer5"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_7piqx")
@@ -1060,7 +1062,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 40
 alignment = 1
-max_length = 4
+max_length = 10
 context_menu_enabled = false
 
 [node name="ConfirmationButton" type="Button" parent="ConfirmationMenu/Panel/Control"]
@@ -1620,7 +1622,26 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
+[node name="ColorRect2" type="ColorRect" parent="Settings"]
+show_behind_parent = true
+material = SubResource("ShaderMaterial_wwcsp")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.560784)
+
 [node name="NotificationPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 568.0
 offset_top = -540.0

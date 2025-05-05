@@ -1,11 +1,11 @@
 extends Node2D
 const CAMERA_MOVEMENT_SPEED : float = 150
-const CAMERA_ZOOM_SPEED : Vector2 = Vector2(0.2, 0.2)
+const CAMERA_ZOOM_SPEED : Vector2 = Vector2(0.25, 0.25)
 const CAMERA_ZOOM_DEFAULT : Vector2 = Vector2(1.0, 1.0)
-const CAMERA_ZOOM_MIN : Vector2 = Vector2(1.2, 1.2)
-const CAMERA_ZOOM_MAX : Vector2 = Vector2(3.0, 3.0)
+const CAMERA_ZOOM_MIN : Vector2 = Vector2(1, 1)
+const CAMERA_ZOOM_MAX : Vector2 = Vector2(2.0, 2.0)
 const CAMERA_TWEEN_DURATION : float = 0.3
-const CAMERA_SPEED = 400
+const CAMERA_SPEED = 800
 var viewport_width = ProjectSettings.get_setting("display/window/size/viewport_width")
 var viewport_height = ProjectSettings.get_setting("display/window/size/viewport_height")
 var MAX_RATIO = 16 / 9
@@ -28,11 +28,25 @@ var hp:
 var camera_tween: Tween = null 
 func _ready() -> void:
 	center_field()
+	for x in %Places.get_children():
+		x.start_question.connect(start_qestion)
+	
 	get_viewport().size_changed.connect(center_field)
 	get_viewport().get_visible_rect()
 	Global.gold_changed.connect(update_gold_label)
 	%GoldInput.text = str(Global.gold)
 	hp = 30
+
+func start_qestion(topic: String, is_ok: Signal, level: int):
+	var quest = %Question
+	quest.start_question(topic, level)
+	var res = await quest.question_completed
+	if res == quest.Results.Correct:
+		is_ok.emit(true)
+	else:
+		is_ok.emit(false)
+	
+	
 
 func center_field():
 	var screen_size = get_viewport().get_visible_rect().size
@@ -111,7 +125,7 @@ func _on_wave_generator_wave_ended() -> void:
 
 
 func _on_button_2_pressed() -> void:
-	%Question.start_question("math", 1)
+	$%Question.start_question("math", 1)
 
 
 func _on_menu_cross_button_pressed() -> void:
@@ -120,8 +134,8 @@ func _on_menu_cross_button_pressed() -> void:
 
 
 func _on_menu_button_pressed() -> void:
-	%Menu.visible = true 
-	get_tree().paused = true
+	%Menu.visible = not %Menu.visible
+	get_tree().paused = not get_tree().paused
 
 
 func _on_settings_button_pressed() -> void:

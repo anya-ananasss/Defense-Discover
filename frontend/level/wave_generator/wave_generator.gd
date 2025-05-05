@@ -4,6 +4,7 @@ class_name  Wave_generator
 var level = 1
 var power = 1000
 var power_per_level = 200
+var hp_increasing_per_level = 0.1
 var timer: Timer;
 var short_range = 0.4
 var long_range = 3
@@ -26,7 +27,9 @@ func start_wave():
 		var enemy := Global.enemy_properties[rng.randi_range(0, len(enemies_type) - 1)]
 		var count := rng.randi_range(enemy.min_count_in_group, enemy.max_count_in_group)
 		for i in range(count):
-			add_enemy.emit(enemy.scene.instantiate())
+			var en = enemy.scene.instantiate()
+			en.hp *= 1 + level * hp_increasing_per_level
+			add_enemy.emit(en)
 			timer.start(short_range)
 			await timer.timeout
 		current_power -= count * enemy.power

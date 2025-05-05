@@ -54,7 +54,7 @@ func _process(delta: float) -> void:
 	if is_instance_valid(current_enemy):
 		%Attack.visible = true
 		var direction: Vector2 = current_enemy.global_position - %Attack.global_position
-		%Attack.region_rect = Rect2(0, 0, 448, direction.length() - 20)
+		%Attack.region_rect = Rect2(0, 0, 448, direction.length() - 10)
 		%Attack.rotation = direction.angle() - PI / 2
 		current_enemy.hit(delta * dps, Global.Types.ELECTRIC)
 	

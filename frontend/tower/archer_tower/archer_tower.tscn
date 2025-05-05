@@ -29,6 +29,9 @@ scale = Vector2(3, 3)
 [node name="TowerSprite" parent="." index="2"]
 material = SubResource("ShaderMaterial_vstve")
 sprite_frames = ExtResource("3_vstve")
+frame = 4
+frame_progress = 1.0
+offset = Vector2(0, 5)
 
 [node name="Arrows" type="Node2D" parent="." index="3"]
 

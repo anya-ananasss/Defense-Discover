@@ -1,4 +1,5 @@
 extends TextureButton
+class_name CrossButton
 
 @onready var shader_material := material as ShaderMaterial
 var increasing = 1.15

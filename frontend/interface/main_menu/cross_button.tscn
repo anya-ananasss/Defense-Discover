@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://dmmbux1y4e8bw"]
 
 [ext_resource type="Shader" uid="uid://cielcltgrm1g8" path="res://interface/main_menu/main_menu_cross.gdshader" id="1_ap6si"]
-[ext_resource type="Texture2D" uid="uid://nhi8etlx7l2y" path="res://interface/main_menu/red_cross.png" id="2_ww57j"]
+[ext_resource type="Texture2D" uid="uid://cbuac4u4011hq" path="res://interface/main_menu/cancel_icon-export.png" id="2_ap6si"]
 [ext_resource type="Script" uid="uid://bi3cuxled5fq6" path="res://interface/main_menu/cross_button.gd" id="3_uurra"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dff57"]
@@ -18,11 +18,11 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -960.0
-offset_top = -540.0
-offset_right = -890.0
-offset_bottom = -470.0
+offset_left = -965.0
+offset_top = -545.0
+offset_right = -885.0
+offset_bottom = -465.0
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("2_ww57j")
+texture_normal = ExtResource("2_ap6si")
 script = ExtResource("3_uurra")

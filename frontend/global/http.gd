@@ -1,10 +1,10 @@
 extends Node
 
-var base_url := "http://127.0.0.1:8000"
+var base_url := "http://176.98.178.10:8080"
 var token := ''
 var user_name := ''
+var email = ''
 var cookie_time = 30
-
 const TIMEOUT_SECONDS := 4.0
 
 func  _ready() -> void:
@@ -12,6 +12,9 @@ func  _ready() -> void:
 		var dop = Global.java_script.getCookie("token")
 		if dop != null:
 			token = dop
+		dop = Global.java_script.getCookue("email")
+		email = dop if dop != null else ''
+			
 
 func _create_http_request() -> HTTPRequest:
 	var http_request := HTTPRequest.new()
@@ -20,7 +23,7 @@ func _create_http_request() -> HTTPRequest:
 	http_request.timeout = TIMEOUT_SECONDS
 	return http_request
 
-func _send_request(http_request: HTTPRequest, method: int, url: String, data: Dictionary = {}, auth: bool = false) -> Dictionary:
+func _send_request(http_request: HTTPRequest, method: int, url: String, data: Dictionary = {}, auth: bool = false):
 	var headers := ["Content-Type: application/json"]
 	if auth:
 		headers.append("Authorization: Bearer %s" % token)
@@ -45,39 +48,50 @@ func _send_request(http_request: HTTPRequest, method: int, url: String, data: Di
 	
 	if response_code / 100 == 2:
 		var json = JSON.parse_string(response_body)
-		return json if typeof(json) == TYPE_DICTIONARY else {}
+		if json == null:
+			return response_body
+		return json
 	return {'error':''}
 
 # ========== AUTH ==========
 
 func register_user(email: String, username:String, password: String) -> Dictionary:
-	return await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/regUser", {
+	self.email = email 
+	return await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/createUser", {
 		"email": email,
 		"password": password,
 		'username': username
 	})
 
-func confirm_user(email: String, username:String, password: String, code: String) -> Dictionary:
-	var response := await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/confirmation/" + str(code), {
-		"email": email,
-		"password": password,
-		'username': username
-	})
-	if response.has("token"):
-		token = response["token"]
+func set_cookie(token ,email):
 		if OS.get_name() == 'Web':
 			Global.java_script.setCookie("token", token, cookie_time)
+			Global.java_script.setCookie("email", email, cookie_time)
+		self.token = token
+		self.email = email
+	
+	
+
+func confirm_user(email: String, username:String, password: String, code: String):
+	var response = await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/confirmationUser?code=" + str(code), {
+		"email": email,
+		"password": password,
+		'username': username
+	})
+	if response is String:
+		set_cookie(response, email)
 	return response
 
-func login_user(email: String, password: String) -> Dictionary:
-	var response := await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/login", {
+
+
+func login_user(email: String, password: String):
+	self.email = email
+	var response = await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/login", {
 		"email": email,
 		"password": password
 	})
-	if response.has("token"):
-		token = response["token"]
-		if OS.get_name() == 'Web':
-			Global.java_script.setCookie("token", token, cookie_time)
+	if response is String:
+		set_cookie(response, email)
 	return response
 
 
@@ -97,7 +111,7 @@ class StatsDto:
 		nature = int(dct['nature'])
 
 func get_user_stat(username):
-	var res = await  _send_request(_create_http_request(), HTTPClient.METHOD_GET, "/api/getUserStat?username=" + username, {}, true)
+	var res = await  _send_request(_create_http_request(), HTTPClient.METHOD_GET, "/api/v1/getUserStat?username=" + username, {}, true)
 	if 'error' in res:
 		return null
 	return StatsDto.new(res)	
@@ -106,7 +120,7 @@ func post_wave(waves):
 	fill_user_name()
 	if user_name != '':
 		return
-	_send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/postWave", {
+	_send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/postWave", {
 		"countWave": waves,
 		"username": user_name
 	}, true)
@@ -126,20 +140,20 @@ class LeaderBoardDto:
 			users.append(UserScore.new(x))
 			
 func get_waves():
-	var res = await _send_request(_create_http_request(), HTTPClient.METHOD_GET, "/api/getWaves", {})
+	var res = await _send_request(_create_http_request(), HTTPClient.METHOD_GET, "/api/v1/getWaves", {})
 	if 'error' in res:
 		return null
 	return LeaderBoardDto.new(res)
 	
 	
 func get_user() -> Dictionary:
-	return await _send_request(_create_http_request(), HTTPClient.METHOD_GET, "/api/user", {}, true)
+	return await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/getUser?email=" + email, {}, true)
 
 func delete_user() -> Dictionary:
-	return await _send_request(_create_http_request(), HTTPClient.METHOD_DELETE, "/api/user", {}, true)
+	return await _send_request(_create_http_request(), HTTPClient.METHOD_DELETE, "/api/v1/user", {}, true)
 
 func update_user(email: String, password: String) -> Dictionary:
-	return await _send_request(_create_http_request(), HTTPClient.METHOD_PATCH, "/api/user", {
+	return await _send_request(_create_http_request(), HTTPClient.METHOD_PATCH, "/api/v1/user", {
 		"email": email,
 		"password": password
 	}, true)
@@ -156,9 +170,9 @@ class QuestionDto:
 
 func get_question(category: String, difficulty: int):
 	fill_user_name()
-	var dct = await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/getQuestion", {
+	var dct = await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/getQuestion", {
 		'username': user_name,
-		'prompt': {
+		'promt': {
 			"topic": category,
 			"difficulty": str(difficulty),
 			"keyWords": []
@@ -166,7 +180,7 @@ func get_question(category: String, difficulty: int):
 	})
 	if 'error' in dct:
 		return null
-	return QuestionDto.new(dct)
+	return QuestionDto.new(dct[0])
 
 class AnswerDto:
 	var user_name: String
@@ -174,12 +188,12 @@ class AnswerDto:
 	var correct_answer: String
 	func _init(dct: Dictionary):
 		user_name = dct['userName']
-		is_correct = dct['isCorrect']
+		is_correct = dct['correct']
 		correct_answer = dct['correctAnswer']
 	
 func post_answer(question_id: String, answer: String):
-	var res = await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/postAnswer", {
-		'username': user_name,
+	var res = await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/postAnswer", {
+		'userName': user_name,
 		'questionId': question_id,
 		'answer': answer
 	})

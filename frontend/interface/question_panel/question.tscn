@@ -73,7 +73,6 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-text = "Сколько дней в году?"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -92,7 +91,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 34
-text = "11"
 autowrap_mode = 3
 
 [node name="Button2" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
@@ -100,7 +98,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 34
-text = "1414"
 autowrap_mode = 3
 
 [node name="Button3" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
@@ -108,7 +105,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 34
-text = "41"
 autowrap_mode = 3
 
 [node name="Button4" type="Button" parent="VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/GridContainer"]
@@ -116,5 +112,4 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 34
-text = "991"
 autowrap_mode = 3

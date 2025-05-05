@@ -16,16 +16,16 @@ func filling():
 	var pattern1 = tile_set.get_pattern(1)
 	var pattern2 = tile_set.get_pattern(2)
 	var pattern3 = tile_set.get_pattern(3)
-	var view_size = get_viewport().get_visible_rect().size / camera.scale
+	var view_size = get_viewport().get_visible_rect().size
 	var tile_size =  tile_set.tile_size
 	var map_size = Vector2i(view_size.x / tile_size.x, view_size.y / tile_size.y) 
-	var mn_x = -((view_size.x - viewport_width) / 2) - 1
+	var mn_x = -((view_size.x - viewport_width) / 2)
 	var mx_x = (view_size.x + viewport_width) / 2
-	var mn_y = -((view_size.y - viewport_height) / 2) - 1
+	var mn_y = -((view_size.y - viewport_height) / 2)
 	var mx_y = (view_size.y + viewport_height) / 2
 	for i in range(mn_x - tile_size.x , mx_x + tile_size.x, tile_size.x):
 		for j in range(mn_y - tile_size.y, mx_y + tile_size.y, tile_size.y):
-			var vec = $object2.local_to_map(Vector2(i, j))
+			var vec = $object2.local_to_map(Vector2(i, j) - %object2.global_position)
 			var vec1 = vec + Vector2i(0, 1)
 			var vec2 = vec
 			var vec3 = vec + Vector2i(0,-1)

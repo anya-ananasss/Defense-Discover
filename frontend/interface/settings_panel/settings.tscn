@@ -24,6 +24,7 @@ grow_vertical = 2
 script = ExtResource("1_wnk05")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_wwcsp")
 layout_mode = 1
 anchors_preset = 8
@@ -52,6 +53,7 @@ offset_right = 302.0
 offset_bottom = 224.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Control" type="Control" parent="Panel"]
 layout_mode = 1
