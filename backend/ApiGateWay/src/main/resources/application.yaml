@@ -41,3 +41,6 @@ role:
 stat:
   client:
     url: ${STAT_CLIENT_URL}
+springdoc:
+  swagger-ui:
+    tryItOutEnabled: false
