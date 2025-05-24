@@ -1,5 +1,6 @@
 package backend.academy.apigateway.client;
 
+import backend.academy.apigateway.dto.WavesDto;
 import backend.academy.apigateway.dto.security.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
@@ -9,24 +10,10 @@ import java.util.List;
 @FeignClient(name = "wave-client", url = "${user.client.url}")
 public interface WaveClient {
 
-    @GetMapping("/users")
-    List<UserDto> getAllUsers();
+    @GetMapping("/addWave")
+    void addWave(@RequestParam(name = "email") String email, @RequestParam(name = "count") int count);
 
-    @GetMapping("/users/{id}")
-    UserDto getUserById(@PathVariable("id") Long id);
 
-    @PostMapping("/users")
-    UserDto createUser(@RequestBody UserDto userDto);
-
-    @PutMapping("/users/{id}")
-    UserDto updateUser(@PathVariable("id") Long id, @RequestBody UserDto userDto);
-
-    @DeleteMapping("/users/{id}")
-    void deleteUser(@PathVariable("id") Long id);
-
-    @GetMapping("/users/by-username/{username}")
-    UserDto getUserByUsername(@PathVariable("username") String username);
-
-    @GetMapping("/users/by-email")
-    UserDto getUserByEmail(@RequestParam("email") String email);
+    @GetMapping("/getAllWaves")
+    List<WavesDto> getAllWaves();
 }
