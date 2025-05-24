@@ -1,0 +1,30 @@
+package backend.academy.apigateway.controller;
+
+import backend.academy.apigateway.dto.WaveDto;
+import backend.academy.apigateway.utils.ApiPaths;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@Controller
+@RestController
+@RequiredArgsConstructor
+@Tag(name = "Волны", description = "Учет пройденных волн")
+public class WaveController {
+
+
+    @PostMapping(ApiPaths.USER_API + "/addWave")
+    public ResponseEntity<Void> addWaveInfo(@RequestBody WaveDto waveDto,
+                                            @AuthenticationPrincipal UserDetails userDetails) {
+        log.info("Пользователь " + userDetails.getUsername() + " прошел " + waveDto.getWaveCount() + "волн");
+        return ResponseEntity.ok().build();
+    }
+}
