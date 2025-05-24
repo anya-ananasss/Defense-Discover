@@ -57,6 +57,7 @@ public class StatService {
     }
 
     public List<StatCounterWithoutUserDto> getUserStats(String username) {
+        log.info("Получить статистику пользователя:" + username);
         Optional<User> userOptional = userRepository.findByUsername(username);
         if (userOptional.isEmpty()) {
             return null;
