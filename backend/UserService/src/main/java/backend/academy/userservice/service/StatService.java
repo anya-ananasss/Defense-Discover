@@ -10,10 +10,10 @@ import backend.academy.userservice.model.User;
 import backend.academy.userservice.repository.CategoryRepository;
 import backend.academy.userservice.repository.StatsRepository;
 import backend.academy.userservice.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,6 +56,7 @@ public class StatService {
         ).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<StatCounterWithoutUserDto> getUserStats(String username) {
         log.info("Получить статистику пользователя:" + username);
         Optional<User> userOptional = userRepository.findByUsername(username);
