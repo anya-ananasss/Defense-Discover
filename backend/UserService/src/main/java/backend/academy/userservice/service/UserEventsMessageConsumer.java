@@ -48,6 +48,7 @@ public class UserEventsMessageConsumer {
             StatDto s = objectMapper.readValue(record.value(), StatDto.class);
             statService.addStat(s);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             kafkaTemplate.send(topicDlt + "-dlt", record.toString());
         }
 
