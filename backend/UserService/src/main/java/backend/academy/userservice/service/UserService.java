@@ -68,6 +68,7 @@ public class UserService {
                             .password(encoder.encode("gameMaster0000"))
                             .email("placeholder2@admin.com")
                             .role(roleRepository.findByName("USER").orElseThrow())
+                            .isGameMaster(true)
                             .build()
             );
         }
