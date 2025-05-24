@@ -106,6 +106,7 @@ public class UserService {
 
         log.info(user.toString());
         UserDto userDto = userMapper.toDto(user);
+        userDto.setGameMaster(user.isGameMaster());
         log.info(userDto.toString());
         return userDto;
     }
