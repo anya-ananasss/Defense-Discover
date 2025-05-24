@@ -189,6 +189,7 @@ public class UserController {
     public ResponseEntity<UserDtoWithoutPassword> getUser(@AuthenticationPrincipal UserDetails userDetails) {
         try {
             UserDto userDto = userService.getUserByEmail(userDetails.getUsername());
+            log.info(userDto.toString());
             UserDtoWithoutPassword userDtoWithoutPassword = UserDtoWithoutPassword
                     .builder()
                     .id(userDto.getId())
