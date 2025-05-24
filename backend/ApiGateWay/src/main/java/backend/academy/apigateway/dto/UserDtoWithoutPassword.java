@@ -13,4 +13,5 @@ public class UserDtoWithoutPassword {
     private String username;
     private String email;
     private RoleDto role;
+    private boolean isGameMaster;
 }

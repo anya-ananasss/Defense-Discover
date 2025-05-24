@@ -195,6 +195,7 @@ public class UserController {
                     .email(userDto.getEmail())
                     .username(userDto.getUsername())
                     .role(userDto.getRole())
+                    .isGameMaster(userDto.isGameMaster())
                     .build();
             return ResponseEntity.ok(userDtoWithoutPassword);
         } catch (UserNotFound e) {
