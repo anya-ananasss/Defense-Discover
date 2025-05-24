@@ -6,3 +6,20 @@ databaseChangeLog:
         - sqlFile:
             path: changes/001_create_questions_table_and_seed.sql
             relativeToChangelogFile: true
+  - changeSet:
+      id: 002
+      author: valyalshikovd
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: is_game_master
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropColumn:
+            tableName: users
+            columnName: is_game_master

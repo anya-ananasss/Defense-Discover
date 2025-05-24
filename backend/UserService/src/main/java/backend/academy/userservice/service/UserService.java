@@ -43,6 +43,30 @@ public class UserService {
                             .password(encoder.encode("0000"))
                             .email("admin@admin.com")
                             .role(roleRepository.findByName("ADMIN").orElseThrow())
+                            .isGameMaster(true)
+                            .build()
+            );
+        }
+
+        if (userRepository.findByUsername("gameMaster1").isEmpty()) {
+            userRepository.save(
+                    User.builder()
+                            .username("gameMaster1")
+                            .password(encoder.encode("gameMaster0000"))
+                            .email("placeholder1@admin.com")
+                            .role(roleRepository.findByName("USER").orElseThrow())
+                            .isGameMaster(true)
+                            .build()
+            );
+        }
+
+        if (userRepository.findByUsername("gameMaster2").isEmpty()) {
+            userRepository.save(
+                    User.builder()
+                            .username("gameMaster2")
+                            .password(encoder.encode("gameMaster0000"))
+                            .email("placeholder2@admin.com")
+                            .role(roleRepository.findByName("USER").orElseThrow())
                             .build()
             );
         }
