@@ -30,22 +30,23 @@ public class StatService {
 
     @Transactional
     public StatDto addStat(StatDto statDto) {
-
-        log.info(statDto.toString());
-        Optional<User> userOptional = userRepository.findByUsername(statDto.getUsername());
-
-        if (userOptional.isEmpty()) {
-            return null;
+        User user = userRepository.findByUsername(statDto.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Category category = categoryRepository.findByName(statDto.getTopic())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        List<Stat> stats = statsRepository.findByUserAndCategoryName(user, statDto.getTopic());
+        Stat statEntity;
+        if (stats.isEmpty()) {
+            statEntity = Stat.builder()
+                    .user(user)
+                    .category(category)
+                    .counterCounter(1L)
+                    .build();
+        } else {
+            statEntity = stats.get(0);
+            statEntity.setCounterCounter(statEntity.getCounterCounter() + 1);
         }
-
-        User userEntity = userOptional.get();
-        List<Stat> stats = statsRepository.findByUserAndCategoryName(userEntity, statDto.getUsername());
-
-        Stat statEntity = stats.get(0);
-        statEntity.setCounterCounter(statEntity.getCounterCounter() + 1);
-
         statsRepository.save(statEntity);
-
         return statDto;
     }
 
