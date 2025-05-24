@@ -50,6 +50,7 @@ public class StatService {
         return statDto;
     }
 
+    @Transactional(readOnly = true)
     public List<StatDtoCounter> getAllStats() {
         return statsRepository.findAll().stream().map(
                 StatMapper::toStatCounterDto
