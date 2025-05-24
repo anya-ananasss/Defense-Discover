@@ -20,7 +20,7 @@ public class StatController {
 
     private final StatService statService;
 
-    @PostMapping("/getStats")
+    @GetMapping("/getStats")
     public ResponseEntity<List<StatDtoCounter>> stats(){
         return ResponseEntity.ok(statService.getAllStats());
     }
