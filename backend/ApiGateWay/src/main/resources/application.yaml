@@ -44,3 +44,7 @@ stat:
 springdoc:
   swagger-ui:
     tryItOutEnabled: false
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.web.FilterChainProxy: DEBUG

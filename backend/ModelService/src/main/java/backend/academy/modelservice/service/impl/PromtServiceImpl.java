@@ -85,14 +85,15 @@ public class PromtServiceImpl implements PromtService {
 
             if (Objects.equals(questionDto.getCorrectAnswer(), postAnswerDto.getAnswer())) {
 
-
-                kafkaClientService.sendNotificationStackOverflow(
-                        StatEvent
-                                .builder()
-                                .username(postAnswerDto.getUserName())
-                                .topic(questionDto.getTopic())
-                                .build()
-                );
+                if (postAnswerDto.getUserName() != null) {
+                    kafkaClientService.sendNotificationStackOverflow(
+                            StatEvent
+                                    .builder()
+                                    .username(postAnswerDto.getUserName())
+                                    .topic(questionDto.getTopic())
+                                    .build()
+                    );
+                }
 
                 return CheckAnswerDto
                         .builder()
