@@ -208,6 +208,19 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Восстановление пароля")
+    @PostMapping(ApiPaths.BASE_API + "/repairPassword")
+    public ResponseEntity<Void> getUser(@RequestBody String email) {
+        try {
+
+            return ResponseEntity.ok().build();
+        } catch (UserNotFound e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.unprocessableEntity().build();
+        }
+    }
+
     @Operation(summary = "Регистрация с подтверждением через почту")
     @PostMapping(ApiPaths.BASE_API + "/createUser")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
