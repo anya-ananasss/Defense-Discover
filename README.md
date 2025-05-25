@@ -34,7 +34,7 @@
 
 [PM-отчет](https://docs.google.com/document/d/1O8wl8u_HmrzIumzbRkWsaGDGj8cGXJMNwQdTcZ3BdJo/edit?usp=sharing)
 
-[Деплой игры](https://deni10000.github.io/DefenseAndDiscover/)
+[Деплой игры](https://anya-ananasss.github.io/Defense-Discover/)
 
 ❗ Данные для входа: 
 
