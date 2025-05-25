@@ -1,6 +1,7 @@
 package backend.academy.apigateway.service.impl;
 
 
+import backend.academy.apigateway.dto.PasswordRepair;
 import backend.academy.apigateway.dto.UserConfirmation;
 import backend.academy.apigateway.service.KafkaClientService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,10 +23,22 @@ public class KafkaClientServiceImpl implements KafkaClientService {
     @Value("${app.user-confirmation.topic}")
     private String topic;
 
+    @Value("${app.password-repair.topic}")
+    private String topicPasswordRepair;
+
     public void sendNotificationStackOverflow(UserConfirmation userConfirmation)  {
         try {
             System.out.println("сообщение отправлено");
             kafkaTemplate.send(topic, objectMapper.writeValueAsString(userConfirmation));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    public void sendPasswordRepair(PasswordRepair passwordRepair)  {
+        try {
+            System.out.println("сообщение отправлено");
+            kafkaTemplate.send(topicPasswordRepair, objectMapper.writeValueAsString(passwordRepair));
         } catch (Exception e) {
             log.error(e.getMessage());
         }

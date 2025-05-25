@@ -29,4 +29,8 @@ public interface UserClient {
 
      @GetMapping("/users/by-email")
      UserDto getUserByEmail(@RequestParam("email") String email);
+
+     @GetMapping("/users/repairPassword/by-email")
+     UserDto repairPasswordByEmail(@RequestParam("email") String email,
+                                   @RequestParam("newPassword") String newPassword);
 }

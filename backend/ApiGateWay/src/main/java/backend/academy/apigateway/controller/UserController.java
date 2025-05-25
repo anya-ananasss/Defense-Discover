@@ -1,6 +1,7 @@
 package backend.academy.apigateway.controller;
 
 
+import backend.academy.apigateway.client.UserClient;
 import backend.academy.apigateway.dto.UserConfirmation;
 import backend.academy.apigateway.dto.UserDtoWithoutPassword;
 import backend.academy.apigateway.dto.security.AddRoleDto;
@@ -35,6 +36,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserClient userClient;
 
     @PostMapping((ApiPaths.BASE_API + "/register"))
     public ResponseEntity<String> register(@RequestBody UserDto userDto) {
@@ -212,7 +214,8 @@ public class UserController {
     @PostMapping(ApiPaths.BASE_API + "/repairPassword")
     public ResponseEntity<Void> getUser(@RequestBody String email) {
         try {
-
+            String tempPassword = userService.repairPassword(email);
+            userClient.repairPasswordByEmail(email, tempPassword);
             return ResponseEntity.ok().build();
         } catch (UserNotFound e) {
             return ResponseEntity.notFound().build();

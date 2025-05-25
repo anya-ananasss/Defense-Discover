@@ -111,7 +111,12 @@ public class UserService {
         return userDto;
     }
 
-
+    public void repairPassword(String email, String newPassword){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
+    }
 
     public UserDto createUser(UserDto userDto) {
         User user = new User();

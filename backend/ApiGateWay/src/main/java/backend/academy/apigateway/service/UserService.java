@@ -23,4 +23,5 @@ public interface UserService {
     UserDto requestToCreateUser(UserDto user);
     void userConfirmation(UserDto userDto, String code);
     UserDto getUserByEmail(String email);
+    String repairPassword(String email);
 }
