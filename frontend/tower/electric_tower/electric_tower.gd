@@ -3,10 +3,10 @@ extends Tower
 var current_enemy: Area2D
 var tween: Tween
 var dps = 100
-var MIN_DPS = 20 #было 10
-var MAX_DPS = 100
+var MIN_DPS = 15 #было 10
+var MAX_DPS = 96
 var additional_price_to_up := 50
-const INCREASING_TIME = 3
+const INCREASING_TIME = 4
 
 var cooldown : float:
 	set(value):
@@ -22,8 +22,8 @@ func get_update_price():
 	
 func update_tower():
 	default_update()
-	MIN_DPS += 10
-	MAX_DPS += 20
+	MIN_DPS += 8
+	MAX_DPS += 18
 	
 
 func _ready() -> void:

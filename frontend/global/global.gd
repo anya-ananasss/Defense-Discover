@@ -10,10 +10,10 @@ var gold : int:
 	set(v):
 		gold = v
 		gold_changed.emit()
-var archer_tower_price : int = 115 #было 100
-var electric_tower_price : int = 150
-var art_tower_price : int = 170 #было 150
-var tree_tower_price : int = 200
+var archer_tower_price : int = 145 #было 100
+var electric_tower_price : int = 160
+var art_tower_price : int = 175 #было 150
+var tree_tower_price : int = 190
 var archer_tower := preload("uid://dblmp648wldnf")
 var electric_tower := preload("uid://sqp3gbqgta6a")
 var art_tower := preload("uid://bdth5uwj86qyt")
@@ -52,9 +52,9 @@ class Properties:
 	
 enum Enemies {SLIME, FLY, SKELETON, MUSHROOM_GOLEM}
 var enemy_properties: Dictionary[Enemies, Properties]  = {
-	Enemies.SLIME: Properties.new(100, 3, 7, preload("uid://bm1ng04ojad8f")),
-	Enemies.FLY: Properties.new(80, 5, 8, preload("uid://841ivpjbv8wr")),
-	Enemies.SKELETON: Properties.new(200, 2, 4, preload("uid://bcfbn4m7snohl")),
+	Enemies.SLIME: Properties.new(150, 3, 6, preload("uid://bm1ng04ojad8f")),
+	Enemies.FLY: Properties.new(100, 4, 8, preload("uid://841ivpjbv8wr")),
+	Enemies.SKELETON: Properties.new(250, 2, 5, preload("uid://bcfbn4m7snohl")),
 	Enemies.MUSHROOM_GOLEM: Properties.new(500, 1, 2, preload("uid://k1oxy458hcmj"))
 	}
 

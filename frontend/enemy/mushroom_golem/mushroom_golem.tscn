@@ -160,7 +160,10 @@ animations = [{
 }]
 
 [node name="MushroomGolem" instance=ExtResource("1_x16bl")]
-max_hp = 500.0
+speed = 60
+award = 10
+damage = 4
+max_hp = 1250.0
 
 [node name="HpBar" parent="." index="0"]
 anchors_preset = 8

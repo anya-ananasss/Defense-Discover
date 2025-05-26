@@ -1,7 +1,7 @@
 extends Tower
 
 var arrow_class := Global.arrow
-var damage = 40 #было 50
+var damage = 42 #было 50
 var additional_price_to_up := 30
 var radius_attac = $AttackArea.get_overlapping_areas()
 
@@ -18,7 +18,7 @@ func get_update_price():
 
 func update_tower():
 	default_update()
-	damage += 12 #было 15
+	damage += 14 #было 15
 
 func _physics_process(delta: float) -> void:
 	if  $AttackTimer.time_left != 0:

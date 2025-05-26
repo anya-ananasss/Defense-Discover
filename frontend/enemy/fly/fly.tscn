@@ -92,6 +92,8 @@ animations = [{
 }]
 
 [node name="Fly" instance=ExtResource("1_xw3j5")]
+speed = 95
+award = 4
 mooving_while_dead = true
 max_hp = 200.0
 

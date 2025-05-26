@@ -6,7 +6,7 @@ var label := %Label
 @onready
 var button := %Button
 
-var sprite_sheet = preload("uid://cn1lkflk7wv5s")
+var sprite_sheet = preload("uid://dlx27y65osvdx")
 var sprites
 
 var flag = true
@@ -28,12 +28,14 @@ func _ready() -> void:
 var player := %AudioStreamPlayer
 
 func play_sound(t, i):
-	if t not in '.- ,!' and not player.playing:
-		#await get_tree().create_timer(0.01).timeout
-		player.pitch_scale = randf_range(0.55, 0.75)
+	if not player.playing:
+		if t not in '.- ,!':
+			#await get_tree().create_timer(0.01).timeout
+			player.pitch_scale = randf_range(0.55, 0.75)
+			player.play()
+		else:
+			i = 0
 		%TextureRect.texture = sprites[i % len(sprites)]
-		player.play()
-	
 	
 
 func show_text(text: String):

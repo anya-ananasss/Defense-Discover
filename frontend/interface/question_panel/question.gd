@@ -15,6 +15,9 @@ func _ready() -> void:
 	for i in range(len(children)):
 		children[i].pressed.connect(_on_any_button_pressed.bind(i))
 
+func text_without_slash(text: String):
+	return text.replace("\\", "")
+
 func start_question(category: String, difficulty: int):
 	get_tree().paused = true
 	var http_res = await Http.get_question(category, difficulty)
@@ -28,7 +31,7 @@ func start_question(category: String, difficulty: int):
 	for i in range(len(children)):
 		var button: Button = children[i]
 		button.text = http_res.options[i]
-	%Label.text = http_res.question
+	%Label.text = text_without_slash(http_res.question)
 	var prev_color = filling.bg_color
 	var tween := get_tree().create_tween()
 	tween.set_parallel()
@@ -74,9 +77,9 @@ func start_question(category: String, difficulty: int):
 	await timer.timeout
 	
 	visible = false
+	filling.bg_color = Color("4ab500")
 	for i in range(len(children)):
 		children[i].modulate = Color.WHITE
 	get_tree().paused = false
-	filling.bg_color = prev_color
 	question_completed.emit(result)
 	
