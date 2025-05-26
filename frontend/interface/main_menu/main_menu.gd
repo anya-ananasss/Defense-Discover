@@ -8,12 +8,6 @@ var email_regex :=  RegEx.new()
 const MINIMUM_PASSWORD_LENGTH := 8
 var leaderBoardRows: Array[LeaderBoardRow]
 
-var email: String:
-	set(value):
-		%EmailInput.text = value
-		%EmailInput2.text = value
-		%EmailLine.text = value
-		email = value
 var username: String:
 	set(value):
 		%NicknameInput.text = value
@@ -21,6 +15,12 @@ var username: String:
 		%NicknameLine.text = value
 		username = value
 		fill_leaderboard()
+var email: String:
+	set(value):
+		%EmailInput.text = value
+		%EmailInput2.text = value
+		%EmailLine.text = value
+		email = value
 
 var row_count = 7
 func fill_leaderboard():
@@ -69,9 +69,17 @@ func update_user_data():
 		email = res['email']
 	fill_leaderboard()
 
-
+var lines = []
+var error_tres: LabelSettings = preload("uid://ci6a0b63tao2b")
 func clear_lines():
-	for x in find_children("", "LineEdit"):
+	if not lines:
+		for x in find_children("", "LineEdit"):
+			lines.append(x)
+		for x: Label in find_children("", "Label"):
+			if x.label_settings == error_tres:
+				lines.append(x)
+		
+	for x in lines:
 		x.text = ''
 
 
@@ -135,6 +143,10 @@ func set_user_stats():
 	%ScienceLine.value = str(res.science)
 	%CultureLine.value = str(res.culture)
 	%NatureLine.value = str(res.nature)
+	%HistoryLine.value2 = str(res.all_history)
+	%ScienceLine.value2 = str(res.all_science)
+	%CultureLine.value2 = str(res.all_culture)
+	%NatureLine.value2 = str(res.all_nature)
 
 
 func _on_profile_button_pressed() -> void:
@@ -201,13 +213,14 @@ func _on_registration_button_pressed() -> void:
 	var error = ''
 	if not is_valid_email(%EmailLineEdit.text):
 		error = NOT_ALLOWED_EMAIL_ERROR
-	elif not is_valid_passoword(%PasswordLineEdit.text):
+	elif not is_valid_password(%PasswordLineEdit.text):
 		error = MIN_LEN_PASSWORD_ERROR
 	elif not is_valid_username(%LoginLineEdit.text):
 		error = USERNAME_LEN_ERROR
 	
+	var error_label = %ErrorRegistrationLabel.text
 	if error != '':
-		%ErrorRegistrationLabel.text = error
+		error_label = error
 		return
 	
 	enable_waiting()
@@ -216,6 +229,11 @@ func _on_registration_button_pressed() -> void:
 		%Registration.visible = false
 		%ConfirmationMenu.visible = true	
 		update_user_data()
+	else:
+		if ret['error'] == '':
+			error_label.text = 'Нет подключения к интернету'
+		else:
+			error_label.text = "Не удалось зарегистрировать пользователя"
 	disable_waiting()
 
 func show_success_notification():
@@ -240,6 +258,8 @@ func _on_confirmation_button_pressed() -> void:
 
 func _on_exit_button_pressed() -> void:
 	Http.exit()
+	username = ""
+	clear_lines()
 	fill_leaderboard()
 	%Profile.visible = false
 
@@ -247,7 +267,7 @@ func is_valid_email(email: String) -> bool:
 	var res :=  email_regex.search(email)
 	return res != null and res.get_end() == email.length()
 
-func is_valid_passoword(password: String) -> bool:
+func is_valid_password(password: String) -> bool:
 	return len(password) >= MINIMUM_PASSWORD_LENGTH
 
 
@@ -255,11 +275,12 @@ func _on_authorization_button_pressed() -> void:
 	var error = ''
 	if not is_valid_email(%EmailLineEdit2.text):
 		error = NOT_ALLOWED_EMAIL_ERROR
-	elif not is_valid_passoword(%PasswordLineEdit2.text):
+	elif not is_valid_password(%PasswordLineEdit2.text):
 		error = MIN_LEN_PASSWORD_ERROR
 	
+	var error_label = %ErrorAutharizationLabel
 	if error != '':
-		%ErrorAutharizationLabel.text = error
+		error_label.text = error
 		return
 		
 	
@@ -268,6 +289,16 @@ func _on_authorization_button_pressed() -> void:
 	if 'error' not in ret:
 		%Authorization.visible = false
 		update_user_data()
+	else:
+		var code = str(ret['error'])
+		if code == '':
+			error_label.text = 'Нет подключения к интернету'
+		elif code == '422':
+			error_label.text = "Неверный email или пароль"
+		else:
+			error_label.text = "Не удалось авторизировать пользователя"
+		
+		
 	disable_waiting()
 
 
@@ -281,8 +312,15 @@ func _on_get_password_cross_button_pressed() -> void:
 	%Authorization.visible = true
 
 
+func reset_email():
+	username = username
+	email = email
+
 func _on_change_password_cross_button_pressed() -> void:
-	%ChangePasswordCrossButton.visible = false
+	%ChangePassword.visible = false
+	%Profile.visible = true
+	reset_email.call_deferred()
+
 
 
 func _on_leader_bord_gui_input(event: InputEvent) -> void:
@@ -291,3 +329,68 @@ func _on_leader_bord_gui_input(event: InputEvent) -> void:
 		await  %FullLeaderbord.show_leaderbord()
 		disable_waiting()
 	
+
+var awaiting_seconds = 30
+func _on_send_code_again_button_pressed() -> void:
+	%SendCodeAgainButton.disabled = true
+	Http.register_user(%EmailLineEdit.text, %LoginLineEdit.text, %PasswordLineEdit.text)
+	for i in range(awaiting_seconds, 0, -1):
+		%TimeLeftLabel.text = str(i)
+		await get_tree().create_timer(1).timeout
+	%TimeLeftLabel.text = ""
+	%SendCodeAgainButton.disabled = false
+
+
+func _on_get_password_button_pressed() -> void:
+	var error = ''
+	if not is_valid_email(%EmailGetPasswordLineEdit.text):
+		error = NOT_ALLOWED_EMAIL_ERROR
+	
+	if error != '':
+		%GetPasswordErrorLabel.text = error
+		return
+	
+	enable_waiting()
+	var ret = await Http.get_password(%EmailGetPasswordLineEdit.text)
+	if 'error' not in ret:
+		%GetPasswordSuccess.visible = true
+		await  get_tree().create_timer(1).timeout
+		%GetPasswordSuccess.visible = false
+		%Authorization.visible = true
+		%GetPassword.visible = false
+	else:
+		%GetPasswordErrorLabel.text = "Не удалось восстановить пароль"
+		
+	disable_waiting()
+
+
+func _on_change_password_button_pressed() -> void:
+	var error = ''
+	if not is_valid_password(%OldPasswprdLineEdit.text) or not is_valid_password(%NewPasswordLineEdit.text):
+		error = MIN_LEN_PASSWORD_ERROR
+	
+	if error != '':
+		%ErrorChangePasswordLabel.text = error
+		return
+	
+	enable_waiting()
+	var ret = await Http.change_password(%OldPasswprdLineEdit.text, %NewPasswordLineEdit.text)
+	if 'error' not in ret:
+		%Profile.visible = true
+		clear_lines()
+		username = username
+		email = email
+		%ChangePassword.visible = false
+		disable_waiting()
+		%ChangePasswordSuccess.visible = true
+		await  get_tree().create_timer(1).timeout
+		%ChangePasswordSuccess.visible = false
+	else:
+		%ErrorChangePasswordLabel.text = "Не удалось изменить пароль"
+		
+	disable_waiting()
+
+
+func _on_change_password_pressed() -> void:
+	$Profile.visible = false
+	%ChangePassword.visible = true

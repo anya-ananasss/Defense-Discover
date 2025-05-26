@@ -11,6 +11,7 @@ var offset : int;
 var sm_delta: float
 @export var award : int = 8; #было 10
 @export var mooving_while_dead: bool
+@export var damage: int = 1
 var is_dead: bool
 
 @export var max_hp: float:

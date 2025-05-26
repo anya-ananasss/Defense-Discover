@@ -58,7 +58,7 @@ func _send_request(http_request: HTTPRequest, method: int, url: String, data: Di
 		if json == null:
 			return response_body
 		return json
-	return {'error':''}
+	return {'error':response_code}
 
 # ========== AUTH ==========
 func exit():
@@ -116,14 +116,24 @@ class StatsDto:
 	var science: int
 	var culture: int
 	var nature: int
+	var all_history: int
+	var all_science: int
+	var all_culture: int
+	var all_nature: int
 	func _init(json):
 		var dct = {}
+		var dct2 = {}
 		for x in json:
 			dct[x['topic']] = x['score']
+			dct2[x['topic']] = x['allQuestions']
 		history = get_zero_or_int_res(dct, 'history')
 		science = get_zero_or_int_res(dct, 'science')
 		culture = get_zero_or_int_res(dct, 'culture')
 		nature = get_zero_or_int_res(dct, 'nature')
+		all_history = get_zero_or_int_res(dct2, 'history')
+		all_science = get_zero_or_int_res(dct2, 'science')
+		all_culture = get_zero_or_int_res(dct2, 'culture')
+		all_nature = get_zero_or_int_res(dct2, 'nature')
 
 func get_user_stat():
 	await fill_user_name()
@@ -135,6 +145,17 @@ func get_user_stat():
 func post_wave(waves):
 	_send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/user/addWave", {
 		"waveCount": waves,
+	}, true)
+
+func get_password(email):
+	return await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/repairPassword", {
+		"email": email,
+	}, false)
+
+func change_password(old_password, new_password):
+	return await await _send_request(_create_http_request(), HTTPClient.METHOD_POST, "/api/v1/user/changePassword", {
+		"oldPassword": old_password,
+		"newPassword": new_password
 	}, true)
 
 class UserScore:

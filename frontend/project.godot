@@ -14,8 +14,8 @@ config/name="Defense&Discover"
 run/main_scene="uid://dgd30hd5wxqbf"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 boot_splash/fullsize=false
-boot_splash/image="uid://kqqg52etmvwp"
-config/icon="res://icon.svg"
+boot_splash/image="uid://ydj5f36ttq35"
+config/icon="uid://cuntscmet3pf5"
 
 [autoload]
 

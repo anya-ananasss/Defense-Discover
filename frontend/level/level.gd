@@ -145,9 +145,13 @@ func next_enemy():
 func _on_button_pressed() -> void:
 	get_tree().paused = !get_tree().paused
 
+func damage_animation():
+	var tween = get_tree().create_tween()
+	tween.tween_property(%Gates, "modulate", Color(1, 1, 1), 0.1).from(Color(1, 0, 0))
 
 func _on_home_area_entered(area: Area2D) -> void:
-	hp -= 1
+	hp -= area.get_damage()
+	damage_animation()
 	area.remove()
 
 

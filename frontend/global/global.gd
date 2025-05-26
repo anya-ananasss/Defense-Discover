@@ -50,11 +50,12 @@ class Properties:
 		
 	
 	
-enum Enemies {SLIME, FLY, SKELETON}
+enum Enemies {SLIME, FLY, SKELETON, MUSHROOM_GOLEM}
 var enemy_properties: Dictionary[Enemies, Properties]  = {
 	Enemies.SLIME: Properties.new(100, 3, 7, preload("uid://bm1ng04ojad8f")),
 	Enemies.FLY: Properties.new(80, 5, 8, preload("uid://841ivpjbv8wr")),
-	Enemies.SKELETON: Properties.new(200, 2, 4, preload("uid://bcfbn4m7snohl"))
+	Enemies.SKELETON: Properties.new(200, 2, 4, preload("uid://bcfbn4m7snohl")),
+	Enemies.MUSHROOM_GOLEM: Properties.new(500, 1, 2, preload("uid://k1oxy458hcmj"))
 	}
 
 func slice_spritesheet(texture: Texture2D, rows: int, columns: int) -> Array[Texture2D]:

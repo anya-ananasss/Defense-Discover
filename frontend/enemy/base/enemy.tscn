@@ -21,7 +21,6 @@ bg_color = Color(1, 0, 0, 1)
 
 [node name="Enemy" type="PathFollow2D" node_paths=PackedStringArray("texture", "lightning") groups=["Enemy"]]
 z_as_relative = false
-y_sort_enabled = true
 rotates = false
 loop = false
 script = ExtResource("1_1fxkx")
@@ -44,7 +43,5 @@ metadata/_edit_lock_ = true
 script = ExtResource("2_2aqp0")
 
 [node name="Texture" type="AnimatedSprite2D" parent="."]
-z_as_relative = false
-y_sort_enabled = true
 
 [node name="Lightning" type="AnimatedSprite2D" parent="Texture"]

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=44 format=3 uid="uid://bbr70t6gbgc2m"]
+[gd_resource type="Theme" load_steps=45 format=3 uid="uid://bbr70t6gbgc2m"]
 
 [ext_resource type="Texture2D" uid="uid://d00ws7wljnit4" path="res://theme/UIpack_vector.svg" id="1"]
 [ext_resource type="Texture2D" uid="uid://cukb4mqk7d2wo" path="res://interface/new_compressed_texture_2d.tres" id="1_jexus"]
@@ -217,6 +217,8 @@ texture_margin_top = 12.0
 texture_margin_right = 16.0
 texture_margin_bottom = 12.0
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_24kvn"]
+
 [sub_resource type="AtlasTexture" id="20"]
 atlas = ExtResource("1")
 region = Rect2(812, 458, 28, 10)
@@ -272,6 +274,7 @@ region_rect = Rect2(1051, 317, 4, 100)
 [resource]
 default_font = ExtResource("3_ybv40")
 default_font_size = 25
+AcceptDialog/styles/panel = ExtResource("7_lyxrx")
 Button/colors/font_color = Color(0, 0, 0, 1)
 Button/colors/font_disabled_color = Color(0.9, 0.9, 0.9, 0.2)
 Button/colors/font_focus_color = Color(0, 0, 0, 1)
@@ -347,8 +350,10 @@ LineEdit/styles/focus = SubResource("18")
 LineEdit/styles/normal = ExtResource("6_u4boy")
 LineEdit/styles/read_only = SubResource("19")
 LinkButton/colors/font_color = Color(0, 0, 0, 1)
-LinkButton/colors/font_focus_color = Color(0.392157, 0.392157, 0.392157, 1)
+LinkButton/colors/font_disabled_color = Color(0.392157, 0.392157, 0.392157, 1)
+LinkButton/colors/font_focus_color = Color(0, 0, 0, 1)
 LinkButton/colors/font_hover_color = Color(0.393084, 0.393086, 0.393086, 1)
+LinkButton/styles/focus = SubResource("StyleBoxEmpty_24kvn")
 OptionButton/colors/font_color = Color(0, 0, 0, 1)
 OptionButton/colors/font_disabled_color = Color(0.9, 0.9, 0.9, 0.2)
 OptionButton/colors/font_focus_color = Color(0, 0, 0, 1)

@@ -325,6 +325,7 @@ region_rect = Rect2(1051, 317, 4, 100)
 [sub_resource type="Theme" id="Theme_38238"]
 default_font = ExtResource("11_cr5ul")
 default_font_size = 25
+AcceptDialog/fonts/title_font = ExtResource("11_cr5ul")
 Button/colors/font_color = Color(0, 0, 0, 1)
 Button/colors/font_disabled_color = Color(0.9, 0.9, 0.9, 0.2)
 Button/colors/font_hover_color = Color(0.34902, 0.34902, 0.34902, 1)
@@ -513,13 +514,50 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.72549)
 
+[node name="Name" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -709.0
+offset_top = -540.0
+offset_right = -431.0
+offset_bottom = -401.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.941176, 0.52549, 0.160784, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 60
+text = "Defense 
+Discover"
+
+[node name="Name" type="Label" parent="Name"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -40.0
+offset_right = 25.0
+offset_bottom = 34.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.941176, 0.52549, 0.160784, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 65
+text = "&"
+
 [node name="NotificationPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 568.0
-offset_top = -540.0
+offset_top = -531.0
 offset_right = 959.0
-offset_bottom = -230.0
+offset_bottom = -221.0
 
 [node name="Label" type="Label" parent="NotificationPanel"]
 layout_mode = 2
@@ -535,9 +573,9 @@ autowrap_mode = 3
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = -730.0
-offset_top = -480.0
+offset_top = -380.0
 offset_right = -423.0
-offset_bottom = -190.0
+offset_bottom = -90.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cr5ul")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="LeaderBord"]
@@ -595,9 +633,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -730.0
-offset_top = -95.0
+offset_top = 5.0
 offset_right = -423.0
-offset_bottom = -34.749
+offset_bottom = 65.251
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
@@ -611,9 +649,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -730.0
-offset_top = -15.0
+offset_top = 85.0
 offset_right = -423.0
-offset_bottom = 45.251
+offset_bottom = 145.251
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
@@ -627,9 +665,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -730.0
-offset_top = 60.0
+offset_top = 160.0
 offset_right = -423.0
-offset_bottom = 120.251
+offset_bottom = 220.251
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
@@ -643,9 +681,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -730.0
-offset_top = 135.0
+offset_top = 235.0
 offset_right = -423.0
-offset_bottom = 195.251
+offset_bottom = 295.251
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
@@ -805,16 +843,17 @@ focus_mode = 1
 [node name="GetPassword" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
+clip_children = 2
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -96.0
+offset_top = -24.5
+offset_right = 96.0
+offset_bottom = 24.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -842,9 +881,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -270.0
-offset_top = -148.5
+offset_top = -164.0
 offset_right = 270.0
-offset_bottom = 148.5
+offset_bottom = 164.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -868,10 +907,10 @@ theme_override_constants/margin_bottom = -8
 layout_mode = 2
 text = "Email:"
 
-[node name="LineEdit" type="LineEdit" parent="GetPassword/Panel/MarginContainer/Control"]
+[node name="EmailGetPasswordLineEdit" type="LineEdit" parent="GetPassword/Panel/MarginContainer/Control"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 61)
 layout_mode = 2
-max_length = 20
 context_menu_enabled = false
 language = "en"
 
@@ -880,7 +919,8 @@ layout_mode = 2
 theme_override_constants/margin_top = -16
 theme_override_constants/margin_bottom = -12
 
-[node name="Label" type="Label" parent="GetPassword/Panel/MarginContainer/Control/MarginContainer5"]
+[node name="GetPasswordErrorLabel" type="Label" parent="GetPassword/Panel/MarginContainer/Control/MarginContainer5"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_7piqx")
@@ -891,7 +931,7 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="Button" type="Button" parent="GetPassword/Panel/MarginContainer/Control/MarginContainer2"]
+[node name="GetPasswordButton" type="Button" parent="GetPassword/Panel/MarginContainer/Control/MarginContainer2"]
 layout_mode = 2
 focus_mode = 1
 theme_override_font_sizes/font_size = 40
@@ -909,6 +949,57 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 focus_mode = 1
+
+[node name="GetPasswordSuccess" type="Control" parent="GetPassword"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="GetPassword/GetPasswordSuccess"]
+material = SubResource("ShaderMaterial_wwcsp")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1250.0
+offset_top = -540.0
+offset_right = 1251.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.560784)
+
+[node name="RegistrationSuccess" type="PanelContainer" parent="GetPassword/GetPasswordSuccess"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -324.0
+offset_top = -44.5
+offset_right = 324.0
+offset_bottom = 44.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GetPassword/GetPasswordSuccess/RegistrationSuccess"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.819608, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("11_cr5ul")
+theme_override_font_sizes/font_size = 35
+text = "✅ Письмо с паролем отправлено"
+horizontal_alignment = 1
 
 [node name="Registration" type="Control" parent="."]
 unique_name_in_owner = true
@@ -950,9 +1041,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -276.5
-offset_top = -353.0
+offset_top = -403.0
 offset_right = 276.5
-offset_bottom = 353.0
+offset_bottom = 403.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -966,6 +1057,15 @@ theme_override_constants/margin_bottom = 6
 [node name="Control" type="VBoxContainer" parent="Registration/Panel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 26
+
+[node name="MarginContainer6" type="MarginContainer" parent="Registration/Panel/MarginContainer/Control"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Registration/Panel/MarginContainer/Control/MarginContainer6"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+text = "регистрация"
+horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Registration/Panel/MarginContainer/Control"]
 layout_mode = 2
@@ -1166,7 +1266,8 @@ scale = Vector2(0.6, 0.6)
 pivot_offset = Vector2(35, 35)
 focus_mode = 1
 
-[node name="LinkButton" type="LinkButton" parent="ConfirmationMenu/Panel/Control"]
+[node name="SendCodeAgainButton" type="LinkButton" parent="ConfirmationMenu/Panel/Control"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = -139.0
 offset_top = 204.0
@@ -1175,6 +1276,17 @@ offset_bottom = 235.0
 focus_mode = 1
 theme_override_font_sizes/font_size = 22
 text = "Получить код повторно"
+
+[node name="TimeLeftLabel" type="Label" parent="ConfirmationMenu/Panel/Control"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 150.0
+offset_top = 204.0
+offset_right = 175.0
+offset_bottom = 235.0
+theme_override_fonts/font = ExtResource("11_cr5ul")
+theme_override_font_sizes/font_size = 22
+text = "30"
 
 [node name="RegistrationSuccess" type="Control" parent="."]
 unique_name_in_owner = true
@@ -1185,10 +1297,6 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -1215,10 +1323,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -284.0
-offset_top = -64.5
-offset_right = 244.0
-offset_bottom = 24.5
+offset_left = -264.0
+offset_top = -44.5
+offset_right = 264.0
+offset_bottom = 44.5
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -1403,14 +1511,17 @@ text = "Удалить аккаунт"
 [node name="TabContainer" type="TabContainer" parent="Profile"]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-offset_left = -307.0
-offset_top = -343.0
-offset_right = 319.0
-offset_bottom = 368.0
+anchor_bottom = 0.5
+offset_left = -344.0
+offset_top = -360.0
+offset_right = 344.0
+offset_bottom = 360.0
 grow_horizontal = 2
+grow_vertical = 2
 current_tab = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="Profile/TabContainer"]
@@ -1531,7 +1642,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 10
+theme_override_constants/separation = 16
 
 [node name="MarginContainer" type="MarginContainer" parent="Profile/TabContainer/MarginContainer2/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -1547,10 +1658,19 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_font_sizes/font_size = 34
 text = "Тема 
-вопроса:"
+вопроса"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[node name="Label3" type="Label" parent="Profile/TabContainer/MarginContainer2/ScrollContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 34
+text = "Вопросов"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
 
 [node name="Label2" type="Label" parent="Profile/TabContainer/MarginContainer2/ScrollContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -1570,24 +1690,28 @@ unique_name_in_owner = true
 layout_mode = 2
 property = "История"
 value = "-"
+value2 = "-"
 
 [node name="ScienceLine" parent="Profile/TabContainer/MarginContainer2/ScrollContainer/VBoxContainer" instance=ExtResource("6_7piqx")]
 unique_name_in_owner = true
 layout_mode = 2
 property = "Наука"
 value = "-"
+value2 = "-"
 
 [node name="CultureLine" parent="Profile/TabContainer/MarginContainer2/ScrollContainer/VBoxContainer" instance=ExtResource("6_7piqx")]
 unique_name_in_owner = true
 layout_mode = 2
 property = "Искусство"
 value = "-"
+value2 = "-"
 
 [node name="NatureLine" parent="Profile/TabContainer/MarginContainer2/ScrollContainer/VBoxContainer" instance=ExtResource("6_7piqx")]
 unique_name_in_owner = true
 layout_mode = 2
 property = "природа"
 value = "-"
+value2 = "-"
 
 [node name="CrossButton" parent="Profile" instance=ExtResource("5_x3w8v")]
 layout_mode = 0
@@ -1605,10 +1729,36 @@ grow_vertical = 1
 focus_mode = 1
 
 [node name="ChangePassword" type="Control" parent="."]
+unique_name_in_owner = true
 visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ChangePassword"]
+material = SubResource("ShaderMaterial_wwcsp")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1250.0
+offset_top = -540.0
+offset_right = 1251.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.560784)
 
 [node name="Panel" type="PanelContainer" parent="ChangePassword"]
 layout_mode = 1
@@ -1623,20 +1773,6 @@ offset_right = 270.0
 offset_bottom = 148.5
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MarginContainer2" type="MarginContainer" parent="ChangePassword/Panel"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-theme_override_constants/margin_top = -25
-theme_override_constants/margin_right = -16
-
-[node name="ChangePasswordCrossButton" parent="ChangePassword/Panel/MarginContainer2" instance=ExtResource("5_x3w8v")]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-focus_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="ChangePassword/Panel"]
 layout_mode = 2
@@ -1658,11 +1794,13 @@ theme_override_constants/margin_bottom = -8
 layout_mode = 2
 text = "старый пароль:"
 
-[node name="LineEdit" type="LineEdit" parent="ChangePassword/Panel/MarginContainer/Control"]
+[node name="OldPasswprdLineEdit" type="LineEdit" parent="ChangePassword/Panel/MarginContainer/Control"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 61)
 layout_mode = 2
 max_length = 20
 context_menu_enabled = false
+secret = true
 language = "en"
 
 [node name="MarginContainer3" type="MarginContainer" parent="ChangePassword/Panel/MarginContainer/Control"]
@@ -1674,11 +1812,13 @@ theme_override_constants/margin_bottom = -8
 layout_mode = 2
 text = "Новый пароль:"
 
-[node name="LineEdit2" type="LineEdit" parent="ChangePassword/Panel/MarginContainer/Control"]
+[node name="NewPasswordLineEdit" type="LineEdit" parent="ChangePassword/Panel/MarginContainer/Control"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 61)
 layout_mode = 2
 max_length = 20
 context_menu_enabled = false
+secret = true
 language = "en"
 
 [node name="MarginContainer4" type="MarginContainer" parent="ChangePassword/Panel/MarginContainer/Control"]
@@ -1687,6 +1827,7 @@ theme_override_constants/margin_top = -16
 theme_override_constants/margin_bottom = -12
 
 [node name="ErrorChangePasswordLabel" type="Label" parent="ChangePassword/Panel/MarginContainer/Control/MarginContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_7piqx")
@@ -1697,11 +1838,76 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_constants/margin_top = 10
 
-[node name="Button" type="Button" parent="ChangePassword/Panel/MarginContainer/Control/MarginContainer2"]
+[node name="ChangePasswordButton" type="Button" parent="ChangePassword/Panel/MarginContainer/Control/MarginContainer2"]
 layout_mode = 2
 focus_mode = 1
 theme_override_font_sizes/font_size = 40
-text = "Получить пароль"
+text = "Сменить пароль"
+
+[node name="MarginContainer2" type="MarginContainer" parent="ChangePassword/Panel"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/margin_top = -25
+theme_override_constants/margin_right = -16
+
+[node name="ChangePasswordCrossButton" parent="ChangePassword/Panel/MarginContainer2" instance=ExtResource("5_x3w8v")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+focus_mode = 1
+
+[node name="ChangePasswordSuccess" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ChangePasswordSuccess"]
+material = SubResource("ShaderMaterial_wwcsp")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1250.0
+offset_top = -540.0
+offset_right = 1251.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.560784)
+
+[node name="RegistrationSuccess" type="PanelContainer" parent="ChangePasswordSuccess"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -265.0
+offset_top = -44.5
+offset_right = 265.0
+offset_bottom = 44.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ChangePasswordSuccess/RegistrationSuccess"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.819608, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("11_cr5ul")
+theme_override_font_sizes/font_size = 35
+text = "✅ Успешная смена пароля"
+horizontal_alignment = 1
 
 [node name="WaitingScreen" type="ColorRect" parent="."]
 visible = false
@@ -1720,13 +1926,28 @@ color = Color(0, 0, 0, 0.301961)
 unique_name_in_owner = true
 title = "Внимание!"
 initial_position = 2
-size = Vector2i(200, 150)
+size = Vector2i(641, 152)
 unresizable = true
+borderless = true
 always_on_top = true
 popup_window = true
 sharp_corners = true
 theme = SubResource("Theme_38238")
 dialog_text = "Не удалось получить данные с сервера"
+
+[node name="AcceptDialog2" type="AcceptDialog" parent="."]
+unique_name_in_owner = true
+auto_translate_mode = 1
+title = "Внимание!"
+initial_position = 2
+size = Vector2i(551, 152)
+unresizable = true
+borderless = true
+always_on_top = true
+popup_window = true
+sharp_corners = true
+theme = SubResource("Theme_38238")
+dialog_text = "Не удалось восстановить пароль"
 
 [node name="Settings" parent="." instance=ExtResource("13_rkwbc")]
 unique_name_in_owner = true
@@ -1769,15 +1990,19 @@ bus = &"Music"
 [connection signal="pressed" from="Authorization/Panel/MarginContainer/Control/MarginContainer/RecoverPasswordButton" to="." method="_on_recover_password_button_pressed"]
 [connection signal="pressed" from="Authorization/Panel/MarginContainer/Control/CreateAccount" to="." method="_on_create_account_pressed"]
 [connection signal="pressed" from="Authorization/Panel/MarginContainer2/CrossButton" to="." method="_on_cross_button_pressed"]
+[connection signal="pressed" from="GetPassword/Panel/MarginContainer/Control/MarginContainer2/GetPasswordButton" to="." method="_on_get_password_button_pressed"]
 [connection signal="pressed" from="GetPassword/Panel/MarginContainer2/GetPasswordCrossButton" to="." method="_on_get_password_cross_button_pressed"]
 [connection signal="pressed" from="Registration/Panel/MarginContainer/Control/MarginContainer4/RegistrationButton" to="." method="_on_registration_button_pressed"]
 [connection signal="pressed" from="Registration/Panel/MarginContainer/Control/LoginButton" to="." method="_on_login_button_pressed"]
 [connection signal="pressed" from="Registration/Panel/MarginContainer2/CrossButton" to="." method="_on_cross_button_pressed"]
 [connection signal="pressed" from="ConfirmationMenu/Panel/Control/ConfirmationButton" to="." method="_on_confirmation_button_pressed"]
 [connection signal="pressed" from="ConfirmationMenu/Panel/Control/ConfirmationCrossButton" to="." method="_on_confirmation_cross_button_pressed"]
+[connection signal="pressed" from="ConfirmationMenu/Panel/Control/SendCodeAgainButton" to="." method="_on_send_code_again_button_pressed"]
 [connection signal="pressed" from="Profile/Panel/Control/CheckStatistic" to="." method="_on_check_statistic_pressed"]
 [connection signal="pressed" from="Profile/Panel/Control/CrossButton" to="." method="_on_cross_button_pressed"]
 [connection signal="pressed" from="Profile/Panel/Control/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Profile/TabContainer/MarginContainer/VBoxContainer/MarginContainer5/ChangePassword" to="." method="_on_change_password_pressed"]
 [connection signal="pressed" from="Profile/TabContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Profile/CrossButton" to="." method="_on_cross_button_pressed"]
+[connection signal="pressed" from="ChangePassword/Panel/MarginContainer/Control/MarginContainer2/ChangePasswordButton" to="." method="_on_change_password_button_pressed"]
 [connection signal="pressed" from="ChangePassword/Panel/MarginContainer2/ChangePasswordCrossButton" to="." method="_on_change_password_cross_button_pressed"]

@@ -164,18 +164,13 @@ offset_top = -71.0
 offset_right = 40.0
 offset_bottom = -63.0
 
-[node name="Body" parent="." index="1"]
-position = Vector2(0, -14)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body" index="0"]
-position = Vector2(0, -4)
+position = Vector2(0, -18)
 shape = SubResource("CapsuleShape2D_cridm")
 
 [node name="Texture" parent="." index="2"]
 position = Vector2(1, -19)
 scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_8a38f")
-animation = &"death"
+animation = &"move"
 autoplay = "move"
-frame = 8
-frame_progress = 1.0
