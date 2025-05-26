@@ -223,7 +223,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String repairPassword(String email) {
         try {
-            String tmpPassword = RandomUtils.generateSixDigitCode();
+            String tmpPassword = "tempPassword" + RandomUtils.generateSixDigitCode();
             kafkaClientService.sendPasswordRepair(
                     PasswordRepair.builder().password(tmpPassword).email(email).build());
             return tmpPassword;
