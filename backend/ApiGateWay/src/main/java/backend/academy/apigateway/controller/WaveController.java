@@ -4,6 +4,7 @@ import backend.academy.apigateway.client.WaveClient;
 import backend.academy.apigateway.dto.WaveDto;
 import backend.academy.apigateway.dto.WavesDto;
 import backend.academy.apigateway.utils.ApiPaths;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class WaveController {
 
     private final WaveClient waveClient;
 
+    @Operation(summary = "Сделать запись о том что игрок прошел волну")
     @PostMapping(ApiPaths.USER_API + "/addWave")
     public ResponseEntity<Void> addWaveInfo(@RequestBody WaveDto waveDto,
                                             @AuthenticationPrincipal UserDetails userDetails) {
@@ -39,6 +41,7 @@ public class WaveController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Загрузка лидерборда по числу пройденных волн")
     @GetMapping(ApiPaths.BASE_API + "/getWavesLeaderBoard")
     public ResponseEntity<List<WavesDto>> getWaveLeaderBoard() {
         try {
