@@ -30,19 +30,9 @@
 
 [Брендбук](https://github.com/anya-ananasss/Defense-Discover/blob/main/Documentation/Brandbook.pdf)
 
-📎 Новое:
-
 Презентация MVP [.pptx](https://disk.yandex.ru/i/OuHshLGiN_WZcQ) [видео](https://disk.yandex.ru/i/HJ11HPOJllkSQg)
 
 [PM-отчет](https://docs.google.com/document/d/1O8wl8u_HmrzIumzbRkWsaGDGj8cGXJMNwQdTcZ3BdJo/edit?usp=sharing)
-
-[Деплой игры](https://anya-ananasss.github.io/Defense-Discover/)
-
-❗ Данные для входа: 
-
-Email: an.an.gurieva@yandex.ru
-
-Пароль: 12345678
 
 Тестовая документация:
 
@@ -83,3 +73,23 @@ Email: an.an.gurieva@yandex.ru
 4 группа 1 команда [Git](https://publictransport2025.github.io/) [Чек-лист](https://github.com/PublicTransport2025/Docs/blob/main/%D0%AD%D1%82%D0%B0%D0%BF%20MVP/%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D0%BF%D0%BE%D1%80%D1%82%202025%20%D0%A7%D0%B5%D0%BA%D0%BB%D0%B8%D1%81%D1%82%202%20%D1%8D%D1%82%D0%B0%D0%BF.pdf)
 
 4 группа 2 команда [Git](https://github.com/I-want-pizza/QWality) [Чек-лист](https://github.com/I-want-pizza/QWality/blob/88be92d58178c8b91e3ab7b066cc00c24d141450/docs/teams_score/%D0%A7%D0%B5%D0%BA%D0%BB%D0%B8%D1%81%D1%82%202%20%D1%8D%D1%82%D0%B0%D0%BF.pdf)
+
+
+
+# 📎 Новое:
+
+[Деплой игры](https://anya-ananasss.github.io/Defense-Discover/)
+
+## ❗ Данные для входа: 
+
+### Игрок:
+
+Email: an.an.gurieva@yandex.ru
+
+Пароль: 12345678
+
+### Гейм-Мастер:
+
+Email: placeholder2@admin.com
+
+Пароль: gameMaster0000
