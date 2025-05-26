@@ -2,6 +2,7 @@ package backend.academy.apigateway.controller;
 
 
 import backend.academy.apigateway.client.UserClient;
+import backend.academy.apigateway.dto.EmailDto;
 import backend.academy.apigateway.dto.UserConfirmation;
 import backend.academy.apigateway.dto.UserDtoWithoutPassword;
 import backend.academy.apigateway.dto.security.AddRoleDto;
@@ -212,10 +213,10 @@ public class UserController {
 
     @Operation(summary = "Восстановление пароля")
     @PostMapping(ApiPaths.BASE_API + "/repairPassword")
-    public ResponseEntity<Void> getUser(@RequestBody String email) {
+    public ResponseEntity<Void> getUser(@RequestBody EmailDto email) {
         try {
-            String tempPassword = userService.repairPassword(email);
-            userClient.repairPasswordByEmail(email, tempPassword);
+            String tempPassword = userService.repairPassword(email.getEmail());
+            userClient.repairPasswordByEmail(email.getEmail(), tempPassword);
             return ResponseEntity.ok().build();
         } catch (UserNotFound e) {
             return ResponseEntity.notFound().build();
