@@ -156,9 +156,12 @@ services:
   qwen:
     image: qwenllm/qwen:latest
     container_name: qwen
-    restart: always                  # порт, на котором QWEN OpenAI-совместимый сервер
+    restart: always
+    command: >
+      python -m fastchat.serve.openai_api_server
+        --host 0.0.0.0 --port 8000
     environment:
-      - MODEL_ID=qwen2.5                  # имя модели, которую будет поднимать образ
+      - MODEL_ID=qwen2.5
     networks:
       - app-network
 
