@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,7 +71,7 @@ public class PromtServiceImpl implements PromtService {
             redisService.setValue("currQuest" + requestPromtDto.getUsername(), objectMapper.writeValueAsString(questionDto));
 
             System.out.println("currQuest" + requestPromtDto.getUsername());
-
+            Collections.shuffle(questionDto.getOptions());
             return List.of(questionDto);
 
         } catch (Exception e) {
