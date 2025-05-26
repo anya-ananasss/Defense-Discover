@@ -20,6 +20,8 @@
 
 Презентация технического задания [.pptx](https://github.com/anya-ananasss/Defense-Discover/blob/main/Documentation/%D0%97%D0%B0%D1%89%D0%B8%D1%82%D0%B0%20%D0%A2%D0%97.pptx) [.pdf](https://github.com/anya-ananasss/Defense-Discover/blob/main/Documentation/%D0%97%D0%B0%D1%89%D0%B8%D1%82%D0%B0%20%D0%A2%D0%97.pdf) [видео](https://disk.yandex.ru/i/TYYrQcqBtMgtFA)
 
+[swagger-docs](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/anya-ananasss/Defense-Discover/main/Documentation/swagger-docs.json)
+
 [Пользовательские пути](https://github.com/anya-ananasss/Defense-Discover/tree/main/Documentation/User%20Stories)
 
 [UML-диаграммы](https://github.com/anya-ananasss/Defense-Discover/tree/main/Documentation/Diagrams)
