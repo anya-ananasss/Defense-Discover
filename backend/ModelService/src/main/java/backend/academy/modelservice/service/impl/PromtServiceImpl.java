@@ -71,7 +71,9 @@ public class PromtServiceImpl implements PromtService {
             redisService.setValue("currQuest" + requestPromtDto.getUsername(), objectMapper.writeValueAsString(questionDto));
 
             System.out.println("currQuest" + requestPromtDto.getUsername());
-            Collections.shuffle(questionDto.getOptions());
+            List<String> newList = new ArrayList<>(questionDto.getOptions());
+            Collections.shuffle(newList);
+            questionDto.setOptions(newList);
             return List.of(questionDto);
 
         } catch (Exception e) {
