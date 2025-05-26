@@ -153,6 +153,14 @@ services:
     restart: always
     networks:
       - app-network
+  qwen:
+    image: qwenllm/qwen:latest
+    container_name: qwen
+    restart: always                  # порт, на котором QWEN OpenAI-совместимый сервер
+    environment:
+      - MODEL_ID=qwen2.5                  # имя модели, которую будет поднимать образ
+    networks:
+      - app-network
 
 volumes:
   postgres_users_data:
