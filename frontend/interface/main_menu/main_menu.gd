@@ -22,7 +22,7 @@ var email: String:
 		%EmailLine.text = value
 		email = value
 
-var row_count = 7
+var row_count = 6
 func fill_leaderboard():
 	var res = await Http.get_waves()
 	#res = Http.LeaderBoardDto.new([{'username': 'alexagaggagagagag', 'countWave': 10}])
@@ -46,7 +46,7 @@ func fill_leaderboard():
 	var row: LeaderBoardRow = Global.leaderboard_row_secene.instantiate()
 	if len(res.users) < row_count:
 		return
-	if flag:
+	if flag or username == '':
 		var x: Http.UserScore = res.users[row_count - 1]
 		row.set_params(row_count, x.username, x.count_wave)
 	else:
@@ -56,8 +56,8 @@ func fill_leaderboard():
 				row.set_bold()
 				row.set_params(i + 1, x.username, x.count_wave)
 				break
-		leaderBoardRows.append(row)
-		leaderbord.add_child(row)
+	leaderBoardRows.append(row)
+	leaderbord.add_child(row)
 	
 			
 func update_user_data():

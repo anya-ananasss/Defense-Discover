@@ -342,6 +342,7 @@ LineEdit/colors/font_color_uneditable = Color(0.88, 0.88, 0.88, 0.5)
 LineEdit/colors/font_selected_color = Color(0, 0, 0, 1)
 LineEdit/colors/font_uneditable_color = Color(0, 0, 0, 1)
 LineEdit/colors/selection_color = Color(1, 0.8, 0, 1)
+LineEdit/constants/caret_width = 2
 LineEdit/constants/minimum_spaces = 12
 LineEdit/font_sizes/font_size = 30
 LineEdit/fonts/font = ExtResource("6_n7pmp")

@@ -25,7 +25,9 @@ var t: float = 0:
 					enemy.hit(damage, Global.Types.ARCHER)
 				queue_free()
 		
-
+func is_back():
+	var angle := (enemy_pos - tower_pos).angle()
+	return angle < 0
 
 func _physics_process(delta: float) -> void:
 	if is_instance_valid(enemy):
