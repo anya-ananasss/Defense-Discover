@@ -20,11 +20,7 @@ def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "сре�
     if key_words is None:
         key_words = []
 
-    llm = QwenLLM(
-        api_token=Config.QWEN_API_TOKEN,
-        api_url=Config.QWEN_API_URL,
-        model_name=Config.QWEN_MODEL_NAME
-    )
+    llm = QwenLLM()
 
     chain = (
             {
