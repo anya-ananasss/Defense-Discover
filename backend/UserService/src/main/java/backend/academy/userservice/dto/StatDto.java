@@ -12,4 +12,5 @@ import lombok.*;
 public class StatDto {
     private String username;
     private String topic;
+    private boolean isCorrect;
 }

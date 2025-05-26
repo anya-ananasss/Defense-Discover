@@ -20,6 +20,8 @@ public class Stat {
 
     private Long counterCounter;
 
+    private Long allquestions;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
             name = "category_id",

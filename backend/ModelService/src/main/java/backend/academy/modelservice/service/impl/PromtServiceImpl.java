@@ -91,6 +91,7 @@ public class PromtServiceImpl implements PromtService {
                                     .builder()
                                     .username(postAnswerDto.getUserName())
                                     .topic(questionDto.getTopic())
+                                    .isCorrect(true)
                                     .build()
                     );
                 }
@@ -101,6 +102,17 @@ public class PromtServiceImpl implements PromtService {
                         .userName(postAnswerDto.getUserName())
                         .correctAnswer(questionDto.getCorrectAnswer())
                         .build();
+            }
+
+            if (postAnswerDto.getUserName() != null) {
+                kafkaClientService.sendNotificationStackOverflow(
+                        StatEvent
+                                .builder()
+                                .username(postAnswerDto.getUserName())
+                                .topic(questionDto.getTopic())
+                                .isCorrect(false)
+                                .build()
+                );
             }
 
             return CheckAnswerDto

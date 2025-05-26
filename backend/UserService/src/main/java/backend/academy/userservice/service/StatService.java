@@ -36,15 +36,35 @@ public class StatService {
                 .orElseThrow(() -> new RuntimeException("Category not found"));
         List<Stat> stats = statsRepository.findByUserAndCategoryName(user, statDto.getTopic());
         Stat statEntity;
+
+        if(!statDto.isCorrect()) {
+            if (stats.isEmpty()) {
+                statEntity = Stat.builder()
+                        .user(user)
+                        .category(category)
+                        .counterCounter(0L)
+                        .allquestions(1L)
+                        .build();
+            } else {
+                statEntity = stats.get(0);
+                statEntity.setCounterCounter(statEntity.getCounterCounter());
+                statEntity.setAllquestions(statEntity.getAllquestions() + 1);
+            }
+            statsRepository.save(statEntity);
+            return statDto;
+        }
+
         if (stats.isEmpty()) {
             statEntity = Stat.builder()
                     .user(user)
                     .category(category)
                     .counterCounter(1L)
+                    .allquestions(1L)
                     .build();
         } else {
             statEntity = stats.get(0);
             statEntity.setCounterCounter(statEntity.getCounterCounter() + 1);
+            statEntity.setAllquestions(statEntity.getAllquestions() + 1);
         }
         statsRepository.save(statEntity);
         return statDto;
