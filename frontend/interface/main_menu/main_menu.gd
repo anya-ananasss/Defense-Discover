@@ -139,14 +139,14 @@ func set_user_stats():
 	if res == null:
 		return
 	res = res as Http.StatsDto
-	%HistoryLine.value = str(res.history)
-	%ScienceLine.value = str(res.science)
-	%CultureLine.value = str(res.culture)
-	%NatureLine.value = str(res.nature)
-	%HistoryLine.value2 = str(res.all_history)
-	%ScienceLine.value2 = str(res.all_science)
-	%CultureLine.value2 = str(res.all_culture)
-	%NatureLine.value2 = str(res.all_nature)
+	%HistoryLine.value2 = str(res.history)
+	%ScienceLine.value2 = str(res.science)
+	%CultureLine.value2 = str(res.culture)
+	%NatureLine.value2 = str(res.nature)
+	%HistoryLine.value = str(res.all_history)
+	%ScienceLine.value = str(res.all_science)
+	%CultureLine.value = str(res.all_culture)
+	%NatureLine.value = str(res.all_nature)
 
 
 func _on_profile_button_pressed() -> void:
