@@ -3,7 +3,6 @@ package backend.academy.modelservice.service.impl;
 import backend.academy.modelservice.client.PromtClient;
 import backend.academy.modelservice.dto.*;
 import backend.academy.modelservice.exception.QuestionDoesntExists;
-import backend.academy.modelservice.mapper.QuestionMapper;
 import backend.academy.modelservice.service.KafkaClientService;
 import backend.academy.modelservice.service.PromtService;
 import backend.academy.modelservice.service.QuestionService;
@@ -13,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +47,12 @@ public class PromtServiceImpl implements PromtService {
             try {
                 questionDto = questionService.findQuestionAndTopicWhereIdNotIn(ids, requestPromtDto.getPromt().getTopic());
             } catch (QuestionDoesntExists e) {
-                List<QuestionDto> questionDtos = promtClient.getQuestion(requestPromtDto.getPromt());
+                PromtDto promtDto = new PromtDto();
+                promtDto.setTopic(requestPromtDto.getPromt().getTopic());
+                promtDto.setDifficulty("средний");
+                promtDto.setNumQuestions(requestPromtDto.getPromt().getNumQuestions());
+                promtDto.setKeyWords(requestPromtDto.getPromt().getKeyWords());
+                List<QuestionDto> questionDtos = promtClient.getQuestion(promtDto);
 
                 if (questionDtos != null) {
                     questionDto = questionDtos.get(0);

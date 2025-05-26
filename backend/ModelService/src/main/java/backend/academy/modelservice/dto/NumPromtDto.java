@@ -10,10 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PromtDto {
+public class NumPromtDto {
     private String topic;
     private int numQuestions;
-    private String difficulty;
+    private int difficulty;
     @JsonProperty("key_words")
     private List<String> keyWords;
 }
