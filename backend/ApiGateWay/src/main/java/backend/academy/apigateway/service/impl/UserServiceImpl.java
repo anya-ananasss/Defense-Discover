@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updatePassword(String newPassword, String oldPassword, String username) {
-        UserDto userEntity = userClient.getUserByUsername(username);
+        UserDto userEntity = userClient.getUserByEmail(username);
         if (userEntity == null) {
             throw new UserNotFound(username);
         }
