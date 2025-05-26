@@ -94,6 +94,7 @@ public class StatService {
                             .builder()
                             .score(stat.getCounterCounter())
                             .topic(stat.getCategory().getName())
+                            .allQuestions(stat.getAllquestions())
                             .build();
                 }
         ).collect(Collectors.toList());
