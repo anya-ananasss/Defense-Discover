@@ -57,10 +57,6 @@ public class UserController {
         try {
             log.info("Logining user: {}", userDto);
             return ResponseEntity.ok(userService.verify(userDto));
-        } catch (BadCredentialsException e) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body("Неверное имя пользователя или пароль");
         } catch (Exception e) {
             log.error(e.getMessage() + userDto.toString());
             return ResponseEntity.unprocessableEntity().build();
