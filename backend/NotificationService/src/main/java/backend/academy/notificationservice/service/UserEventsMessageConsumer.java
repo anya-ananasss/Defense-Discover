@@ -60,7 +60,7 @@ public class UserEventsMessageConsumer {
             containerFactory = "defaultConsumerFactory",
             topicPartitions =
             @TopicPartition(
-                    topic = "${password-repair}",
+                    topic = "${app.password-repair.topic}",
                     partitions = {"0"}))
     @RetryableTopic(
             backoff = @Backoff(delay = 3000L, multiplier = 2.0),
