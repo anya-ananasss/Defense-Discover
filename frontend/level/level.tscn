@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://mahg2nbldblf"]
+[gd_scene load_steps=16 format=3 uid="uid://mahg2nbldblf"]
 
 [ext_resource type="Script" uid="uid://dc256idbg6umu" path="res://level/level.gd" id="1_dbc2d"]
 [ext_resource type="Theme" uid="uid://bbr70t6gbgc2m" path="res://theme/maintheme.tres" id="2_44x8d"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://dj334r3yagshk" path="res://interface/settings_panel/settings.tscn" id="6_cw150"]
 [ext_resource type="PackedScene" uid="uid://bnyty5vobw6si" path="res://level/place_for_tower/v1/place_for_tower.tscn" id="8_6gtgk"]
 [ext_resource type="PackedScene" uid="uid://cnrsl2eyk4iwf" path="res://level/plot_menu/plot_menu.tscn" id="8_rhqlf"]
-[ext_resource type="AudioStream" uid="uid://d3q0taf82i5nn" path="res://asset/theme2.wav" id="10_cw150"]
 [ext_resource type="Texture2D" uid="uid://c8djfufpkikkv" path="res://level/tower.png" id="10_l5lfc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6gtgk"]
@@ -589,13 +588,6 @@ position = Vector2(431, 712)
 unique_name_in_owner = true
 script = ExtResource("4_vkbyq")
 metadata/_custom_type_script = "uid://m1vo0myw6iol"
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-process_mode = 3
-stream = ExtResource("10_cw150")
-volume_db = -15.0
-autoplay = true
-bus = &"Music"
 
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer2/Panel/MarginContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer2/Panel/MarginContainer/VBoxContainer/StartWave" to="." method="start_wave"]

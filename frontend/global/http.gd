@@ -196,6 +196,12 @@ class QuestionDto:
 	var qeustion_id: String
 	var question: String
 	var options: Array
+	func _to_string() -> String:
+		return "QuestionDto(id=%s, question=%s, options=%s)" % [
+			qeustion_id,
+			question,
+			str(options)
+		]
 	func _init(dct: Dictionary):
 		qeustion_id = dct['questionId']
 		question = dct['question']
@@ -219,6 +225,14 @@ class AnswerDto:
 	var user_name: String
 	var is_correct: bool
 	var correct_answer: String
+	
+	func _to_string() -> String:
+		return "AnswerDto(user_name=%s, is_correct=%s, correct_answer=%s)" % [
+			user_name,
+			str(is_correct),
+			correct_answer
+		]
+	
 	func _init(dct: Dictionary):
 		user_name = dct['userName']
 		is_correct = dct['correct']

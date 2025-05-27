@@ -93,6 +93,7 @@ func _ready():
 	email_regex.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
 	for x in  find_children("", "CrossButton"):
 		x.pressed.connect(clear_lines)
+	Music.set_main_menu_music()
 	
 	
 	for node in get_tree().get_nodes_in_group("text_fields") + find_children("", "LineEdit"):

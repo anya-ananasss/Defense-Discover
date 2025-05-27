@@ -19,8 +19,10 @@ func text_without_slash(text: String):
 	return text.replace("\\", "")
 
 func start_question(category: String, difficulty: int):
+	print('Start question')
 	get_tree().paused = true
 	var http_res = await Http.get_question(category, difficulty)
+	print('Get question: ', http_res)
 	if http_res == null:
 		question_completed.emit(Results.ConnectionProblem)
 		get_tree().paused = false
@@ -47,11 +49,13 @@ func start_question(category: String, difficulty: int):
 	tween.tween_subtween(modulate_tween)
 	
 	var res = await button_pressed
+	print('Button pressed')
 	var choosen_question = ''
 	if res != -1:
 		choosen_question = http_res.options[res] 
 	tween.stop()
 	http_res = await Http.post_answer(http_res.qeustion_id, choosen_question)
+	print('Returned answer: ',http_res)
 	if http_res == null:
 		question_completed.emit(Results.ConnectionProblem)
 		get_tree().paused = false
@@ -82,4 +86,5 @@ func start_question(category: String, difficulty: int):
 		children[i].modulate = Color.WHITE
 	get_tree().paused = false
 	question_completed.emit(result)
+	print("Question complited")
 	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://dgd30hd5wxqbf"]
+[gd_scene load_steps=53 format=3 uid="uid://dgd30hd5wxqbf"]
 
 [ext_resource type="Texture2D" uid="uid://c2tlo7nh1uj6" path="res://interface/main_menu/back.png" id="2_cr5ul"]
 [ext_resource type="Script" uid="uid://cu8e2j7nnhfvx" path="res://interface/main_menu/main_menu.gd" id="2_wwcsp"]
@@ -15,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://8ftsbugsvsdr" path="res://interface/Block3 (1).png" id="10_db0k2"]
 [ext_resource type="FontFile" uid="uid://1qmoiwwfgi76" path="res://theme/alagard-12px-unicode.ttf" id="11_cr5ul"]
 [ext_resource type="PackedScene" uid="uid://dj334r3yagshk" path="res://interface/settings_panel/settings.tscn" id="13_rkwbc"]
-[ext_resource type="AudioStream" uid="uid://df58nlsra6mkb" path="res://asset/main-theme.wav" id="16_cr5ul"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cr5ul"]
 bg_color = Color(0, 0, 0, 0.313726)
@@ -1983,13 +1982,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.560784)
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-process_mode = 3
-stream = ExtResource("16_cr5ul")
-volume_db = -15.0
-autoplay = true
-bus = &"Music"
 
 [connection signal="gui_input" from="LeaderBord" to="." method="_on_leader_bord_gui_input"]
 [connection signal="resized" from="LeaderBord/VBoxContainer/HBoxContainer/Label" to="LeaderBord/VBoxContainer/HBoxContainer" method="_on_label_resized"]
