@@ -666,7 +666,7 @@ offset_bottom = 145.251
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
-text = "Начать компанию"
+text = "Начать кампанию"
 
 [node name="SettingsButton" type="Button" parent="."]
 layout_mode = 1
