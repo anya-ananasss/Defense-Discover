@@ -1,11 +1,13 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from ..llm_config.config import Config
-from ..llm_config.constants import difficulty_levels
-from ..llm_config.prompts import quiz_prompt
-from ..llm_config.qwen_llm import QwenLLM
-from ..utils.quiz_json_parser import QuizJSONParser
 
+from backend.ModelApiService.ModelGateway.llm_config.constants import difficulty_levels
+from backend.ModelApiService.ModelGateway.llm_config.prompts import quiz_prompt
+from backend.ModelApiService.ModelGateway.llm_config.qwen_wrapper import QwenWrapper
+from backend.ModelApiService.ModelGateway.utils.quiz_json_parser import QuizJSONParser
 
 app = FastAPI()
 
@@ -16,11 +18,14 @@ class QuizRequest(BaseModel):
     difficulty: str = "средний"
     key_words: list[str] = []
 
+
 def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "средний", key_words=None):
     if key_words is None:
         key_words = []
 
-    llm = QwenLLM()
+    load_dotenv(os.path.join(os.path.dirname(__file__), "../private/token.env"))
+
+    llm = QwenWrapper()
 
     chain = (
             {
@@ -60,6 +65,7 @@ async def api_generate_quiz(request: QuizRequest):
             difficulty=request.difficulty,
             key_words=request.key_words
         )
+        print(result)
 
         return result
     except Exception as e:
