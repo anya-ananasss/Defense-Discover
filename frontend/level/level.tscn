@@ -589,6 +589,12 @@ unique_name_in_owner = true
 script = ExtResource("4_vkbyq")
 metadata/_custom_type_script = "uid://m1vo0myw6iol"
 
+[node name="Label" type="Label" parent="."]
+offset_left = -102.003
+offset_top = 17.7753
+offset_right = -62.0031
+offset_bottom = 73.7753
+
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer2/Panel/MarginContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer2/Panel/MarginContainer/VBoxContainer/StartWave" to="." method="start_wave"]
 [connection signal="value_changed" from="CanvasLayer/Control/VBoxContainer2/GmPanel/VBoxContainer/HpSpinBox" to="." method="_on_hp_spin_box_value_changed"]

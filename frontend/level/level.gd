@@ -5,7 +5,7 @@ const CAMERA_ZOOM_DEFAULT : Vector2 = Vector2(1.0, 1.0)
 const CAMERA_ZOOM_MIN : Vector2 = Vector2(1, 1)
 const CAMERA_ZOOM_MAX : Vector2 = Vector2(2.0, 2.0)	
 const CAMERA_TWEEN_DURATION : float = 0.3
-const CAMERA_SPEED = 1400
+const CAMERA_SPEED = 2000
 var viewport_width = ProjectSettings.get_setting("display/window/size/viewport_width")
 var viewport_height = ProjectSettings.get_setting("display/window/size/viewport_height")
 var MAX_RATIO = 16 / 9
@@ -80,44 +80,58 @@ func start_qestion(topic: String, is_ok: Signal, level: int):
 func center_field():
 	var screen_size = get_viewport().get_visible_rect().size
 	#print(screen_size)
-	camera.limit_right = ((viewport_width + screen_size.x / camera.scale.x) / 2) 
-	camera.limit_top = (viewport_height - screen_size.y / camera.scale.y) 
+	camera.limit_right = max(((viewport_width + screen_size.x / camera.zoom.x) / 2), viewport_width)
+	camera.limit_top = min((viewport_height - screen_size.y / camera.zoom.y), 0)
 	
 var waves = [
 	[Global.Enemies.SLIME, Global.Enemies.SLIME],
 	[Global.Enemies.SLIME, Global.Enemies.SLIME, Global.Enemies.SLIME, Global.Enemies.SLIME, Global.Enemies.SLIME, Global.Enemies.SLIME, Global.Enemies.SLIME, Global.Enemies.SLIME, Global.Enemies.SLIME ]
 ]
 
-var i = 0
-func _process(delta: float) -> void:
-	var viewport_size = get_viewport().size
-	i += 1
-	if i % 100 == 0:
-		i = 0
-		#print(get_global_mouse_position(), get_viewport().get_visible_rect().size)
-		#print(camera.get_local_mouse_position(), viewport_size)
+
+func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("zoom_in"):
+		center_field()
 		if (camera.zoom < CAMERA_ZOOM_MAX):
 			if (camera_tween == null or not camera_tween.is_running()):
 				camera_tween = create_tween()
-				camera_tween.tween_property(camera, "zoom", camera.zoom * (CAMERA_ZOOM_DEFAULT + CAMERA_ZOOM_SPEED),CAMERA_TWEEN_DURATION)
+				camera_tween.tween_method(zoom_at_mouse, camera.zoom, camera.zoom * (CAMERA_ZOOM_DEFAULT + CAMERA_ZOOM_SPEED), CAMERA_TWEEN_DURATION)
 	elif Input.is_action_just_pressed("zoom_out"):
+		center_field()
 		if (camera.zoom > CAMERA_ZOOM_MIN):
 			if (camera_tween == null or not camera_tween.is_running()):
 				camera_tween = create_tween()
-				camera_tween.tween_property(camera, "zoom", camera.zoom / (CAMERA_ZOOM_DEFAULT + CAMERA_ZOOM_SPEED),CAMERA_TWEEN_DURATION)
+				camera_tween.tween_method(zoom_at_mouse, camera.zoom, camera.zoom / (CAMERA_ZOOM_DEFAULT + CAMERA_ZOOM_SPEED), CAMERA_TWEEN_DURATION)
+	
+	if event is InputEventMagnifyGesture:
+		center_field()
+		camera.zoom = (camera.zoom + Vector2(1, 1) * (event.factor - 1)).clamp(CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX)
+	elif event is InputEventScreenDrag:
+		center_field()
+		camera.position -= event.relative
+		
+func _process(delta: float) -> void:
+	var viewport_size = get_viewport().size
+	#print(get_global_mouse_position(), get_viewport().get_visible_rect().size)
+	#print(camera.get_local_mouse_position(), viewport_size)
 	var mouse_pos := camera.get_local_mouse_position()
 	#print(mouse_pos)
 	if mouse_pos[0] < -(viewport_size.x / camera.zoom.x) / 2 + 10:
-		camera.position.x -= CAMERA_SPEED * delta / camera.zoom.x / viewport_width * viewport_size.x
+		camera.position.x -= CAMERA_SPEED * delta / viewport_width * viewport_size.x
 	if mouse_pos[1] < -(viewport_size.y / camera.zoom.y) / 2 + 10:
-		camera.position.y -= CAMERA_SPEED * delta / camera.zoom.y / viewport_height * viewport_size.y
+		camera.position.y -= CAMERA_SPEED * delta / viewport_height * viewport_size.y
 	if mouse_pos[0] > (viewport_size.x / camera.zoom.x) / 2 - 10:
-		camera.position.x += CAMERA_SPEED * delta / camera.zoom.x / viewport_width * viewport_size.x
+		camera.position.x += CAMERA_SPEED * delta / viewport_width * viewport_size.x
 	if mouse_pos[1] > (viewport_size.y / camera.zoom.y) / 2 - 10:
-		camera.position.y += CAMERA_SPEED * delta / camera.zoom.y / viewport_height * viewport_size.y
+		camera.position.y += CAMERA_SPEED * delta / viewport_height * viewport_size.y
 		
-		
+
+func zoom_at_mouse(zoom) -> void:
+	var world_before := get_global_mouse_position()
+	camera.zoom = zoom
+	var world_after := get_global_mouse_position()
+	camera.position += (world_before - world_after)
+	
 
 func update_gold_label():
 	%GoldInput.text = str(Global.gold)
