@@ -91,26 +91,23 @@ var waves = [
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("zoom_in"):
-		center_field()
 		if (camera.zoom < CAMERA_ZOOM_MAX):
 			if (camera_tween == null or not camera_tween.is_running()):
 				camera_tween = create_tween()
 				camera_tween.tween_method(zoom_at_mouse, camera.zoom, camera.zoom * (CAMERA_ZOOM_DEFAULT + CAMERA_ZOOM_SPEED), CAMERA_TWEEN_DURATION)
 	elif Input.is_action_just_pressed("zoom_out"):
-		center_field()
 		if (camera.zoom > CAMERA_ZOOM_MIN):
 			if (camera_tween == null or not camera_tween.is_running()):
 				camera_tween = create_tween()
 				camera_tween.tween_method(zoom_at_mouse, camera.zoom, camera.zoom / (CAMERA_ZOOM_DEFAULT + CAMERA_ZOOM_SPEED), CAMERA_TWEEN_DURATION)
 	
 	if event is InputEventMagnifyGesture:
-		center_field()
 		camera.zoom = (camera.zoom + Vector2(1, 1) * (event.factor - 1)).clamp(CAMERA_ZOOM_MIN, CAMERA_ZOOM_MAX)
 	elif event is InputEventScreenDrag:
-		center_field()
 		camera.position -= event.relative
 		
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	center_field()
 	var viewport_size = get_viewport().size
 	#print(get_global_mouse_position(), get_viewport().get_visible_rect().size)
 	#print(camera.get_local_mouse_position(), viewport_size)
