@@ -71,9 +71,11 @@ func start_qestion(topic: String, is_ok: Signal, level: int):
 	quest.start_question(topic, level)
 	var res = await quest.question_completed
 	if res == quest.Results.Correct:
-		is_ok.emit(true)
+		is_ok.emit(PlaceForTower.Result.CORRECT)
+	elif res == quest.Results.Incorrect:
+		is_ok.emit(PlaceForTower.Result.INCORRECT)
 	else:
-		is_ok.emit(false)
+		is_ok.emit(PlaceForTower.Result.CANCEL)
 	
 	
 

@@ -1,4 +1,5 @@
 extends Node2D
+class_name PlaceForTower
 
 var mouse_in_control : bool
 var mouse_in_area : bool 
@@ -8,7 +9,8 @@ var lost_price := 0.25
 var current_tower_type
 
 signal start_question(topic: String, is_ok: Signal, level: int)
-signal is_ok(is_ok: bool)
+enum Result {CORRECT, INCORRECT, CANCEL}
+signal is_ok(is_ok: Result)
 
 func  _ready() -> void:
 	%ArcherTowerCard.price = Global.archer_tower_price
@@ -60,7 +62,9 @@ func handle_question(type: Global.Types):
 	start_question.emit(Global.topic_names[type], is_ok, 1)
 	var res = await is_ok
 	var price = Global.tower_prices[type]
-	if not res:
+	if res == Result.CANCEL:
+		return
+	if res == Result.INCORRECT:
 		Global.gold -= price * lost_price
 		return
 	current_tower_type = type
@@ -99,7 +103,9 @@ func _on_update_card_card_pressed() -> void:
 	start_question.emit(Global.topic_names[current_tower_type], is_ok, min(current_tower.level, Global.max_question_level))
 	var res = await is_ok
 	var price = current_tower.get_update_price()
-	if not res:
+	if res == Result.CANCEL:
+		return
+	if res == Result.INCORRECT:
 		Global.gold -= price * lost_price
 		return
 	current_tower.update_tower()
