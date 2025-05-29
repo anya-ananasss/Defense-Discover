@@ -23,6 +23,7 @@ def generate_quiz(topic: str, num_questions: int = 5, difficulty: str = "сре�
     if key_words is None:
         key_words = []
 
+    root = os.getcwd()
     load_dotenv(os.path.join(root, ".env"))
 
     llm = QwenWrapper()
