@@ -133,7 +133,7 @@ public class PromtServiceImpl implements PromtService {
         }
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000000)
     @Transactional
     public void runtimeQuestionGen() {
         log.info("Запросы генерируются");
