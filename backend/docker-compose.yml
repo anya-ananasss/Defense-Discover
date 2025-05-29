@@ -149,19 +149,9 @@ services:
     build: ./ModelApiService
     container_name: llmservice
     environment:
-      TOKEN: ${LLM_TOKEN}
+      QWEN_AUTH_TOKEN: ${QWEN_AUTH_TOKEN}
+      QWEN_COOKIE: ${QWEN_COOKIE}
     restart: always
-    networks:
-      - app-network
-  qwen:
-    image: qwenllm/qwen:latest
-    container_name: qwen
-    restart: always
-    command: >
-      python -m fastchat.serve.openai_api_server
-        --host 0.0.0.0 --port 8000
-    environment:
-      - MODEL_ID=qwen2.5
     networks:
       - app-network
 
