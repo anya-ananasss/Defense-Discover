@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
-from backend.ModelApiService.ModelGateway.llm_config.constants import difficulty_levels
-from backend.ModelApiService.ModelGateway.llm_config.prompts import quiz_prompt
-from backend.ModelApiService.ModelGateway.llm_config.qwen_wrapper import QwenWrapper
-from backend.ModelApiService.ModelGateway.utils.quiz_json_parser import QuizJSONParser
+from ..llm_config.constants import difficulty_levels
+from ..llm_config.prompts import quiz_prompt
+from ..llm_config.qwen_wrapper import QwenWrapper
+from ..utils.quiz_json_parser import QuizJSONParser
 
 app = FastAPI()
 
