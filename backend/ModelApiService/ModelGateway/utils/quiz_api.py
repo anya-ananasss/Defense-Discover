@@ -69,6 +69,7 @@ async def api_generate_quiz(request: QuizRequest):
 
         return result
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail=str(e))
 
 
