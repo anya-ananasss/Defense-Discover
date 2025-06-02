@@ -71,9 +71,12 @@ func slice_spritesheet(texture: Texture2D, rows: int, columns: int) -> Array[Tex
 
 	return result
 
-
+const CONFIG_PATH = "user://session_data.cfg"
 func _ready() -> void:
 	gold = 600
 	var file = FileAccess.open("res://plot.json", FileAccess.READ)
 	if file != null:
 		plot =  JSON.parse_string(file.get_as_text())
+	if not FileAccess.file_exists(Global.CONFIG_PATH):
+		var config = ConfigFile.new()
+		config.save(CONFIG_PATH)

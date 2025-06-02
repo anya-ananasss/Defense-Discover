@@ -16,11 +16,17 @@ func  _ready() -> void:
 		var json = JSON.parse_string(text)
 		base_url = json['url']
 		print(base_url)
+	var dop = null
 	if OS.get_name() == 'Web':
 		print(JavaScriptBridge.eval("window.location.origin", true))
-		var dop = Global.java_script.getCookie("token")
-		if dop != null:
-			token = dop
+		dop = Global.java_script.getCookie("token")
+	elif OS.get_name() == "Android":
+		var config = ConfigFile.new()
+		var err = config.load(Global.CONFIG_PATH)
+		if err == OK:
+			dop = config.get_value("session", "token")
+	if dop != null:
+		token = dop
 			
 
 func _create_http_request() -> HTTPRequest:
@@ -64,8 +70,7 @@ func _send_request(http_request: HTTPRequest, method: int, url: String, data: Di
 func exit():
 	token = ''
 	user_name = ''
-	if OS.get_name() == 'Web':
-		Global.java_script.setCookie("token", "", 0)
+	set_cookie("", "")
 
 
 func register_user(email: String, username:String, password: String) -> Dictionary:
@@ -78,6 +83,12 @@ func register_user(email: String, username:String, password: String) -> Dictiona
 func set_cookie(token ,email):
 	if OS.get_name() == 'Web':
 		Global.java_script.setCookie("token", token, cookie_time)
+	elif OS.get_name() == "Android":
+		var config = ConfigFile.new()
+		var err = config.load(Global.CONFIG_PATH)
+		if err == OK:
+			config.set_value("session", "token", token)
+			config.save(Global.CONFIG_PATH)
 	self.token = token
 	
 	

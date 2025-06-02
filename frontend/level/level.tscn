@@ -33,12 +33,11 @@ script = ExtResource("1_dbc2d")
 camera = NodePath("Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, 2)
 limit_left = 0
 limit_top = 0
 limit_right = 1920
 limit_bottom = 1080
-position_smoothing_enabled = true
+editor_draw_limits = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

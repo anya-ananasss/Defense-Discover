@@ -39,4 +39,10 @@ var master_volume_db: float = -10:
 func set_master_volume(linear):
 	if OS.get_name() == 'Web':
 		Global.java_script.setCookie("volume", linear, Http.cookie_time)
+	elif OS.get_name() == "Android":
+		var config = ConfigFile.new()
+		var err = config.load(Global.CONFIG_PATH)
+		if err == OK:
+			config.set_value("session", "volume", linear)
+			config.save(Global.CONFIG_PATH)
 	master_volume_db = linear_to_db(linear)
