@@ -1,5 +1,4 @@
-name: Godot Web Export and Deploy
-
+name: Godot Web and Android Export
 on:
   push:
     branches: [main]
@@ -13,12 +12,11 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-web:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Create export directory
         run: mkdir -p frontend/build/web
@@ -30,19 +28,41 @@ jobs:
             -w /game \
             barichello/godot-ci:4.4.1 \
             godot --headless --export-release "Web" build/web/index.html
-      - name: Upload artifact
+
+      - name: Upload web artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/build/web
 
-  deploy:
-    needs: build
+  build-android:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
+      - name: Create Android export directory
+        run: mkdir -p frontend/build/android
+
+      - name: Export Android Debug APK using Godot
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/frontend":/game \
+            -w /game \
+            barichello/godot-ci:4.4.1 \
+            godot --headless --verbose --export-debug "Android" build/android/defense-and-discover.apk
+
+      - name: Upload Android artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name:  defense-and-discover
+          path: frontend/build/android/defense-and-discover.apk
+
+  deploy-web:
+    needs: build-web
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
