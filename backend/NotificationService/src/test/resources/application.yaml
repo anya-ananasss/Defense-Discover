@@ -1,0 +1,25 @@
+spring:
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      group-id: test-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  mail:
+    host: localhost
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+app:
+  mail: test@example.com
+  user-confirmation:
+    topic: user-confirmation-test
+  password-repair:
+    topic: password-repair-test 
