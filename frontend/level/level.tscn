@@ -53,6 +53,57 @@ size_flags_horizontal = 4
 mouse_filter = 2
 theme = ExtResource("2_44x8d")
 
+[node name="Help" type="PanelContainer" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/Help"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Нажмите на флажок, выберите      башню и ответьте на вопрос, чтобы её построить.
+
+Если нажать на башню, то её можно улучшить или разрушить, вернув часть потраченных денег.
+
+Когда вы будете готовы к обороне, нажмите на кнопку «Начать волну»."
+fit_content = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/Help"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 0
+theme_override_constants/margin_top = -32
+theme_override_constants/margin_right = -28
+
+[node name="HelpCrossButton" parent="CanvasLayer/Control/Help/MarginContainer2" instance=ExtResource("5_6gtgk")]
+layout_mode = 2
+focus_mode = 1
+
+[node name="HelpButton" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -391.0
+offset_top = 13.0
+offset_right = -321.0
+offset_bottom = 83.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 40
+text = "?"
+
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 3
@@ -488,6 +539,7 @@ size = Vector2i(1920, 1083)
 render_target_update_mode = 0
 
 [node name="Plot" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="PlotMenu" parent="Plot" instance=ExtResource("8_rhqlf")]
 unique_name_in_owner = true
@@ -588,12 +640,8 @@ unique_name_in_owner = true
 script = ExtResource("4_vkbyq")
 metadata/_custom_type_script = "uid://m1vo0myw6iol"
 
-[node name="Label" type="Label" parent="."]
-offset_left = -102.003
-offset_top = 17.7753
-offset_right = -62.0031
-offset_bottom = 73.7753
-
+[connection signal="pressed" from="CanvasLayer/Control/Help/MarginContainer2/HelpCrossButton" to="." method="_on_help_cross_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/HelpButton" to="." method="_on_help_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer2/Panel/MarginContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer2/Panel/MarginContainer/VBoxContainer/StartWave" to="." method="start_wave"]
 [connection signal="value_changed" from="CanvasLayer/Control/VBoxContainer2/GmPanel/VBoxContainer/HpSpinBox" to="." method="_on_hp_spin_box_value_changed"]

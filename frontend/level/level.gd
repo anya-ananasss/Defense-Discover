@@ -269,3 +269,11 @@ func _on_skip_wave_button_pressed() -> void:
 	if wave_ended:
 		%Wave_generator.start_wave(true)
 		_on_wave_ended()
+
+
+func _on_help_cross_button_pressed() -> void:
+	%Help.visible = false
+
+
+func _on_help_button_pressed() -> void:
+	%Help.visible = true
