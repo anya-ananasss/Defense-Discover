@@ -76,6 +76,16 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public String verifyAdmin(UserDto user) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+
+        if (authentication.isAuthenticated() && authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ROLE_ADMIN"))) {
+            return jwtService.generateToken(user.getEmail());
+        } else {
+            return "fail";
+        }
+    }
+
     public String registerAndVerifyUser(UserDto user) {
         user.setPassword(encoder.encode(user.getPassword()));
         try {

@@ -64,11 +64,11 @@ public class UserController {
     }
 
     @Operation(summary = "Логин в админ панель")
-    @PostMapping(ApiPaths.ADMIN_API + "/login")
+    @PostMapping(ApiPaths.BASE_API + "/login/admin")
     public ResponseEntity<String> loginToAdminPanel(@RequestBody UserDto userDto) {
         try {
             log.info("Logining user: {}", userDto);
-            return ResponseEntity.ok(userService.verify(userDto));
+            return ResponseEntity.ok(userService.verifyAdmin(userDto));
         } catch (Exception e) {
             log.error(e.getMessage() + userDto.toString());
             return ResponseEntity.unprocessableEntity().build();

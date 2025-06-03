@@ -10,6 +10,7 @@ public interface UserService {
 
     UserDto registerUser(UserDto user);
     String verify(UserDto user);
+    String verifyAdmin(UserDto user);
     String registerAndVerifyUser(UserDto user);
     UserDto registerWithRole(UserDto user);
     boolean deleteUser(UserDto user);
