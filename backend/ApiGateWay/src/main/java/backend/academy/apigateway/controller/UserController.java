@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @Operation(summary = "Логин в админ панель")
-    @PostMapping(ApiPaths.BASE_API + "/login-admin")
+    @PostMapping(ApiPaths.BASE_API + "/loginadmin")
     public ResponseEntity<String> loginToAdminPanel(@RequestBody UserDto userDto) {
         try {
             log.info("Logining user: {}", userDto);
