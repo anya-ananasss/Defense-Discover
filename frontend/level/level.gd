@@ -273,7 +273,9 @@ func _on_skip_wave_button_pressed() -> void:
 
 func _on_help_cross_button_pressed() -> void:
 	%Help.visible = false
+	get_tree().paused = false
 
 
 func _on_help_button_pressed() -> void:
 	%Help.visible = true
+	get_tree().paused = true

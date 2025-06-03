@@ -53,44 +53,6 @@ size_flags_horizontal = 4
 mouse_filter = 2
 theme = ExtResource("2_44x8d")
 
-[node name="Help" type="PanelContainer" parent="CanvasLayer/Control"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -200.0
-offset_right = 300.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/Help"]
-layout_mode = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-text = "Нажмите на флажок, выберите      башню и ответьте на вопрос, чтобы её построить.
-
-Если нажать на башню, то её можно улучшить или разрушить, вернув часть потраченных денег.
-
-Когда вы будете готовы к обороне, нажмите на кнопку «Начать волну»."
-fit_content = true
-
-[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/Help"]
-layout_mode = 2
-size_flags_horizontal = 8
-size_flags_vertical = 0
-mouse_filter = 0
-theme_override_constants/margin_top = -32
-theme_override_constants/margin_right = -28
-
-[node name="HelpCrossButton" parent="CanvasLayer/Control/Help/MarginContainer2" instance=ExtResource("5_6gtgk")]
-layout_mode = 2
-focus_mode = 1
-
 [node name="HelpButton" type="Button" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 1
@@ -524,6 +486,63 @@ layout_mode = 2
 focus_mode = 0
 text = "Выйти "
 
+[node name="Help" type="Control" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/Help"]
+material = SubResource("ShaderMaterial_6gtgk")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.560784)
+
+[node name="Help" type="PanelContainer" parent="CanvasLayer/Control/Help"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Control/Help/Help"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "Нажмите на флажок, выберите      башню и ответьте на вопрос, чтобы её построить.
+
+Если нажать на башню, то её можно улучшить или разрушить, вернув часть потраченных денег.
+
+Когда вы будете готовы к обороне, нажмите на кнопку «Начать волну»."
+fit_content = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/Help/Help"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 0
+theme_override_constants/margin_top = -32
+theme_override_constants/margin_right = -28
+
+[node name="HelpCrossButton" parent="CanvasLayer/Control/Help/Help/MarginContainer2" instance=ExtResource("5_6gtgk")]
+layout_mode = 2
+focus_mode = 1
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
 visible = false
 show_behind_parent = true
@@ -640,7 +659,6 @@ unique_name_in_owner = true
 script = ExtResource("4_vkbyq")
 metadata/_custom_type_script = "uid://m1vo0myw6iol"
 
-[connection signal="pressed" from="CanvasLayer/Control/Help/MarginContainer2/HelpCrossButton" to="." method="_on_help_cross_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HelpButton" to="." method="_on_help_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer2/Panel/MarginContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer2/Panel/MarginContainer/VBoxContainer/StartWave" to="." method="start_wave"]
@@ -657,6 +675,7 @@ metadata/_custom_type_script = "uid://m1vo0myw6iol"
 [connection signal="pressed" from="CanvasLayer/Control/DefeatMenu/PanelContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/WinMenu/PanelContainer/MarginContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/WinMenu/PanelContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Help/Help/MarginContainer2/HelpCrossButton" to="." method="_on_help_cross_button_pressed"]
 [connection signal="child_exiting_tree" from="Level/map/Path2D" to="." method="_on_path_2d_child_exiting_tree"]
 [connection signal="timeout" from="Level/EnemyTimer" to="." method="next_enemy"]
 [connection signal="area_entered" from="Level/Home" to="." method="_on_home_area_entered"]

@@ -55,7 +55,11 @@ func fill_leaderboard():
 			if x.username == username:
 				row.set_bold()
 				row.set_params(i + 1, x.username, x.count_wave)
+				flag = true
 				break
+	if not flag:
+		var x: Http.UserScore = res.users[row_count - 1]
+		row.set_params(row_count, x.username, x.count_wave)
 	leaderBoardRows.append(row)
 	leaderbord.add_child(row)
 	
@@ -219,9 +223,9 @@ func _on_registration_button_pressed() -> void:
 	elif not is_valid_username(%LoginLineEdit.text):
 		error = USERNAME_LEN_ERROR
 	
-	var error_label = %ErrorRegistrationLabel.text
+	var error_label = %ErrorRegistrationLabel
 	if error != '':
-		error_label = error
+		error_label.text = error
 		return
 	
 	enable_waiting()
