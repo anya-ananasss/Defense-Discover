@@ -1,4 +1,4 @@
-// src/components/UsersPage.js
+
 import React, { useEffect, useState } from 'react';
 import { userApi, roleApi } from '../api';
 
@@ -92,7 +92,6 @@ export default function UsersPage() {
       <div className="container py-4">
         <h2 className="mb-4">Пользователи</h2>
 
-        {/* Форма создания нового пользователя */}
         <div className="card mb-5 shadow-sm">
           <div className="card-body">
             <h5 className="card-title">Создать нового пользователя</h5>

@@ -1,4 +1,4 @@
-// src/components/RolesPage.js
+
 import React, { useEffect, useState } from 'react';
 import { roleApi } from '../api';
 
@@ -125,7 +125,6 @@ export default function RolesPage() {
           </div>
         </div>
 
-        {/* Таблица ролей */}
         <div className="table-responsive shadow-sm">
           <table className="table table-bordered align-middle mb-0">
             <thead className="table-light">
