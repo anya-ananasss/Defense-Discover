@@ -11,7 +11,7 @@ function getAuthHeaders() {
 
 export const authApi = {
   login: (credentials) =>
-    axios.post(`${API_GATEWAY}/admin/login`, credentials).then(res => res.data),
+    axios.post(`${API_GATEWAY}/login/admin`, credentials).then(res => res.data),
   registerAndLogin: (user) =>
     axios.post(`${API_GATEWAY}/registerAndLogin`, user).then(res => res.data),
 };
