@@ -12,7 +12,7 @@ script = ExtResource("1_j6g01")
 speed = 85
 award = 7
 damage = 2
-max_hp = 500.0
+max_hp = 450.0
 
 [node name="HpBar" parent="." index="0"]
 anchors_preset = 8

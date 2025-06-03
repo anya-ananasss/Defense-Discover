@@ -1,5 +1,5 @@
 extends Tower
-var dps = 24
+var dps = 28
 
 var tween: Tween
 var visiable = false
@@ -16,7 +16,7 @@ func _ready() -> void:
 func update_tower():
 	default_update()
 	level += 1
-	dps += 12 #было 5
+	dps += 14 #было 5
 
 func _physics_process(delta: float) -> void:
 	var enemies = $AttackArea.get_overlapping_areas()

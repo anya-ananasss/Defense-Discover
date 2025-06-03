@@ -12,7 +12,7 @@ var gold : int:
 		gold_changed.emit()
 var archer_tower_price : int = 140 #было 100
 var electric_tower_price : int = 150
-var art_tower_price : int = 165 #было 150
+var art_tower_price : int = 160 #было 150
 var tree_tower_price : int = 170
 var archer_tower := preload("uid://dblmp648wldnf")
 var electric_tower := preload("uid://sqp3gbqgta6a")
@@ -52,10 +52,10 @@ class Properties:
 	
 enum Enemies {SLIME, FLY, SKELETON, MUSHROOM_GOLEM}
 var enemy_properties: Dictionary[Enemies, Properties]  = {
-	Enemies.SLIME: Properties.new(150, 3, 6, preload("uid://bm1ng04ojad8f")),
-	Enemies.FLY: Properties.new(100, 4, 8, preload("uid://841ivpjbv8wr")),
-	Enemies.SKELETON: Properties.new(250, 2, 5, preload("uid://bcfbn4m7snohl")),
-	Enemies.MUSHROOM_GOLEM: Properties.new(500, 1, 2, preload("uid://k1oxy458hcmj"))
+	Enemies.SLIME: Properties.new(250, 3, 6, preload("uid://bm1ng04ojad8f")),
+	Enemies.FLY: Properties.new(125, 4, 8, preload("uid://841ivpjbv8wr")),
+	Enemies.SKELETON: Properties.new(300, 2, 4, preload("uid://bcfbn4m7snohl")),
+	Enemies.MUSHROOM_GOLEM: Properties.new(550, 1, 2, preload("uid://k1oxy458hcmj"))
 	}
 
 func slice_spritesheet(texture: Texture2D, rows: int, columns: int) -> Array[Texture2D]:

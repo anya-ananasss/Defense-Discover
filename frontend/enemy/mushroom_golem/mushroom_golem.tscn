@@ -160,8 +160,8 @@ animations = [{
 }]
 
 [node name="MushroomGolem" instance=ExtResource("1_x16bl")]
-speed = 60
-award = 12
+speed = 58
+award = 11
 damage = 4
 max_hp = 1250.0
 
