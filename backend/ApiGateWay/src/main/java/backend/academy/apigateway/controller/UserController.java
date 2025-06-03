@@ -63,6 +63,18 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Логин в админ панель")
+    @PostMapping(ApiPaths.ADMIN_API + "/login")
+    public ResponseEntity<String> loginToAdminPanel(@RequestBody UserDto userDto) {
+        try {
+            log.info("Logining user: {}", userDto);
+            return ResponseEntity.ok(userService.verify(userDto));
+        } catch (Exception e) {
+            log.error(e.getMessage() + userDto.toString());
+            return ResponseEntity.unprocessableEntity().build();
+        }
+    }
+
     @PostMapping(ApiPaths.BASE_API + "/registerAndLogin")
     public ResponseEntity<String> registerAndLogin(@RequestBody UserDto userDto) {
         try {
