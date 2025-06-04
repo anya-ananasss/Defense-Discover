@@ -187,6 +187,8 @@ func _on_home_area_entered(area: Area2D) -> void:
 
 func _on_wave_generator_add_enemy(enemy: Enemy) -> void:
 	enemy.offset = randi_range(-20, 20)
+	if wave > 5:
+		enemy.change_texture()
 	%Path2D.add_child(enemy)
 
 

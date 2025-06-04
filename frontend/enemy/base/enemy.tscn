@@ -43,5 +43,6 @@ metadata/_edit_lock_ = true
 script = ExtResource("2_2aqp0")
 
 [node name="Texture" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
 
 [node name="Lightning" type="AnimatedSprite2D" parent="Texture"]

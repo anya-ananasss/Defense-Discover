@@ -54,7 +54,14 @@ func hit(damage, type):
 	hp -= damage
 	
 			
-		
+func change_texture():
+	var frames := texture.sprite_frames
+	frames.remove_animation("death")
+	frames.remove_animation("move")
+	frames.duplicate_animation("death_1", "death")
+	frames.duplicate_animation("move_1", "move")
+	%Texture.play("move")
+	
 
 func calculate_offset_vector():
 	var path := get_parent() as Path2D
@@ -88,9 +95,9 @@ func mooving(delta):
 		#elif (-180 <= deg and deg <= -95) or (95 <= deg and deg <= 180):
 			#$Texture.flip_h = true
 		if (global_position - prev_pos).x > 0:
-			$Texture.flip_h = false
+			%Texture.scale.x = abs(%Texture.scale.x)
 		else:
-			$Texture.flip_h = true
+			%Texture.scale.x = -abs(%Texture.scale.x)
 		
 		prev_pos = global_position
 

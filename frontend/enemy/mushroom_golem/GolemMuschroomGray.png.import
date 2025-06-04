@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbsfih51riwyl"
-path="res://.godot/imported/slime.png-aa3718b283ab15dbc9d0f3f7a3c08cbe.ctex"
+uid="uid://durxr8pjio15d"
+path="res://.godot/imported/GolemMuschroomGray.png-62752d12148ca494fdc301e0f4afdd53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemy/slime/slime.png"
-dest_files=["res://.godot/imported/slime.png-aa3718b283ab15dbc9d0f3f7a3c08cbe.ctex"]
+source_file="res://enemy/mushroom_golem/GolemMuschroomGray.png"
+dest_files=["res://.godot/imported/GolemMuschroomGray.png-62752d12148ca494fdc301e0f4afdd53.ctex"]
 
 [params]
 

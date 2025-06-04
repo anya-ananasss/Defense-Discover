@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xcye4vltrkba"
-path="res://.godot/imported/skeletonOnlyWalk.png-e8800ffc4a914aa605f7266833f09e4f.ctex"
+uid="uid://g82of8yegift"
+path="res://.godot/imported/slimeGreen.png-ecedd507a7d5daf4d416f7e7a137bc7b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemy/skeleton/skeletonOnlyWalk.png"
-dest_files=["res://.godot/imported/skeletonOnlyWalk.png-e8800ffc4a914aa605f7266833f09e4f.ctex"]
+source_file="res://enemy/slime/slimeGreen.png"
+dest_files=["res://.godot/imported/slimeGreen.png-ecedd507a7d5daf4d416f7e7a137bc7b.ctex"]
 
 [params]
 

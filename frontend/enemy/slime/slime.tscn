@@ -38,6 +38,5 @@ shape = SubResource("CircleShape2D_1p7sx")
 position = Vector2(0, -9)
 scale = Vector2(2.4, 2.4)
 sprite_frames = ExtResource("3_dp8x3")
-animation = &"move"
+animation = &"move_1"
 autoplay = "move"
-frame_progress = 0.268993

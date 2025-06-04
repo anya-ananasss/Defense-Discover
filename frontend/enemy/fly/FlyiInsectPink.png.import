@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xcye4vltrkba"
-path="res://.godot/imported/skeletonOnlyWalk.png-e8800ffc4a914aa605f7266833f09e4f.ctex"
+uid="uid://cy285o11okle5"
+path="res://.godot/imported/FlyiInsectPink.png-26878535708d95c685f20736b74ccc65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemy/skeleton/skeletonOnlyWalk.png"
-dest_files=["res://.godot/imported/skeletonOnlyWalk.png-e8800ffc4a914aa605f7266833f09e4f.ctex"]
+source_file="res://enemy/fly/FlyiInsectPink.png"
+dest_files=["res://.godot/imported/FlyiInsectPink.png-26878535708d95c685f20736b74ccc65.ctex"]
 
 [params]
 

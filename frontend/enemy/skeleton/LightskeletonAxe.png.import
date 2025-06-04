@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdw5nwpytg7x5"
-path="res://.godot/imported/SkeletonOnlyDeath.png-1e411c47e4ed647fbb9e96dad14f8459.ctex"
+uid="uid://c0h0asvcxrtnm"
+path="res://.godot/imported/LightskeletonAxe.png-5a34f669f7bae0f57ee7e826655b1d81.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemy/skeleton/SkeletonOnlyDeath.png"
-dest_files=["res://.godot/imported/SkeletonOnlyDeath.png-1e411c47e4ed647fbb9e96dad14f8459.ctex"]
+source_file="res://enemy/skeleton/LightskeletonAxe.png"
+dest_files=["res://.godot/imported/LightskeletonAxe.png-5a34f669f7bae0f57ee7e826655b1d81.ctex"]
 
 [params]
 
