@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://caxhrua1riphy"]
 
-[ext_resource type="Shader" uid="uid://bc7orevuf0skr" path="res://interface/tower_card/tower_card.gdshader" id="1_nkxfm"]
+[ext_resource type="Shader" uid="uid://bc7orevuf0skr" path="res://level/tower_card/tower_card.gdshader" id="1_nkxfm"]
 
 [resource]
 shader = ExtResource("1_nkxfm")

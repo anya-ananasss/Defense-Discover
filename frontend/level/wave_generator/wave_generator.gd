@@ -4,13 +4,13 @@ class_name Wave_generator
 @export var seed : int
 var level = 1
 var power = 1150
-var power_per_level = 275  # Увеличиваем базовую мощность врагов с каждым уровнем было 200
-var hp_increasing_per_level = 0.22  # Увеличиваем здоровье врагов с каждым уровнем было 0.1
+var power_per_level = 275 
+var hp_increasing_per_level = 0.22 
 var timer: Timer
-var short_range_min = 0.25  # Минимальная задержка
-var short_range_max = 1.45  # Максимальная задержка
-var long_range_min = 1.35
-var long_range_max = 1.95
+var short_range_min = 0.35 
+var short_range_max = 0.45  
+var long_range_min = 1.3
+var long_range_max = 1.7
 
 signal add_enemy(enemy: Enemy)
 signal wave_ended
@@ -29,12 +29,8 @@ func start_wave(only_generate = false):
 	var current_power = level * power_per_level + power
 	while current_power > 0:
 		var enemies_type := Global.Enemies.values()
-		var enemy := Global.enemy_properties[rng.randi_range(0, len(enemies_type) - 1)]
+		var enemy := Global.enemy_properties[rng.randi_range(0, min(level, len(enemies_type)) - 1)]
 		var count := rng.randi_range(enemy.min_count_in_group, enemy.max_count_in_group)
-
-		# Увеличиваем количество врагов с каждым уровнем начиная с 2 уровня
-		if level >= 2:
-			count += rng.randi_range(0, 2)  # Увеличиваем количество врагов случайным образом от 0 до 2
 
 		# Увеличиваем здоровье врагов с каждым уровнем
 		for i in range(count):

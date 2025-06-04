@@ -1,26 +1,27 @@
 [gd_scene load_steps=3 format=3 uid="uid://cyja2fwqgai08"]
 
-[ext_resource type="Script" uid="uid://dpqx1g335tjtr" path="res://interface/tower_card/tower_card.gd" id="1_bmjmt"]
+[ext_resource type="Script" uid="uid://dpqx1g335tjtr" path="res://level/tower_card/tower_card.gd" id="1_bmjmt"]
 [ext_resource type="Texture2D" uid="uid://b801sep3qwlos" path="res://icon.svg" id="2_uhpuh"]
 
 [node name="TowerCard" type="VSplitContainer"]
+z_index = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 502.0
-offset_top = 61.0
-offset_right = -1290.0
-offset_bottom = -835.0
+offset_right = -1792.0
+offset_bottom = -904.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 dragging_enabled = false
+dragger_visibility = 2
 drag_area_highlight_in_editor = true
 script = ExtResource("1_bmjmt")
 texture = ExtResource("2_uhpuh")
 
 [node name="TextureButton" type="TextureButton" parent="."]
 unique_name_in_owner = true
+process_mode = 1
 layout_mode = 2
 mouse_filter = 1
 texture_normal = ExtResource("2_uhpuh")
@@ -38,11 +39,14 @@ metadata/_edit_use_anchors_ = true
 [node name="Label" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 8
+size_flags_vertical = 3
 mouse_filter = 1
+theme_override_colors/font_color = Color(1, 0.85098, 0.282353, 1)
+theme_override_constants/outline_size = 5
 theme_override_font_sizes/font_size = 31
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 1
 
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]

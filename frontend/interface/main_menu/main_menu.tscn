@@ -554,6 +554,30 @@ theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 65
 text = "&"
 
+[node name="CookiePanelContainer" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = -219.0
+offset_top = 389.0
+offset_right = 219.0
+offset_bottom = 534.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CookiePanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="CookiePanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("11_cr5ul")
+theme_override_font_sizes/font_size = 32
+text = "Сайт использует cookie"
+
+[node name="CookieButton" type="Button" parent="CookiePanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "ок"
+
 [node name="NotificationPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
@@ -1981,6 +2005,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.560784)
 
+[connection signal="pressed" from="CookiePanelContainer/VBoxContainer/CookieButton" to="." method="_on_cookie_button_pressed"]
 [connection signal="gui_input" from="LeaderBord" to="." method="_on_leader_bord_gui_input"]
 [connection signal="resized" from="LeaderBord/VBoxContainer/HBoxContainer/Label" to="LeaderBord/VBoxContainer/HBoxContainer" method="_on_label_resized"]
 [connection signal="tree_entered" from="LeaderBord/VBoxContainer/HBoxContainer/Label" to="LeaderBord/VBoxContainer/HBoxContainer" method="_on_label_tree_entered"]

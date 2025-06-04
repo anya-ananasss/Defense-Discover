@@ -65,7 +65,7 @@ func _ready() -> void:
 func start_qestion(topic: String, is_ok: Signal, level: int):
 	var quest = %Question
 	if skip_question:
-		is_ok.emit.call_deferred(true)
+		is_ok.emit.call_deferred(PlaceForTower.Result.CORRECT)
 		return
 	quest.start_question(topic, level)
 	var res = await quest.question_completed
@@ -231,6 +231,7 @@ func _on_place_for_tower_return_menu(control: Control) -> void:
 func _on_wave_ended():
 	%StartWave.visible = true
 	wave += 1
+	Global.gold += Global.gold_after_wave
 	if not is_gamemaster:
 		Http.post_wave(wave)
 	%WaveCount.text = str(wave + 1)

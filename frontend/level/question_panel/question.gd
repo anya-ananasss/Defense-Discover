@@ -1,5 +1,7 @@
 extends Control
-var question_time = 8
+var min_question_time = 6
+var question_time = 6
+var char_per_second = 25.0
 var await_time = 2
 signal question_completed(result: Results)
 signal button_pressed(i) 
@@ -16,7 +18,7 @@ func _ready() -> void:
 		children[i].pressed.connect(_on_any_button_pressed.bind(i))
 
 func text_without_slash(text: String):
-	return text.replace("\\", "")
+	return text.replace("\\", "").replace("«", "\"").replace("»", "\"")
 
 func start_question(category: String, difficulty: int):
 	print('Start question')
@@ -30,10 +32,15 @@ func start_question(category: String, difficulty: int):
 		return
 	http_res = http_res as Http.QuestionDto
 	visible = true
+	var ln = 0
 	for i in range(len(children)):
 		var button: Button = children[i]
 		button.text = http_res.options[i]
+		ln += len(button.text)
 	%Label.text = text_without_slash(http_res.question)
+	ln += len(%Label.text)
+	question_time = min_question_time + ln / char_per_second
+	print("Question time: ", question_time)
 	var prev_color = filling.bg_color
 	var tween := get_tree().create_tween()
 	tween.set_parallel()

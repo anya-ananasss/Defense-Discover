@@ -29,6 +29,7 @@ var tower_scenes: Dictionary[Types, PackedScene] = {Types.ELECTRIC: electric_tow
 var max_question_level := 5
 var is_campaign: bool = false
 var plot: Array
+var gold_after_wave: int = 100
 
 var java_script := JavaScriptBridge.get_interface("window")
 var volume: float = 0.5
@@ -50,10 +51,10 @@ class Properties:
 		
 	
 	
-enum Enemies {SLIME, FLY, SKELETON, MUSHROOM_GOLEM}
+enum Enemies {FLY, SLIME, SKELETON, MUSHROOM_GOLEM}
 var enemy_properties: Dictionary[Enemies, Properties]  = {
 	Enemies.SLIME: Properties.new(150, 3, 6, preload("uid://bm1ng04ojad8f")),
-	Enemies.FLY: Properties.new(100, 4, 8, preload("uid://841ivpjbv8wr")),
+	Enemies.FLY: Properties.new(100, 5, 9, preload("uid://841ivpjbv8wr")),
 	Enemies.SKELETON: Properties.new(250, 2, 5, preload("uid://bcfbn4m7snohl")),
 	Enemies.MUSHROOM_GOLEM: Properties.new(500, 1, 2, preload("uid://k1oxy458hcmj"))
 	}

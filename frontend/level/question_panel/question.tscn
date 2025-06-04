@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b8kf561rc3uea"]
 
-[ext_resource type="Script" uid="uid://c2nxedoew4ns0" path="res://interface/question_panel/question.gd" id="1_fnbrk"]
+[ext_resource type="Script" uid="uid://c2nxedoew4ns0" path="res://level/question_panel/question.gd" id="1_fnbrk"]
 [ext_resource type="Shader" uid="uid://cwge4y7tj8vrt" path="res://interface/main_menu/blur.gdshader" id="2_3dqpq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qf3o3"]

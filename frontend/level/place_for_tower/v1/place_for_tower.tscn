@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://7h2rok1xosj1" path="res://level/place_for_tower/v1/place_for_tower.gd" id="1_5b8io"]
 [ext_resource type="Theme" uid="uid://h1f7iqhh7ycb" path="res://theme/kenneyUI-yellow.tres" id="2_8yj58"]
-[ext_resource type="PackedScene" uid="uid://cyja2fwqgai08" path="res://interface/tower_card/tower_card.tscn" id="2_f7jdn"]
+[ext_resource type="PackedScene" uid="uid://cyja2fwqgai08" path="res://level/tower_card/tower_card.tscn" id="2_f7jdn"]
 [ext_resource type="Texture2D" uid="uid://c0foveme6oxjl" path="res://tower/archer_tower/archer_tower.png" id="3_i8p77"]
 [ext_resource type="Texture2D" uid="uid://d2omc278toyg2" path="res://tower/electric_tower/electric_tower.png" id="4_4bv7a"]
 [ext_resource type="Texture2D" uid="uid://c5lsxj52wm6r8" path="res://tower/tree_tower/tree_tower.png" id="5_i8p77"]

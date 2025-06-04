@@ -92,10 +92,10 @@ animations = [{
 }]
 
 [node name="Fly" instance=ExtResource("1_xw3j5")]
-speed = 95
-award = 4
+speed = 120
+award = 6
 mooving_while_dead = true
-max_hp = 200.0
+max_hp = 240.0
 
 [node name="HpBar" parent="." index="0"]
 anchors_preset = 8

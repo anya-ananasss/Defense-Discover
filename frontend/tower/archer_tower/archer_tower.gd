@@ -36,7 +36,7 @@ func _physics_process(delta: float) -> void:
 		arrow.tower_pos = global_position + %Arrows.position
 		arrow.damage = damage
 		arrow.enemy = max_enemy
-		arrow.enemy_pos = max_enemy.global_position
+		arrow.enemy_pos = max_enemy.texture.global_position
 		if not arrow.is_back():
 			%TowerSprite.play("default")
 		$Arrows.add_child(arrow)

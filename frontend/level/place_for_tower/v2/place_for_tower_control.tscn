@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://dp7m0dcsucwl3"]
 
 [ext_resource type="Theme" uid="uid://h1f7iqhh7ycb" path="res://theme/kenneyUI-yellow.tres" id="1_7h7tk"]
-[ext_resource type="PackedScene" uid="uid://cyja2fwqgai08" path="res://interface/tower_card/tower_card.tscn" id="2_r3n2h"]
+[ext_resource type="PackedScene" uid="uid://cyja2fwqgai08" path="res://level/tower_card/tower_card.tscn" id="2_r3n2h"]
 [ext_resource type="Script" uid="uid://toxmk0rd6d8b" path="res://level/place_for_tower/v2/place_for_tower_control.gd" id="2_v2eh3"]
 [ext_resource type="Texture2D" uid="uid://c0foveme6oxjl" path="res://tower/archer_tower/archer_tower.png" id="3_v2eh3"]
 [ext_resource type="Texture2D" uid="uid://b6xq7i4oqgfq1" path="res://tower/art_tower/art_tower.png" id="4_w3dvn"]

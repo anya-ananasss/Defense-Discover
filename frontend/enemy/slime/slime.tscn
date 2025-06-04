@@ -10,7 +10,7 @@ radius = 21.0238
 [node name="Slime" instance=ExtResource("1_ktcom")]
 script = ExtResource("1_j6g01")
 speed = 85
-award = 6
+award = 9
 damage = 2
 max_hp = 500.0
 

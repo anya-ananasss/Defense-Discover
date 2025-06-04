@@ -4,7 +4,7 @@ var current_enemy: Area2D
 var tween: Tween
 var dps = 100
 var MIN_DPS = 15 #было 10
-var MAX_DPS = 96
+var MAX_DPS = 130
 var additional_price_to_up := 50
 const INCREASING_TIME = 4
 
@@ -38,14 +38,14 @@ func _physics_process(delta: float) -> void:
 		%TowerSprite.frame = 0
 		%Attack.visible = false
 		%AttackAnimation.stop()
-		var mx = 0
-		var max_enemy: Area2D = null
+		var mn = INF
+		var min_enemy: Area2D = null
 		for enemy_area: Area2D in enemies:
 			var enemy = enemy_area.get_parent()
-			if enemy.progress_ratio > mx:
-				mx = enemy.progress_ratio
-				max_enemy = enemy_area
-		current_enemy = max_enemy
+			if enemy.progress_ratio < mn:
+				mn = enemy.progress_ratio
+				min_enemy = enemy_area
+		current_enemy = min_enemy
 		if current_enemy != null:
 			tween = create_tween()
 			tween.tween_property(self, "dps",  MAX_DPS, INCREASING_TIME).from(MIN_DPS)
@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 			%AttackAnimation.play("start_attack")
 	if is_instance_valid(current_enemy):
 		%Attack.visible = true
-		var direction: Vector2 = current_enemy.global_position - %Attack.global_position
+		var direction: Vector2 = current_enemy.get_parent().texture.global_position - %Attack.global_position
 		%Attack.region_rect = Rect2(0, 0, 448, direction.length() - 10)
 		%Attack.rotation = direction.angle() - PI / 2
 		current_enemy.hit(delta * dps, Global.Types.ELECTRIC)

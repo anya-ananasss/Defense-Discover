@@ -1,7 +1,7 @@
 extends Control
 
 const ALLOWED_SPECIALS = "!@#$%^&*()_+-=[]{}|;:'\",.<>?/ "
-const NOT_ALLOWED_EMAIL_ERROR = "Неверный адресс электронной почты" 
+const NOT_ALLOWED_EMAIL_ERROR = "Неверный адрес электронной почты" 
 const MIN_LEN_PASSWORD_ERROR = "Пароль слишком короткий"
 const USERNAME_LEN_ERROR = "Никнейм не должен быть пустым"
 var email_regex :=  RegEx.new() 
@@ -90,6 +90,7 @@ func clear_lines():
 func _ready():
 	if Http.token != '':
 		%NotificationPanel.visible = false
+		%CookiePanelContainer.visible = false
 	update_user_data()
 	%TabContainer.set_tab_title(0, 'Профиль')
 	%TabContainer.set_tab_title(1, 'Статистика')
@@ -399,3 +400,7 @@ func _on_change_password_button_pressed() -> void:
 func _on_change_password_pressed() -> void:
 	$Profile.visible = false
 	%ChangePassword.visible = true
+
+
+func _on_cookie_button_pressed() -> void:
+	%CookiePanelContainer.visible = false
