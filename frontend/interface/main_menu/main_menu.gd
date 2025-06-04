@@ -238,10 +238,17 @@ func _on_registration_button_pressed() -> void:
 		%ConfirmationMenu.visible = true	
 		update_user_data()
 	else:
-		if ret['error'] == '':
-			error_label.text = 'Нет подключения к интернету'
-		else:
-			error_label.text = "Не удалось зарегистрировать пользователя"
+		var code = str(ret['error'])
+		match code:
+			'':
+				error_label.text = 'Нет подключения к интернету'
+			'400':
+				error_label.text = 'Никнейм уже занят'
+			'409':
+				error_label.text = 'Email уже занят'
+			_:
+				error_label.text = 'Не удалось зарегистрировать пользователя'
+			
 	disable_waiting()
 
 func show_success_notification():
@@ -299,12 +306,13 @@ func _on_authorization_button_pressed() -> void:
 		update_user_data()
 	else:
 		var code = str(ret['error'])
-		if code == '':
-			error_label.text = 'Нет подключения к интернету'
-		elif code == '422':
-			error_label.text = "Неверный email или пароль"
-		else:
-			error_label.text = "Не удалось авторизировать пользователя"
+		match code:
+			'':
+				error_label.text = 'Нет подключения к интернету'
+			'422':
+				error_label.text = "Неверный email или пароль"
+			_:
+				error_label.text = "Не удалось авторизовать пользователя"
 		
 		
 	disable_waiting()
