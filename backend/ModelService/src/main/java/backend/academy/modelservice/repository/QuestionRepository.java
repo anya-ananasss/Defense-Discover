@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     Optional<Question> findFirstByTopicAndQuestionIdNotIn(String topic, List<Long> ids);
     Optional<Question> findFirstByTopic(String topic);
+    List<Question> findAll();
+
+    void deleteById(Long id);
 }
