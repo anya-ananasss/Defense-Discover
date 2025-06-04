@@ -78,6 +78,10 @@
 
 # 📎 Новое:
 
+[Защита проекта: презентация](https://drive.google.com/file/u/0/d/1Bv0APLFi24941XNwv45wi-Iu2xIY-4BH/view?usp=sharing)
+
+Курсовая работа [.pdf](https://github.com/anya-ananasss/Defense-Discover/blob/main/Documentation/%D0%9A%D1%83%D1%80%D1%81%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%204.2%20%D1%81%D0%BF%D0%B5%D1%86.pdf) [.docx](https://github.com/anya-ananasss/Defense-Discover/blob/main/Documentation/%D0%9A%D1%83%D1%80%D1%81%D0%BE%D0%B2%D0%B0%D1%8F%20%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%204.2%20%D1%81%D0%BF%D0%B5%D1%86.docx)
+
 [Деплой игры](https://anya-ananasss.github.io/Defense-Discover/)
 
 ## ❗ Данные для входа: 
