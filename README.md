@@ -84,7 +84,7 @@
 
 ### Игрок:
 
-Email: an.an.gurieva@yandex.ru
+Email: user2025dd@gmail.com
 
 Пароль: 12345678
 
