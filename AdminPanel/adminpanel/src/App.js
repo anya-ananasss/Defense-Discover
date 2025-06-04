@@ -9,6 +9,7 @@ import {
 import LoginPage from './components/LoginPage';
 import UsersPage from './components/UsersPage';
 import RolesPage from './components/RolesPage';
+import QuestionsPage from './components/QuestionsPage';
 import NavBar from './components/NavBar';
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
         <Route
           path="/roles"
           element={isAuthenticated ? <RolesPage upd={upd} /> : <Navigate to="/login" replace />}
+        />
+        <Route
+          path="/questions"
+          element={isAuthenticated ? <QuestionsPage /> : <Navigate to="/login" replace />}
         />
         <Route
           path="*"

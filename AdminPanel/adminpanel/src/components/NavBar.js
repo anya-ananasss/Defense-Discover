@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -42,6 +41,11 @@ export default function NavBar(props) {
                   <li className="nav-item">
                     <Link className="nav-link" to="/roles">
                       Роли
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/questions">
+                      Вопросы
                     </Link>
                   </li>
                 </ul>

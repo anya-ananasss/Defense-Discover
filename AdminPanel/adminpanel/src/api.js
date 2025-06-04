@@ -47,3 +47,11 @@ export const roleApi = {
   getAll: () =>
     axios.get(`${ROLE_SERVICE}/admin/getAllRoles`, { headers: getAuthHeaders() }).then(res => res.data)
 };
+
+export const questionApi = {
+  getAll: () =>
+    axios.get(`${API_GATEWAY}/admin/questions`, { headers: getAuthHeaders() })
+      .then(res => res.data),
+  remove: (id) =>
+    axios.delete(`${API_GATEWAY}/admin/questions/${id}`, { headers: getAuthHeaders() })
+};
