@@ -91,6 +91,8 @@ func _ready():
 	if Http.token != '':
 		%NotificationPanel.visible = false
 		%CookiePanelContainer.visible = false
+	if OS.get_name() == 'Android':
+		%CookiePanelContainer.visible = false
 	update_user_data()
 	%TabContainer.set_tab_title(0, 'Профиль')
 	%TabContainer.set_tab_title(1, 'Статистика')
@@ -404,3 +406,10 @@ func _on_change_password_pressed() -> void:
 
 func _on_cookie_button_pressed() -> void:
 	%CookiePanelContainer.visible = false
+
+
+func _on_help_cross_button_pressed() -> void:
+	%Help.visible = false
+
+func _on_help_button_pressed() -> void:
+	%Help.visible = true

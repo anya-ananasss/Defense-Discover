@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://dgd30hd5wxqbf"]
+[gd_scene load_steps=55 format=3 uid="uid://dgd30hd5wxqbf"]
 
 [ext_resource type="Texture2D" uid="uid://c2tlo7nh1uj6" path="res://interface/main_menu/back.png" id="2_cr5ul"]
 [ext_resource type="Script" uid="uid://cu8e2j7nnhfvx" path="res://interface/main_menu/main_menu.gd" id="2_wwcsp"]
@@ -12,7 +12,9 @@
 [ext_resource type="Texture2D" uid="uid://d00ws7wljnit4" path="res://theme/UIpack_vector.svg" id="7_7piqx"]
 [ext_resource type="FontFile" uid="uid://3rbcosvdyhmd" path="res://theme/kenvector_future.ttf" id="8_rkwbc"]
 [ext_resource type="FontFile" uid="uid://dldpwib6aoosf" path="res://theme/Abaddon Light.ttf" id="9_qt2eg"]
+[ext_resource type="FontFile" uid="uid://ckrrp0gasqb1m" path="res://theme/Tiny5-Regular.ttf" id="10_38238"]
 [ext_resource type="Texture2D" uid="uid://8ftsbugsvsdr" path="res://interface/Block3 (1).png" id="10_db0k2"]
+[ext_resource type="FontFile" uid="uid://c7v76m4mxhpfx" path="res://theme/pixelcyr_normal.ttf" id="11_aukln"]
 [ext_resource type="FontFile" uid="uid://1qmoiwwfgi76" path="res://theme/alagard-12px-unicode.ttf" id="11_cr5ul"]
 [ext_resource type="PackedScene" uid="uid://dj334r3yagshk" path="res://interface/settings_panel/settings.tscn" id="13_rkwbc"]
 
@@ -723,6 +725,19 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 1
 text = "Профиль"
+
+[node name="HelpButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -730.0
+offset_top = 310.0
+offset_right = -660.0
+offset_bottom = 380.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 40
+text = "?"
 
 [node name="FullLeaderbord" parent="." instance=ExtResource("5_cr5ul")]
 unique_name_in_owner = true
@@ -1942,6 +1957,72 @@ theme_override_font_sizes/font_size = 35
 text = "✅ Успешная смена пароля"
 horizontal_alignment = 1
 
+[node name="Help" type="Control" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Help"]
+material = SubResource("ShaderMaterial_wwcsp")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1250.0
+offset_top = -540.0
+offset_right = 1251.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.560784)
+
+[node name="Help" type="PanelContainer" parent="Help"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.5
+offset_top = -218.0
+offset_right = 220.5
+offset_bottom = 218.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Help/Help"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/italics_font = ExtResource("10_38238")
+theme_override_fonts/bold_font = ExtResource("11_aukln")
+bbcode_enabled = true
+text = "Добро пожаловать в игру  [b]Defense & Discover[/b]! 
+
+Вам предстоит отвечать на вопросы, чтобы улучшать и строить башни, которые помогут вам побеждать врагов.
+
+Вы можете выбрать режим с сюжетом или без него."
+fit_content = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="Help/Help"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 0
+theme_override_constants/margin_top = -32
+theme_override_constants/margin_right = -28
+
+[node name="HelpCrossButton" parent="Help/Help/MarginContainer2" instance=ExtResource("5_x3w8v")]
+layout_mode = 2
+focus_mode = 1
+
 [node name="WaitingScreen" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
@@ -2013,6 +2094,7 @@ color = Color(0, 0, 0, 0.560784)
 [connection signal="pressed" from="StartGameButtonHistory" to="." method="_on_start_game_button_history_pressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="ProfileButton" to="." method="_on_profile_button_pressed"]
+[connection signal="pressed" from="HelpButton" to="." method="_on_help_button_pressed"]
 [connection signal="pressed" from="Authorization/Panel/MarginContainer/Control/MarginContainer5/AuthorizationButton" to="." method="_on_authorization_button_pressed"]
 [connection signal="pressed" from="Authorization/Panel/MarginContainer/Control/MarginContainer/RecoverPasswordButton" to="." method="_on_recover_password_button_pressed"]
 [connection signal="pressed" from="Authorization/Panel/MarginContainer/Control/CreateAccount" to="." method="_on_create_account_pressed"]
@@ -2033,3 +2115,4 @@ color = Color(0, 0, 0, 0.560784)
 [connection signal="pressed" from="Profile/CrossButton" to="." method="_on_cross_button_pressed"]
 [connection signal="pressed" from="ChangePassword/Panel/MarginContainer/Control/MarginContainer2/ChangePasswordButton" to="." method="_on_change_password_button_pressed"]
 [connection signal="pressed" from="ChangePassword/Panel/MarginContainer2/ChangePasswordCrossButton" to="." method="_on_change_password_cross_button_pressed"]
+[connection signal="pressed" from="Help/Help/MarginContainer2/HelpCrossButton" to="." method="_on_help_cross_button_pressed"]
