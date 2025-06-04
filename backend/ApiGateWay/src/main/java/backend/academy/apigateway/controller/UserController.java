@@ -3,7 +3,6 @@ package backend.academy.apigateway.controller;
 
 import backend.academy.apigateway.client.UserClient;
 import backend.academy.apigateway.dto.EmailDto;
-import backend.academy.apigateway.dto.UserConfirmation;
 import backend.academy.apigateway.dto.UserDtoWithoutPassword;
 import backend.academy.apigateway.dto.security.AddRoleDto;
 import backend.academy.apigateway.dto.security.ChangingPasswordDto;
@@ -12,8 +11,8 @@ import backend.academy.apigateway.dto.security.UserDto;
 import backend.academy.apigateway.exception.RoleDoesntExist;
 import backend.academy.apigateway.exception.UserNotFound;
 import backend.academy.apigateway.exception.WrongPasswordException;
-import backend.academy.apigateway.service.KafkaClientService;
 import backend.academy.apigateway.service.UserService;
+import backend.academy.apigateway.exception.UserAlreadyExistsException;
 import backend.academy.apigateway.utils.ApiPaths;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,11 +20,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -45,6 +44,9 @@ public class UserController {
             log.info("Registering user: {}", userDto);
             userService.registerUser(userDto);
             return ResponseEntity.ok("Successfully registered");
+        } catch (UserAlreadyExistsException e) {
+            log.error("Registration error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Failed to register user with username " + userDto.getUsername());
         } catch (Exception e) {
             log.error(e.getMessage() + userDto.toString());
             return ResponseEntity.unprocessableEntity().build();
@@ -119,9 +121,9 @@ public class UserController {
         try {
 
             userService.updatePassword(
-                    changingPasswordDto.getNewPassword(),
-                    changingPasswordDto.getOldPassword(),
-                    userDetails.getUsername());
+                changingPasswordDto.getNewPassword(),
+                changingPasswordDto.getOldPassword(),
+                userDetails.getUsername());
 
             return ResponseEntity.ok().build();
 
@@ -202,13 +204,13 @@ public class UserController {
             UserDto userDto = userService.getUserByEmail(userDetails.getUsername());
             log.info(userDto.toString());
             UserDtoWithoutPassword userDtoWithoutPassword = UserDtoWithoutPassword
-                    .builder()
-                    .id(userDto.getId())
-                    .email(userDto.getEmail())
-                    .username(userDto.getUsername())
-                    .role(userDto.getRole())
-                    .isGameMaster(userDto.isGameMaster())
-                    .build();
+                .builder()
+                .id(userDto.getId())
+                .email(userDto.getEmail())
+                .username(userDto.getUsername())
+                .role(userDto.getRole())
+                .isGameMaster(userDto.isGameMaster())
+                .build();
             return ResponseEntity.ok(userDtoWithoutPassword);
         } catch (UserNotFound e) {
             log.error(e.getMessage() + userDetails.getUsername());
@@ -236,7 +238,7 @@ public class UserController {
     @Operation(summary = "Регистрация с подтверждением через почту")
     @PostMapping(ApiPaths.BASE_API + "/createUser")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-       return ResponseEntity.ok().body(userService.requestToCreateUser(userDto));
+        return ResponseEntity.ok().body(userService.requestToCreateUser(userDto));
     }
 
     @Operation(summary = "Отправка кода подтверждения почты")

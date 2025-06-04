@@ -2,6 +2,7 @@ package backend.academy.apigateway.client;
 
 import backend.academy.apigateway.dto.security.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,3 +35,4 @@ public interface UserClient {
      UserDto repairPasswordByEmail(@RequestParam("email") String email,
                                    @RequestParam("newPassword") String newPassword);
 }
+

@@ -5,14 +5,12 @@ import backend.academy.apigateway.dto.PasswordRepair;
 import backend.academy.apigateway.dto.UserConfirmation;
 import backend.academy.apigateway.dto.security.RoleDto;
 import backend.academy.apigateway.dto.security.UserDto;
-import backend.academy.apigateway.exception.RoleDoesntExist;
-import backend.academy.apigateway.exception.UserNotFound;
-import backend.academy.apigateway.exception.WrongConfirmationCode;
-import backend.academy.apigateway.exception.WrongPasswordException;
+import backend.academy.apigateway.exception.*;
 import backend.academy.apigateway.client.RoleClient;
 import backend.academy.apigateway.client.UserClient;
 import backend.academy.apigateway.service.*;
 import backend.academy.apigateway.utils.RandomUtils;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,7 +52,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDto registerUser(UserDto user) {
-        ;
+        checkUsernameAvailability(user.getUsername());
+
         user.setPassword(encoder.encode(user.getPassword()));
         try {
             user.setRole(roleClient.getRoleByName("USER"));
@@ -277,4 +276,14 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
+
+    public void checkUsernameAvailability(String username) {
+        try {
+            userClient.getUserByUsername(username);
+            throw new UserAlreadyExistsException("Username is taken");
+        } catch (FeignException.NotFound e) {
+            log.info("username {} availible", username);
+        }
+    }
+
 }
