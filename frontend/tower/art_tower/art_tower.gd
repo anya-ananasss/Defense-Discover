@@ -5,10 +5,10 @@ var tween: Tween
 var visiable = false
 const THIKNESS = 0.025
 const TWEEN_TIME = 1.25
-var additional_price_to_up := 25
+var additional_price_to_up := 10
 
 func get_update_price():
-	return Global.art_tower_price + additional_price_to_up * (level - 1)
+	return Global.art_tower_price / 5 + additional_price_to_up * (level - 1)
 
 func _ready() -> void:
 	summary_price = Global.art_tower_price
@@ -16,7 +16,7 @@ func _ready() -> void:
 func update_tower():
 	default_update()
 	level += 1
-	dps += 6 #было 5
+	dps += 5
 
 func _physics_process(delta: float) -> void:
 	var enemies = $AttackArea.get_overlapping_areas()

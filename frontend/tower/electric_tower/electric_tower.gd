@@ -5,7 +5,7 @@ var tween: Tween
 var dps = 100
 var MIN_DPS = 15 #было 10
 var MAX_DPS = 130
-var additional_price_to_up := 50
+var additional_price_to_up := 10
 const INCREASING_TIME = 4
 
 var cooldown : float:
@@ -18,12 +18,12 @@ var damage : float = 30
 var atackTimer : Timer = Timer.new()
 
 func get_update_price():
-	return Global.electric_tower_price + additional_price_to_up * (level - 1)
+	return Global.electric_tower_price / 5 + additional_price_to_up * (level - 1)
 	
 func update_tower():
 	default_update()
-	MIN_DPS += 8
-	MAX_DPS += 18
+	MIN_DPS += 5
+	MAX_DPS += 30
 	
 
 func _ready() -> void:
@@ -55,6 +55,10 @@ func _physics_process(delta: float) -> void:
 		%Attack.visible = true
 		var direction: Vector2 = current_enemy.get_parent().texture.global_position - %Attack.global_position
 		%Attack.region_rect = Rect2(0, 0, 448, direction.length() - 10)
+		if direction.angle() > 0:
+			%Attack.z_index = 1
+		else:
+			%Attack.z_index = 0
 		%Attack.rotation = direction.angle() - PI / 2
 		current_enemy.hit(delta * dps, Global.Types.ELECTRIC)
 	

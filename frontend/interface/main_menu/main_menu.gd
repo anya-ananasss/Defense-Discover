@@ -235,7 +235,7 @@ func _on_registration_button_pressed() -> void:
 	var ret = await Http.register_user(%EmailLineEdit.text, %LoginLineEdit.text, %PasswordLineEdit.text)
 	if 'error' not in ret:
 		%Registration.visible = false
-		%ConfirmationMenu.visible = true	
+		%ConfirmationMenu.visible = true
 		update_user_data()
 	else:
 		var code = str(ret['error'])
