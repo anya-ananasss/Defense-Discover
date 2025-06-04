@@ -279,7 +279,7 @@ public class UserServiceImpl implements UserService {
         try {
             userClient.getUserByUsername(username);
             throw new UsernameAlreadyTakenException("Username is taken");
-        } catch (FeignException.NotFound e) {
+        } catch (FeignException e) {
             log.info("username {} is available", username);
         }
     }
@@ -288,7 +288,7 @@ public class UserServiceImpl implements UserService {
         try {
             userClient.getUserByEmail(email);
             throw new EmailAlreadyTakenException("Email is taken");
-        } catch (FeignException.NotFound e) {
+        } catch (FeignException e) {
             log.info("email {} is available", email);
         }
     }
