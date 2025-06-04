@@ -43,10 +43,11 @@ collision_layer = 4
 shape = SubResource("CircleShape2D_bf1au")
 
 [node name="Sprites" type="Node2D" parent="Attack" index="1"]
+y_sort_enabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Attack/Sprites" index="0"]
 unique_name_in_owner = true
-y_sort_enabled = true
+z_index = 2
 position = Vector2(8, -12)
 sprite_frames = ExtResource("4_pa3rh")
 frame = 15
@@ -54,7 +55,6 @@ frame_progress = 1.0
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Attack/Sprites" index="1"]
 unique_name_in_owner = true
-y_sort_enabled = true
 position = Vector2(-26, -36)
 sprite_frames = ExtResource("4_pa3rh")
 frame = 15
@@ -62,7 +62,7 @@ frame_progress = 1.0
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Attack/Sprites" index="2"]
 unique_name_in_owner = true
-y_sort_enabled = true
+z_index = -1
 position = Vector2(16, -55)
 sprite_frames = ExtResource("4_pa3rh")
 frame = 15

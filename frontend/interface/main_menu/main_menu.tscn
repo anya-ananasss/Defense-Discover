@@ -1336,7 +1336,6 @@ offset_right = 175.0
 offset_bottom = 235.0
 theme_override_fonts/font = ExtResource("11_cr5ul")
 theme_override_font_sizes/font_size = 22
-text = "30"
 
 [node name="RegistrationSuccess" type="Control" parent="."]
 unique_name_in_owner = true

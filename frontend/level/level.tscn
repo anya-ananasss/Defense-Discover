@@ -17,15 +17,15 @@
 shader = ExtResource("4_0v1st")
 shader_parameter/lod = 2.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_oem8r"]
+radius = 100.005
+
 [sub_resource type="Curve2D" id="Curve2D_6gtgk"]
 bake_interval = 1.0
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 342.521, 1172.88, 0, 0, 0, 0, 343.674, 309.076, -29.6159, 17.8807, 29.6159, -17.8807, 375.966, 192.596, 0, 0, 0, 0, 491.293, 173, 0, 0, 0, 0, 1560.37, 173, -17.2841, -17.1102, 17.2841, 17.1102, 1633.03, 187.983, 0, 0, 0, 0, 1650.33, 230.654, 0, 0, 0, 0, 1645.72, 374.813, 17.7483, -9.14402, -17.7483, 9.14402, 1621.5, 411.717, 0, 0, 0, 0, 1555.76, 423.25, 0, 0, 0, 0, 704, 420, 14.5228, -15.7684, -14.5228, 15.7684, 645.831, 440.549, 0, 0, 0, 0, 628.532, 500.519, 0, 0, 0, 0, 637.758, 667.743, -20.2718, -14.1012, 20.2718, 14.1012, 663.13, 702.341, 0, 0, 0, 0, 769.231, 709.261, 0, 0, 0, 0, 1567.29, 703.495, -18.5626, -12.4016, 18.5626, 12.4016, 1624.96, 712.721, 0, 0, 0, 0, 1649.18, 755.392, 0, 0, 0, 0, 1644.56, 847.653, 17.0738, -8.64151, -17.0738, 8.64151, 1616.88, 890.324, 0, 0, 0, 0, 1535, 896.091, 0, 0, 0, 0, 783.07, 891.477, 26.038, -22.7357, -26.038, 22.7357, 675.816, 908.776, 0, 0, 0, 0, 645.831, 979.126, 0, 0, 0, 0, 646.984, 1193.63)
 }
 point_count = 26
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_oem8r"]
-radius = 100.005
 
 [node name="Level" type="Node2D" node_paths=PackedStringArray("camera")]
 position = Vector2(960, 540)
@@ -190,7 +190,6 @@ horizontal_alignment = 1
 
 [node name="GmPanel" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer2"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer2/GmPanel"]
@@ -581,12 +580,6 @@ z_as_relative = false
 position = Vector2(436.024, 755.419)
 texture = ExtResource("10_l5lfc")
 
-[node name="Path2D" type="Path2D" parent="Level/map"]
-unique_name_in_owner = true
-y_sort_enabled = true
-scale = Vector2(0.667, 0.667)
-curve = SubResource("Curve2D_6gtgk")
-
 [node name="EnemyTimer" type="Timer" parent="Level"]
 
 [node name="Home" type="Area2D" parent="Level"]
@@ -596,63 +589,71 @@ collision_layer = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Level/Home"]
 shape = SubResource("CircleShape2D_oem8r")
 
+[node name="Path2D" type="Path2D" parent="Level"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(9, 101)
+scale = Vector2(0.8671, 0.8671)
+curve = SubResource("Curve2D_6gtgk")
+
 [node name="Places" type="Node2D" parent="Level"]
 unique_name_in_owner = true
-position = Vector2(14, 0)
+y_sort_enabled = true
+position = Vector2(14, 7)
 
 [node name="PlaceForTower" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(200, 862)
+position = Vector2(200, 808)
 
 [node name="PlaceForTower2" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(200, 412)
+position = Vector2(200, 358)
 
 [node name="PlaceForTower3" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(200, 562)
+position = Vector2(200, 508)
 
 [node name="PlaceForTower4" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(200, 712)
+position = Vector2(200, 658)
 
 [node name="PlaceForTower5" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(560, 792)
+position = Vector2(560, 800)
 
 [node name="PlaceForTower6" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(710, 792)
+position = Vector2(710, 800)
 
 [node name="PlaceForTower7" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(860, 792)
+position = Vector2(860, 800)
 
 [node name="PlaceForTower8" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1010, 792)
+position = Vector2(1010, 800)
 
 [node name="PlaceForTower9" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1160, 792)
+position = Vector2(1160, 800)
 
 [node name="PlaceForTower10" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1309, 792)
+position = Vector2(1309, 800)
 
 [node name="PlaceForTower11" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(560, 352)
+position = Vector2(560, 360)
 
 [node name="PlaceForTower12" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(710, 352)
+position = Vector2(710, 360)
 
 [node name="PlaceForTower13" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(860, 352)
+position = Vector2(860, 360)
 
 [node name="PlaceForTower14" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1010, 352)
+position = Vector2(1010, 360)
 
 [node name="PlaceForTower15" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1160, 352)
+position = Vector2(1160, 360)
 
 [node name="PlaceForTower16" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1309, 352)
+position = Vector2(1309, 360)
 
 [node name="PlaceForTower17" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(431, 562)
+position = Vector2(431, 508)
 
 [node name="PlaceForTower18" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(431, 712)
+position = Vector2(431, 658)
 
 [node name="Wave_generator" type="Node" parent="Level"]
 unique_name_in_owner = true
@@ -677,8 +678,8 @@ metadata/_custom_type_script = "uid://m1vo0myw6iol"
 [connection signal="pressed" from="CanvasLayer/Control/WinMenu/PanelContainer/MarginContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/WinMenu/PanelContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/Help/Help/MarginContainer2/HelpCrossButton" to="." method="_on_help_cross_button_pressed"]
-[connection signal="child_exiting_tree" from="Level/map/Path2D" to="." method="_on_path_2d_child_exiting_tree"]
 [connection signal="timeout" from="Level/EnemyTimer" to="." method="next_enemy"]
 [connection signal="area_entered" from="Level/Home" to="." method="_on_home_area_entered"]
+[connection signal="child_exiting_tree" from="Level/Path2D" to="." method="_on_path_2d_child_exiting_tree"]
 [connection signal="add_enemy" from="Level/Wave_generator" to="." method="_on_wave_generator_add_enemy"]
 [connection signal="wave_ended" from="Level/Wave_generator" to="." method="_on_wave_generator_wave_ended"]
