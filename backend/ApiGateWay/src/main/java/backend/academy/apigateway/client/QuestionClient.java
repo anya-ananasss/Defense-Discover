@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "question-client", url = "${model.client.url}")
+@FeignClient(name = "question-client", url = "${promt.client.url}")
 public interface QuestionClient {
 
     @GetMapping("/getAllQuestions")
