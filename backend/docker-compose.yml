@@ -1,5 +1,3 @@
-
-
 services:
   apigateway:
     image: 770vda/defense-discover:apigateway
@@ -17,6 +15,7 @@ services:
       - ROLE_CLIENT_URL=http://userservice:8081
       - STAT_CLIENT_URL=http://userservice:8081
       - USER_CLIENT_URL=http://userservice:8081
+      - MODEL_CLIENT_URL=http://modelservice:8082
     networks:
       - app-network
 
