@@ -1,5 +1,6 @@
 package backend.academy.notificationservice.service;
 
+import backend.academy.notificationservice.dto.PasswordRepair;
 import backend.academy.notificationservice.dto.UserConfirmation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,33 @@ public class UserEventsMessageConsumer {
     public void consume(ConsumerRecord<Long, String> record, Acknowledgment acknowledgment) {
         try {
             messageService.sendMail(objectMapper.readValue(record.value(), UserConfirmation.class));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            kafkaTemplate.send(topicDlt + "-dlt", record.toString());
+        }
+
+        acknowledgment.acknowledge();
+    }
+
+
+
+    @KafkaListener(
+            containerFactory = "defaultConsumerFactory",
+            topicPartitions =
+            @TopicPartition(
+                    topic = "${app.password-repair.topic}",
+                    partitions = {"0"}))
+    @RetryableTopic(
+            backoff = @Backoff(delay = 3000L, multiplier = 2.0),
+            attempts = "2",
+            autoCreateTopics = "false",
+            kafkaTemplate = "userEventKafkaTemplate",
+            topicSuffixingStrategy = SUFFIX_WITH_INDEX_VALUE,
+            include = RuntimeException.class)
+    @SuppressWarnings("FutureReturnValueIgnored")
+    public void consumeRepairPassword(ConsumerRecord<Long, String> record, Acknowledgment acknowledgment) {
+        try {
+            messageService.sendMailRepairPassword(objectMapper.readValue(record.value(), PasswordRepair.class));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             kafkaTemplate.send(topicDlt + "-dlt", record.toString());

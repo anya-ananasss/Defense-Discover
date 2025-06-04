@@ -33,6 +33,11 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
+    @GetMapping("/repairPassword/by-email")
+    public void repairPasswordByEmail(@RequestParam(name = "email") String email, @RequestParam(name = "newPassword") String newPassword) {
+       userService.repairPassword(email, newPassword);
+    }
+
     @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
         return userService.createUser(userDto);

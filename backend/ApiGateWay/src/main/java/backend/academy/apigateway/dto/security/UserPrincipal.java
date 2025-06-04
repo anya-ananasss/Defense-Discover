@@ -1,6 +1,7 @@
 package backend.academy.apigateway.dto.security;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
+@Slf4j
 public class UserPrincipal implements UserDetails {
 
     private UserDto user;
@@ -19,6 +21,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        log.info(user.getEmail() + " имеет роль " + user.getRole());
         return Stream.of(user.getRole())
                 .map(
                         role -> new SimpleGrantedAuthority(
@@ -35,7 +38,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getEmail();
     }
 
     @Override

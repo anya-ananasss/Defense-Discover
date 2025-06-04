@@ -5,10 +5,10 @@ import lombok.*;
 
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class PromtDto {
     private String topic;
@@ -17,3 +17,4 @@ public class PromtDto {
     @JsonProperty("key_words")
     private List<String> keyWords;
 }
+

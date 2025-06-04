@@ -1,5 +1,6 @@
 package backend.academy.notificationservice.service;
 
+import backend.academy.notificationservice.dto.PasswordRepair;
 import backend.academy.notificationservice.dto.UserConfirmation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,17 @@ public class MessageService {
                 userConfirmation.getEmail(),
                 "Подтвердите свой аккаунт на Defense-Discover",
                 "Ваш код подтверждения: " + userConfirmation.getCode()
+        );
+
+    }
+
+    public void sendMailRepairPassword(PasswordRepair passwordRepair) {
+        System.out.println(passwordRepair);
+
+        emailService.sendSimpleMessage(
+                passwordRepair.getEmail(),
+                "Восстановление пароля на Defense-Discover",
+                "Ваш новый пароль: " + passwordRepair.getPassword()
         );
 
     }

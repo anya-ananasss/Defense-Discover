@@ -5,6 +5,10 @@ app:
     topic: "user-confirmation"
     partitions: "1"
     replicas: "1"
+  password-repair:
+    topic: "password-repair"
+    partitions: "1"
+    replicas: "1"
 spring:
   config:
     import: optional:file:.env[.properties]
@@ -41,3 +45,10 @@ role:
 stat:
   client:
     url: ${STAT_CLIENT_URL}
+springdoc:
+  swagger-ui:
+    tryItOutEnabled: false
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.web.FilterChainProxy: DEBUG

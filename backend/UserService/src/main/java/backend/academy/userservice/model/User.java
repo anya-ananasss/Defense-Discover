@@ -20,6 +20,8 @@ public class User {
     private String username;
     private String email;
     private String password;
+    @Column(name = "is_game_master")
+    private boolean isGameMaster;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

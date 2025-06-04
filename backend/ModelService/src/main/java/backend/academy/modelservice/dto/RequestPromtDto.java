@@ -9,5 +9,5 @@ import lombok.*;
 @Builder
 public class RequestPromtDto {
     private String username;
-    private PromtDto promt;
+    private NumPromtDto promt;
 }

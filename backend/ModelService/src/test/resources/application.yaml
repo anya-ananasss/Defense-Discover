@@ -1,0 +1,60 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+    openfeign:
+      enabled: false
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password: sa
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    enabled: false
+  redis:
+    host: localhost
+    port: 6379
+
+promt:
+  client:
+    url: http://localhost:8081
+
+app:
+  stat:
+    topic: stat-test
+    partitions: 1
+    replicas: 1
+
+kafka:
+  bootstrap-servers: localhost:9092
+  consumer:
+    auto-offset-reset: earliest
+    group-id: test-group
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+
+POSTGRES_URL: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+POSTGRES_USER: sa
+POSTGRES_PASSWORD: sa
+REDIS_HOST: localhost
+REDIS_PORT: 6379
+BOOTSTRAP-SERVERS: localhost:9092
+SCHEMA_REGISTRY_URL: http://localhost:8081
+ZOOKEEPER_CONNECT_STRING: localhost:2181
+PROMT_CLIENT_URL: http://localhost:8081

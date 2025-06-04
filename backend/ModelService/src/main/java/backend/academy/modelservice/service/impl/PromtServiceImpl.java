@@ -3,7 +3,6 @@ package backend.academy.modelservice.service.impl;
 import backend.academy.modelservice.client.PromtClient;
 import backend.academy.modelservice.dto.*;
 import backend.academy.modelservice.exception.QuestionDoesntExists;
-import backend.academy.modelservice.mapper.QuestionMapper;
 import backend.academy.modelservice.service.KafkaClientService;
 import backend.academy.modelservice.service.PromtService;
 import backend.academy.modelservice.service.QuestionService;
@@ -13,11 +12,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +48,12 @@ public class PromtServiceImpl implements PromtService {
             try {
                 questionDto = questionService.findQuestionAndTopicWhereIdNotIn(ids, requestPromtDto.getPromt().getTopic());
             } catch (QuestionDoesntExists e) {
-                List<QuestionDto> questionDtos = promtClient.getQuestion(requestPromtDto.getPromt());
+                PromtDto promtDto = new PromtDto();
+                promtDto.setTopic(requestPromtDto.getPromt().getTopic());
+                promtDto.setDifficulty("средний");
+                promtDto.setNumQuestions(requestPromtDto.getPromt().getNumQuestions());
+                promtDto.setKeyWords(requestPromtDto.getPromt().getKeyWords());
+                List<QuestionDto> questionDtos = promtClient.getQuestion(promtDto);
 
                 if (questionDtos != null) {
                     questionDto = questionDtos.get(0);
@@ -67,7 +71,9 @@ public class PromtServiceImpl implements PromtService {
             redisService.setValue("currQuest" + requestPromtDto.getUsername(), objectMapper.writeValueAsString(questionDto));
 
             System.out.println("currQuest" + requestPromtDto.getUsername());
-
+            List<String> newList = new ArrayList<>(questionDto.getOptions());
+            Collections.shuffle(newList);
+            questionDto.setOptions(newList);
             return List.of(questionDto);
 
         } catch (Exception e) {
@@ -85,14 +91,16 @@ public class PromtServiceImpl implements PromtService {
 
             if (Objects.equals(questionDto.getCorrectAnswer(), postAnswerDto.getAnswer())) {
 
-
-                kafkaClientService.sendNotificationStackOverflow(
-                        StatEvent
-                                .builder()
-                                .username(postAnswerDto.getUserName())
-                                .topic(questionDto.getTopic())
-                                .build()
-                );
+                if (postAnswerDto.getUserName() != null) {
+                    kafkaClientService.sendNotificationStackOverflow(
+                            StatEvent
+                                    .builder()
+                                    .username(postAnswerDto.getUserName())
+                                    .topic(questionDto.getTopic())
+                                    .isCorrect(true)
+                                    .build()
+                    );
+                }
 
                 return CheckAnswerDto
                         .builder()
@@ -100,6 +108,17 @@ public class PromtServiceImpl implements PromtService {
                         .userName(postAnswerDto.getUserName())
                         .correctAnswer(questionDto.getCorrectAnswer())
                         .build();
+            }
+
+            if (postAnswerDto.getUserName() != null) {
+                kafkaClientService.sendNotificationStackOverflow(
+                        StatEvent
+                                .builder()
+                                .username(postAnswerDto.getUserName())
+                                .topic(questionDto.getTopic())
+                                .isCorrect(false)
+                                .build()
+                );
             }
 
             return CheckAnswerDto
@@ -114,7 +133,7 @@ public class PromtServiceImpl implements PromtService {
         }
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 1000000)
     @Transactional
     public void runtimeQuestionGen() {
         log.info("Запросы генерируются");

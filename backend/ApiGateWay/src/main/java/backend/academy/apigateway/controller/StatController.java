@@ -28,6 +28,7 @@ public class StatController {
     }
 
     @GetMapping(ApiPaths.BASE_API+"/getUserStat")
+    @Operation(summary = "Получить записи статистики о достижении текущего игрока")
     public ResponseEntity<List<StatCounterWithoutUserDto>> stats(@RequestParam(name = "username") String username) {
         return ResponseEntity.ok(statClient.getUserStat(username));
     }

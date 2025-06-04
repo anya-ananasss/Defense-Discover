@@ -11,4 +11,5 @@ import lombok.*;
 public class StatEvent {
     private String username;
     private String topic;
+    private boolean isCorrect;
 }

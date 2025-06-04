@@ -10,4 +10,5 @@ import lombok.*;
 public class StatCounterWithoutUserDto {
     private String topic;
     private Long score;
+    private Long allQuestions;
 }

@@ -27,6 +27,14 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+
+        String path = request.getRequestURI();
+        if (path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
@@ -38,6 +46,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = context.getBean(MyUserDetailsService.class).loadUserByUsername(username);
+
+            System.out.println("Auth header: " + authHeader);
+            System.out.println("Extracted username: " + username);
+            System.out.println("Token valid: " + jwtService.validateToken(token, userDetails));
+            System.out.println("Authorities: " + userDetails.getAuthorities());
+
             if (jwtService.validateToken(token, userDetails)) {
                 System.out.println(userDetails.getAuthorities());
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -46,6 +60,8 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }
+
+
 
         filterChain.doFilter(request, response);
 

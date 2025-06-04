@@ -3,6 +3,10 @@ app:
     topic: "user-confirmation"
     fail-on-processing: false
     concurrency: 3
+  password-repair:
+    topic: "password-repair"
+    fail-on-processing: false
+    concurrency: 3
   mail: ${MAIL_USERNAME}
 
 spring:

@@ -55,22 +55,24 @@ public class SecurityConfig {
                         {
                             request
                                     .requestMatchers(
-                                            "/api/v1/swagger-ui/**",
-                                            "/v3/api-docs/**",
                                             "/swagger-ui/**",
                                             "/swagger-ui.html",
-                                            "/webjars/**"
+                                            "/v3/api-docs",
+                                            "/v3/api-docs/**",
+                                            "/v3/api-docs/*"
                                     ).permitAll()
                                     .requestMatchers(HttpMethod.GET, ApiPaths.BASE_API + "/*").permitAll()
                                     .requestMatchers(HttpMethod.POST, ApiPaths.BASE_API + "/*").permitAll()
                                     .requestMatchers(HttpMethod.POST, ApiPaths.USER_API + "/*").hasAnyAuthority("USER", "ADMIN")
+                                    .requestMatchers(HttpMethod.POST, ApiPaths.USER_API + "/**").hasAnyAuthority("USER", "ADMIN")
                                     .requestMatchers(HttpMethod.GET, ApiPaths.ADMIN_API + "/*").hasAuthority("ADMIN")
-                                    .requestMatchers(HttpMethod.POST, ApiPaths.ADMIN_API + "/*").hasAuthority("ADMIN");
+                                    .requestMatchers(HttpMethod.POST, ApiPaths.ADMIN_API + "/*").hasAuthority("ADMIN")
+                                    .requestMatchers(HttpMethod.GET, ApiPaths.ADMIN_API + "/**").hasAuthority("ADMIN")
+                                    .requestMatchers(HttpMethod.POST, ApiPaths.ADMIN_API + "/**").hasAuthority("ADMIN");
                         }
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .httpBasic(Customizer.withDefaults()).
-                sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
 
 

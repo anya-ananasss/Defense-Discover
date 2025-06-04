@@ -1,19 +1,17 @@
 package backend.academy.apigateway.service.impl;
 
 
+import backend.academy.apigateway.dto.PasswordRepair;
 import backend.academy.apigateway.dto.UserConfirmation;
 import backend.academy.apigateway.dto.security.RoleDto;
 import backend.academy.apigateway.dto.security.UserDto;
-import backend.academy.apigateway.exception.RoleDoesntExist;
-import backend.academy.apigateway.exception.UserNotFound;
-import backend.academy.apigateway.exception.WrongConfirmationCode;
-import backend.academy.apigateway.exception.WrongPasswordException;
+import backend.academy.apigateway.exception.*;
 import backend.academy.apigateway.client.RoleClient;
 import backend.academy.apigateway.client.UserClient;
 import backend.academy.apigateway.service.*;
 import backend.academy.apigateway.utils.RandomUtils;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,7 +38,7 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
 
-    public UserServiceImpl(JWTService jwtService, AuthenticationManager authManager, UserClient repo, RoleClient roleClient, UserClient userClient, RoleService roleService,  KafkaClientService kafkaClientService, RedisService redisService) {
+    public UserServiceImpl(JWTService jwtService, AuthenticationManager authManager, UserClient repo, RoleClient roleClient, UserClient userClient, RoleService roleService, KafkaClientService kafkaClientService, RedisService redisService) {
         this.jwtService = jwtService;
         this.authManager = authManager;
         this.repo = repo;
@@ -52,13 +49,13 @@ public class UserServiceImpl implements UserService {
         this.redisService = redisService;
     }
 
-    public UserDto registerUser(UserDto user) {;
+    public UserDto registerUser(UserDto user) {
         user.setPassword(encoder.encode(user.getPassword()));
         try {
             user.setRole(roleClient.getRoleByName("USER"));
             repo.createUser(user);
             return user;
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             log.error("Не удалось сохранить сущность User");
             return null;
@@ -74,16 +71,26 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    public String verifyAdmin(UserDto user) {
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+
+        if (authentication.isAuthenticated() && authentication.getAuthorities().stream().anyMatch(e -> e.getAuthority().equals("ADMIN"))) {
+            return jwtService.generateToken(user.getEmail());
+        } else {
+            return "fail";
+        }
+    }
+
     public String registerAndVerifyUser(UserDto user) {
         user.setPassword(encoder.encode(user.getPassword()));
         try {
             user.setRole(roleClient.getRoleByName("USER"));
             repo.createUser(user);
-            Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+            Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
             if (authentication.isAuthenticated()) {
-                return jwtService.generateToken(user.getUsername());
+                return jwtService.generateToken(user.getEmail());
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Не удалось сохранить или валидикровать сущность User");
             return null;
         }
@@ -102,7 +109,7 @@ public class UserServiceImpl implements UserService {
             }
             repo.createUser(user);
             return user;
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error("Не удалось сохранить сущность User");
             return null;
         }
@@ -111,30 +118,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(UserDto user) {
 
-            UserDto userEntity = userClient.getUserByUsername(user.getUsername());
-            if(userEntity == null){
-                throw new UserNotFound(user.getUsername());
-            }
+        UserDto userEntity = userClient.getUserByUsername(user.getUsername());
+        if (userEntity == null) {
+            throw new UserNotFound(user.getUsername());
+        }
 
-            try {
-                userClient.deleteUser(userEntity.getId());
-            }  catch (Exception e){
-                log.error(e.getMessage());
-                log.error("User " + user.getUsername() + " не был удален");
-                return false;
-            }
+        try {
+            userClient.deleteUser(userEntity.getId());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            log.error("User " + user.getUsername() + " не был удален");
+            return false;
+        }
 
-            log.info("User " + user.getUsername() + " был удален");
-            return true;
+        log.info("User " + user.getUsername() + " был удален");
+        return true;
     }
 
     @Override
     public UserDto updatePassword(String newPassword, String oldPassword, String username) {
-        UserDto userEntity = userClient.getUserByUsername(username);
-        if(userEntity == null){
+        UserDto userEntity = userClient.getUserByEmail(username);
+        if (userEntity == null) {
             throw new UserNotFound(username);
         }
-        if(encoder.matches(oldPassword, userEntity.getPassword())){
+        if (encoder.matches(oldPassword, userEntity.getPassword())) {
             userEntity.setPassword(encoder.encode(newPassword));
             userClient.updateUser(userEntity.getId(), userEntity);
             return UserDto.builder().username(username).password(newPassword).build();
@@ -147,7 +154,7 @@ public class UserServiceImpl implements UserService {
     public RoleDto getRoles(String name) {
 
         UserDto userEntity = userClient.getUserByUsername(name);
-        if(userEntity == null){
+        if (userEntity == null) {
             throw new UserNotFound(name);
         }
 
@@ -157,15 +164,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addRole(RoleDto role, String username) {
 
-        RoleDto roleEntity  = roleClient.getRoleByName(role.getName());
+        RoleDto roleEntity = roleClient.getRoleByName(role.getName());
 
-        if(roleEntity == null){
+        if (roleEntity == null) {
             throw new RoleDoesntExist(role.getName());
         }
 
         UserDto userEntity = userClient.getUserByUsername(username);
 
-        if(userEntity == null){
+        if (userEntity == null) {
             throw new UserNotFound(username);
         }
         userEntity.setRole(roleEntity);
@@ -178,7 +185,7 @@ public class UserServiceImpl implements UserService {
 
         UserDto userEntity = userClient.getUserByUsername(username);
 
-        if(userEntity == null){
+        if (userEntity == null) {
             throw new UserNotFound(username);
         }
         userEntity.setRole(null);
@@ -203,7 +210,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUser(String username) {
         UserDto user = userClient.getUserByUsername(username);
-        if(user == null){
+        if (user == null) {
             throw new UserNotFound(username);
         }
         return user;
@@ -212,14 +219,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserByEmail(String email) {
         UserDto user = userClient.getUserByEmail(email);
-        if(user == null){
+        if (user == null) {
             throw new UserNotFound(email);
         }
         return user;
     }
 
+    @Override
+    public String repairPassword(String email) {
+        try {
+            String tmpPassword = "tempPassword" + RandomUtils.generateSixDigitCode();
+            kafkaClientService.sendPasswordRepair(
+                    PasswordRepair.builder().password(tmpPassword).email(email).build());
+            return tmpPassword;
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            return "";
+        }
+    }
+
 
     public UserDto requestToCreateUser(UserDto userDto) {
+        checkUsernameAvailability(userDto.getUsername());
+        checkEmailAvailability(userDto.getEmail());
         try {
             String code = RandomUtils.generateSixDigitCode();
             kafkaClientService.sendNotificationStackOverflow(
@@ -252,4 +274,23 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException(e);
         }
     }
+
+    public void checkUsernameAvailability(String username) {
+        try {
+            userClient.getUserByUsername(username);
+            throw new UsernameAlreadyTakenException("Username is taken");
+        } catch (FeignException e) {
+            log.info("username {} is available", username);
+        }
+    }
+
+    public void checkEmailAvailability(String email) {
+        try {
+            userClient.getUserByEmail(email);
+            throw new EmailAlreadyTakenException("Email is taken");
+        } catch (FeignException e) {
+            log.info("email {} is available", email);
+        }
+    }
+
 }

@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +44,31 @@ public class UserService {
                             .password(encoder.encode("0000"))
                             .email("admin@admin.com")
                             .role(roleRepository.findByName("ADMIN").orElseThrow())
+                            .isGameMaster(true)
+                            .build()
+            );
+        }
+
+        if (userRepository.findByUsername("gameMaster1").isEmpty()) {
+            userRepository.save(
+                    User.builder()
+                            .username("gameMaster1")
+                            .password(encoder.encode("gameMaster0000"))
+                            .email("placeholder1@admin.com")
+                            .role(roleRepository.findByName("USER").orElseThrow())
+                            .isGameMaster(true)
+                            .build()
+            );
+        }
+
+        if (userRepository.findByUsername("gameMaster2").isEmpty()) {
+            userRepository.save(
+                    User.builder()
+                            .username("gameMaster2")
+                            .password(encoder.encode("gameMaster0000"))
+                            .email("placeholder2@admin.com")
+                            .role(roleRepository.findByName("USER").orElseThrow())
+                            .isGameMaster(true)
                             .build()
             );
         }
@@ -50,7 +76,7 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return userRepository.findAll().stream().peek(user -> user.setPassword("")).collect(Collectors.toList());
     }
 
     public UserDto getUserById(Long id) {
@@ -78,10 +104,19 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return userMapper.toDto(user);
+        log.info(user.toString());
+        UserDto userDto = userMapper.toDto(user);
+        userDto.setGameMaster(user.isGameMaster());
+        log.info(userDto.toString());
+        return userDto;
     }
 
-
+    public void repairPassword(String email, String newPassword){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
+    }
 
     public UserDto createUser(UserDto userDto) {
         User user = new User();

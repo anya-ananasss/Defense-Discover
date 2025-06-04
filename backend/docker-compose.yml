@@ -149,7 +149,8 @@ services:
     build: ./ModelApiService
     container_name: llmservice
     environment:
-      TOKEN: ${LLM_TOKEN}
+      QWEN_AUTH_TOKEN: ${QWEN_AUTH_TOKEN}
+      QWEN_COOKIE: ${QWEN_COOKIE}
     restart: always
     networks:
       - app-network

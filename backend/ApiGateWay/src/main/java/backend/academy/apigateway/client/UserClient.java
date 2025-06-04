@@ -2,6 +2,7 @@ package backend.academy.apigateway.client;
 
 import backend.academy.apigateway.dto.security.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,4 +30,9 @@ public interface UserClient {
 
      @GetMapping("/users/by-email")
      UserDto getUserByEmail(@RequestParam("email") String email);
+
+     @GetMapping("/users/repairPassword/by-email")
+     UserDto repairPasswordByEmail(@RequestParam("email") String email,
+                                   @RequestParam("newPassword") String newPassword);
 }
+

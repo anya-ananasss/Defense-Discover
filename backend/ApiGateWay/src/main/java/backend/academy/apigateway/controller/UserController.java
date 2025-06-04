@@ -1,16 +1,14 @@
 package backend.academy.apigateway.controller;
 
 
-import backend.academy.apigateway.dto.UserConfirmation;
+import backend.academy.apigateway.client.UserClient;
+import backend.academy.apigateway.dto.EmailDto;
 import backend.academy.apigateway.dto.UserDtoWithoutPassword;
 import backend.academy.apigateway.dto.security.AddRoleDto;
 import backend.academy.apigateway.dto.security.ChangingPasswordDto;
 import backend.academy.apigateway.dto.security.RoleDto;
 import backend.academy.apigateway.dto.security.UserDto;
-import backend.academy.apigateway.exception.RoleDoesntExist;
-import backend.academy.apigateway.exception.UserNotFound;
-import backend.academy.apigateway.exception.WrongPasswordException;
-import backend.academy.apigateway.service.KafkaClientService;
+import backend.academy.apigateway.exception.*;
 import backend.academy.apigateway.service.UserService;
 import backend.academy.apigateway.utils.ApiPaths;
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,11 +17,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -35,6 +33,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final UserClient userClient;
 
     @PostMapping((ApiPaths.BASE_API + "/register"))
     public ResponseEntity<String> register(@RequestBody UserDto userDto) {
@@ -42,6 +41,12 @@ public class UserController {
             log.info("Registering user: {}", userDto);
             userService.registerUser(userDto);
             return ResponseEntity.ok("Successfully registered");
+        } catch (UsernameAlreadyTakenException e) {
+            log.error("Registration error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to register user with username " + userDto.getUsername());
+        }  catch (EmailAlreadyTakenException e) {
+            log.error("Registration error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Failed to register user with email " + userDto.getEmail());
         } catch (Exception e) {
             log.error(e.getMessage() + userDto.toString());
             return ResponseEntity.unprocessableEntity().build();
@@ -54,10 +59,18 @@ public class UserController {
         try {
             log.info("Logining user: {}", userDto);
             return ResponseEntity.ok(userService.verify(userDto));
-        } catch (BadCredentialsException e) {
-            return ResponseEntity
-                    .status(HttpStatus.UNAUTHORIZED)
-                    .body("Неверное имя пользователя или пароль");
+        } catch (Exception e) {
+            log.error(e.getMessage() + userDto.toString());
+            return ResponseEntity.unprocessableEntity().build();
+        }
+    }
+
+    @Operation(summary = "Логин в админ панель")
+    @PostMapping(ApiPaths.BASE_API + "/loginadmin")
+    public ResponseEntity<String> loginToAdminPanel(@RequestBody UserDto userDto) {
+        try {
+            log.info("Logining user: {}", userDto);
+            return ResponseEntity.ok(userService.verifyAdmin(userDto));
         } catch (Exception e) {
             log.error(e.getMessage() + userDto.toString());
             return ResponseEntity.unprocessableEntity().build();
@@ -108,9 +121,9 @@ public class UserController {
         try {
 
             userService.updatePassword(
-                    changingPasswordDto.getNewPassword(),
-                    changingPasswordDto.getOldPassword(),
-                    userDetails.getUsername());
+                changingPasswordDto.getNewPassword(),
+                changingPasswordDto.getOldPassword(),
+                userDetails.getUsername());
 
             return ResponseEntity.ok().build();
 
@@ -186,22 +199,38 @@ public class UserController {
 
     @Operation(summary = "Получить конкретного пользователя")
     @PostMapping(ApiPaths.BASE_API + "/getUser")
-    public ResponseEntity<UserDtoWithoutPassword> getUser(@RequestParam(name = "email") String email) {
+    public ResponseEntity<UserDtoWithoutPassword> getUser(@AuthenticationPrincipal UserDetails userDetails) {
         try {
-            UserDto userDto = userService.getUserByEmail(email);
+            UserDto userDto = userService.getUserByEmail(userDetails.getUsername());
+            log.info(userDto.toString());
             UserDtoWithoutPassword userDtoWithoutPassword = UserDtoWithoutPassword
-                    .builder()
-                    .id(userDto.getId())
-                    .email(userDto.getEmail())
-                    .username(userDto.getUsername())
-                    .role(userDto.getRole())
-                    .build();
+                .builder()
+                .id(userDto.getId())
+                .email(userDto.getEmail())
+                .username(userDto.getUsername())
+                .role(userDto.getRole())
+                .isGameMaster(userDto.isGameMaster())
+                .build();
             return ResponseEntity.ok(userDtoWithoutPassword);
         } catch (UserNotFound e) {
-            log.error(e.getMessage() + email);
+            log.error(e.getMessage() + userDetails.getUsername());
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            log.error(e.getMessage() + email);
+            log.error(e.getMessage() + userDetails.getUsername());
+            return ResponseEntity.unprocessableEntity().build();
+        }
+    }
+
+    @Operation(summary = "Восстановление пароля")
+    @PostMapping(ApiPaths.BASE_API + "/repairPassword")
+    public ResponseEntity<Void> getUser(@RequestBody EmailDto email) {
+        try {
+            String tempPassword = userService.repairPassword(email.getEmail());
+            userClient.repairPasswordByEmail(email.getEmail(), tempPassword);
+            return ResponseEntity.ok().build();
+        } catch (UserNotFound e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
             return ResponseEntity.unprocessableEntity().build();
         }
     }
@@ -209,7 +238,15 @@ public class UserController {
     @Operation(summary = "Регистрация с подтверждением через почту")
     @PostMapping(ApiPaths.BASE_API + "/createUser")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-       return ResponseEntity.ok().body(userService.requestToCreateUser(userDto));
+        try{
+            return ResponseEntity.ok().body(userService.requestToCreateUser(userDto));
+        } catch (UsernameAlreadyTakenException e) {
+            log.error("Registration error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userDto);
+        } catch (EmailAlreadyTakenException e) {
+            log.error("Registration error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(userDto);
+        }
     }
 
     @Operation(summary = "Отправка кода подтверждения почты")
