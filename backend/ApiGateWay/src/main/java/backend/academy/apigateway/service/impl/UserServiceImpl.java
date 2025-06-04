@@ -12,7 +12,6 @@ import backend.academy.apigateway.service.*;
 import backend.academy.apigateway.utils.RandomUtils;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,7 +19,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -52,8 +50,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDto registerUser(UserDto user) {
-        checkUsernameAvailability(user.getUsername());
-
         user.setPassword(encoder.encode(user.getPassword()));
         try {
             user.setRole(roleClient.getRoleByName("USER"));
@@ -244,6 +240,8 @@ public class UserServiceImpl implements UserService {
 
 
     public UserDto requestToCreateUser(UserDto userDto) {
+        checkUsernameAvailability(userDto.getUsername());
+        checkEmailAvailability(userDto.getEmail());
         try {
             String code = RandomUtils.generateSixDigitCode();
             kafkaClientService.sendNotificationStackOverflow(
@@ -280,9 +278,18 @@ public class UserServiceImpl implements UserService {
     public void checkUsernameAvailability(String username) {
         try {
             userClient.getUserByUsername(username);
-            throw new UserAlreadyExistsException("Username is taken");
+            throw new UsernameAlreadyTakenException("Username is taken");
         } catch (FeignException.NotFound e) {
-            log.info("username {} availible", username);
+            log.info("username {} is available", username);
+        }
+    }
+
+    public void checkEmailAvailability(String email) {
+        try {
+            userClient.getUserByEmail(email);
+            throw new EmailAlreadyTakenException("Email is taken");
+        } catch (FeignException.NotFound e) {
+            log.info("email {} is available", email);
         }
     }
 

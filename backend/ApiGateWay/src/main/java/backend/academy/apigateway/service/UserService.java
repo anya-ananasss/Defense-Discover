@@ -26,4 +26,5 @@ public interface UserService {
     UserDto getUserByEmail(String email);
     String repairPassword(String email);
     void checkUsernameAvailability(String username);
+    void checkEmailAvailability(String email);
 }

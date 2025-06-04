@@ -8,11 +8,8 @@ import backend.academy.apigateway.dto.security.AddRoleDto;
 import backend.academy.apigateway.dto.security.ChangingPasswordDto;
 import backend.academy.apigateway.dto.security.RoleDto;
 import backend.academy.apigateway.dto.security.UserDto;
-import backend.academy.apigateway.exception.RoleDoesntExist;
-import backend.academy.apigateway.exception.UserNotFound;
-import backend.academy.apigateway.exception.WrongPasswordException;
+import backend.academy.apigateway.exception.*;
 import backend.academy.apigateway.service.UserService;
-import backend.academy.apigateway.exception.UserAlreadyExistsException;
 import backend.academy.apigateway.utils.ApiPaths;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,9 +41,12 @@ public class UserController {
             log.info("Registering user: {}", userDto);
             userService.registerUser(userDto);
             return ResponseEntity.ok("Successfully registered");
-        } catch (UserAlreadyExistsException e) {
+        } catch (UsernameAlreadyTakenException e) {
             log.error("Registration error: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Failed to register user with username " + userDto.getUsername());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to register user with username " + userDto.getUsername());
+        }  catch (EmailAlreadyTakenException e) {
+            log.error("Registration error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Failed to register user with email " + userDto.getEmail());
         } catch (Exception e) {
             log.error(e.getMessage() + userDto.toString());
             return ResponseEntity.unprocessableEntity().build();
@@ -238,7 +238,15 @@ public class UserController {
     @Operation(summary = "Регистрация с подтверждением через почту")
     @PostMapping(ApiPaths.BASE_API + "/createUser")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok().body(userService.requestToCreateUser(userDto));
+        try{
+            return ResponseEntity.ok().body(userService.requestToCreateUser(userDto));
+        } catch (UsernameAlreadyTakenException e) {
+            log.error("Registration error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userDto);
+        } catch (EmailAlreadyTakenException e) {
+            log.error("Registration error: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(userDto);
+        }
     }
 
     @Operation(summary = "Отправка кода подтверждения почты")
