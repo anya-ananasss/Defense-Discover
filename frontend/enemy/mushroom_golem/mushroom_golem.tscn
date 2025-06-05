@@ -335,7 +335,7 @@ position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_iiy3j")
 
 [node name="Texture" parent="." index="2"]
-position = Vector2(-1, -42)
+position = Vector2(-1, -41)
 scale = Vector2(1.8, 1.8)
 sprite_frames = SubResource("SpriteFrames_vavtg")
 animation = &"move"

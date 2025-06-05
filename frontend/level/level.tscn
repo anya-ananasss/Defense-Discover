@@ -190,7 +190,6 @@ horizontal_alignment = 1
 
 [node name="GmPanel" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer2"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer2/GmPanel"]

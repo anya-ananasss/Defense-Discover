@@ -25,7 +25,6 @@ shader_parameter/strength = 0.0
 radius = 50.0
 
 [node name="TreeTower" instance=ExtResource("1_resfc")]
-y_sort_enabled = true
 script = ExtResource("2_bf1au")
 
 [node name="TowerSprite" parent="." index="1"]
@@ -38,6 +37,7 @@ scale = Vector2(2, 2)
 
 [node name="Attack" type="Area2D" parent="." index="3"]
 unique_name_in_owner = true
+y_sort_enabled = true
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack" index="0"]
@@ -45,14 +45,15 @@ shape = SubResource("CircleShape2D_bf1au")
 
 [node name="Sprites" type="Node2D" parent="Attack" index="1"]
 y_sort_enabled = true
+position = Vector2(0, 35)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Attack/Sprites" index="0"]
 unique_name_in_owner = true
-z_index = 2
 position = Vector2(8, -12)
 sprite_frames = ExtResource("4_pa3rh")
 frame = 15
 frame_progress = 1.0
+offset = Vector2(0, -35)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="Attack/Sprites" index="1"]
 unique_name_in_owner = true
@@ -60,14 +61,15 @@ position = Vector2(-26, -36)
 sprite_frames = ExtResource("4_pa3rh")
 frame = 15
 frame_progress = 1.0
+offset = Vector2(0, -35)
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="Attack/Sprites" index="2"]
 unique_name_in_owner = true
-z_index = -1
 position = Vector2(16, -55)
 sprite_frames = ExtResource("4_pa3rh")
 frame = 15
 frame_progress = 1.0
+offset = Vector2(0, -35)
 
 [node name="AttackTimer" type="Timer" parent="." index="4"]
 unique_name_in_owner = true
