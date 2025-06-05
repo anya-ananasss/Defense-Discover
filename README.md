@@ -97,3 +97,11 @@ Email: user2025dd@gmail.com
 Email: placeholder2@admin.com
 
 Пароль: gameMaster0000
+
+### Администратор:
+
+https://admin-panel-tp-kreb.vercel.app/users
+
+Email: admin@admin.com
+
+Пароль: 0000
