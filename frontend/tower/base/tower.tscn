@@ -23,6 +23,7 @@ shader_parameter/border_color = Color(1, 0.4, 0, 0.6)
 radius = 100.0
 
 [node name="Tower" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_sqydd")
 
 [node name="DescriptionArea" type="Area2D" parent="."]

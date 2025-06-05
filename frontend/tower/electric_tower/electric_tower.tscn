@@ -164,7 +164,6 @@ _data = {
 script = ExtResource("2_7o06c")
 
 [node name="TowerSprite" parent="." index="1"]
-z_index = -2
 material = SubResource("ShaderMaterial_oemvy")
 position = Vector2(0, -55)
 sprite_frames = ExtResource("3_wiw85")

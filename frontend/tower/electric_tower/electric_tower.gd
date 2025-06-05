@@ -54,7 +54,7 @@ func _physics_process(delta: float) -> void:
 	if is_instance_valid(current_enemy):
 		%Attack.visible = true
 		var direction: Vector2 = current_enemy.get_parent().texture.global_position - %Attack.global_position
-		%Attack.region_rect = Rect2(0, 0, 448, direction.length() - 10)
+		%Attack.region_rect = Rect2(0, 0, 448, direction.length() - 13)
 		if direction.angle() > 0:
 			%Attack.z_index = 1
 		else:
