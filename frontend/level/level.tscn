@@ -565,6 +565,7 @@ unique_name_in_owner = true
 visible = false
 
 [node name="Level" type="Node2D" parent="."]
+y_sort_enabled = true
 position = Vector2(-960, -540)
 
 [node name="map" parent="Level" node_paths=PackedStringArray("camera") instance=ExtResource("4_ivpvi")]
@@ -615,40 +616,40 @@ position = Vector2(200, 508)
 position = Vector2(200, 658)
 
 [node name="PlaceForTower5" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(560, 800)
+position = Vector2(560, 780)
 
 [node name="PlaceForTower6" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(710, 800)
+position = Vector2(710, 780)
 
 [node name="PlaceForTower7" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(860, 800)
+position = Vector2(860, 780)
 
 [node name="PlaceForTower8" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1010, 800)
+position = Vector2(1010, 780)
 
 [node name="PlaceForTower9" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1160, 800)
+position = Vector2(1160, 780)
 
 [node name="PlaceForTower10" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1309, 800)
+position = Vector2(1309, 780)
 
 [node name="PlaceForTower11" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(560, 360)
+position = Vector2(560, 340)
 
 [node name="PlaceForTower12" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(710, 360)
+position = Vector2(710, 340)
 
 [node name="PlaceForTower13" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(860, 360)
+position = Vector2(860, 340)
 
 [node name="PlaceForTower14" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1010, 360)
+position = Vector2(1010, 340)
 
 [node name="PlaceForTower15" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1160, 360)
+position = Vector2(1160, 340)
 
 [node name="PlaceForTower16" parent="Level/Places" instance=ExtResource("8_6gtgk")]
-position = Vector2(1309, 360)
+position = Vector2(1309, 340)
 
 [node name="PlaceForTower17" parent="Level/Places" instance=ExtResource("8_6gtgk")]
 position = Vector2(431, 508)
@@ -659,7 +660,7 @@ position = Vector2(431, 658)
 [node name="Wave_generator" type="Node" parent="Level"]
 unique_name_in_owner = true
 script = ExtResource("4_vkbyq")
-seed = 1
+seed = 3
 metadata/_custom_type_script = "uid://m1vo0myw6iol"
 
 [connection signal="pressed" from="CanvasLayer/Control/HelpButton" to="." method="_on_help_button_pressed"]

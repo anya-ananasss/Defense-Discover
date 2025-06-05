@@ -25,6 +25,7 @@ shader_parameter/strength = 0.0
 radius = 50.0
 
 [node name="TreeTower" instance=ExtResource("1_resfc")]
+y_sort_enabled = true
 script = ExtResource("2_bf1au")
 
 [node name="TowerSprite" parent="." index="1"]
