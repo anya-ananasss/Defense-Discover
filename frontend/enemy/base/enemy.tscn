@@ -20,7 +20,6 @@ expand_margin_bottom = 2.0
 bg_color = Color(1, 0, 0, 1)
 
 [node name="Enemy" type="PathFollow2D" node_paths=PackedStringArray("texture", "lightning") groups=["Enemy"]]
-z_index = 2
 rotates = false
 loop = false
 script = ExtResource("1_1fxkx")

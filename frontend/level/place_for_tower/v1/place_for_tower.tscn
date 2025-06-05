@@ -65,6 +65,7 @@ animations = [{
 }]
 
 [node name="PlaceForTower" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_5b8io")
 
 [node name="Control" type="Control" parent="."]
